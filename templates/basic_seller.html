@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    {% block header %}{% endblock %}
+
+    <!-- Required webpage logo -->
+    <link rel="icon" href="{% static 'eshop_logo.png'%}">
+    <!-- Required Google Font Support -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2&display=swap" rel="stylesheet">
+
+    <!--fontawsome CDN-->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <!--Required JQuery CDN-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <!-- Optional JavaScript; choose one of the two! -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
+        integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
+        crossorigin="anonymous"></script>
+
+    <!--header JS-->
+    {%block headerJS%}{%endblock%}
+
+    <!--general structure of block-->
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+    <!--Required block for CSS -->
+    <style>
+        #myBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            font-size: 18px;
+            border: none;
+            outline: none;
+            background-color: rgb(0, 0, 0);
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 4px;
+        }
+    </style>
+    {% block style %}{% endblock %}
+
+</head>
+
+<body onload="disablePreloader()">
+    <!--preloader-->
+    <div id="webpreloader">
+
+    </div>
+
+
+    <!--go to top button-->
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+    <!--Toast for cart-->
+    <!--<div class="position-fixed end-0 p-3 " id="toastdisplay" style="z-index: 11;display:none">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <button type="button" class="btn-close text-white" data-bs-dismiss="toast" aria-label="Close" style="float: right;"></button>
+      <div class="toast-body bg-success text-white">
+        Your Item is in the cart.<br>
+        Checkout "{{ request.session.sessionUser }}->cart".
+      </div>
+    </div>
+  </div>-->
+    <div class="position-fixed end-0 p-3 " id="toastdisplay" style="z-index: 11;display:none;">
+        <div id="liveToast" class="toast align-items-center bg-light text-black-50  border-0 " role="alert"
+            aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">eStore | Item Added</strong>
+                <small>Just Now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-3"><img id="cartProductImage" style="max-width: 80px; max-height:150px;">
+                        </div>
+                        <div class="col" style="margin-left:10px;margin-top: 20px;">
+                            <p id="cartProductName"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--navigation bar start here-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+        <div class="container-fluid">
+            <a href="" class="navbar-brand">
+                <img src="{% static 'eshop_logo.png'%}" alt="" width="30" height="30"
+                    class="d-inline-block align-text-top">
+                {% block nav-brand %} {% endblock %}
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav mb-2 mb-lg-0 ">
+                    <li class="nav-item">
+                        {% block nav-home %}{% endblock %}
+                    </li>
+                    <li class="nav-item">
+                        {% block nav-contact %}{% endblock %}
+                    </li>
+                    <li class="nav-item">
+                        {% block nav-about %}{% endblock %}
+                    </li>
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--Navigationbar End here-->
+    {% block body %}{% endblock %}
+</body>
+<!--required footer tag-->
+<footer>
+    {% block footer %}{% endblock %}
+    {% block javaScript %}{% endblock %}
+    <script>
+        var mybutton = document.getElementById("myBtn");
+        function disablePreloader() {
+            document.getElementById('webpreloader').style.display = 'none';
+          }
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+
+    </script>
+</footer>
+
+</html>

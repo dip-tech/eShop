@@ -1,0 +1,128 @@
+<!--Load Basic html-->
+{% extends 'basic.html' %}
+<!--Title-->
+{% block title %}eStore | Confrim Order{% endblock %}
+
+<!--nav-brand-->
+{% block nav-brand %}<span style="font-family: 'Baloo Tammudu 2', cursive;">eStore| Confrim Order</span>{% endblock %}
+
+<!--add home navigation-->
+{% block nav-home %}<a href="/" class="nav-link">Home</a>{% endblock %}
+
+<!--add contact navigation-->
+{% block nav-contact %}<a href="/contact/" class="nav-link">Contact</a>{% endblock %}
+
+<!--add about navigation-->
+{% block nav-about %}<a href="/about/" class="nav-link">About</a>{% endblock %}
+
+<!--body-->
+{% block body %}
+<div class="container d-flex justify-content-center mt-5">
+    <div class="card" >
+        <h5 class="card-header">Confrim Your Order</h5>
+        <div class="card-body">
+            <canvas height="200px" width="300px" style="background-color: beige;" id="capchacanvas"></canvas>
+            <form action="/order/order-pleaced/" method="GET">
+                <input type="text" class="form-control mt-5" id="inputcapcha" required>
+                <p class="text-danger" id="capchaNotMatched" style="display: none;">*Capcha Not Matched</p>
+                <button class="btn btn-primary mt-5" id="submitcapcha" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javaScript %}
+<script>
+    var cap = document.getElementById('capchacanvas').getContext('2d');
+    cap.font = "100px Arial";
+    cap.fillStyle = "red";
+    cap.textAlign = "center";
+    cap.fillText("{{ capcha }}", document.getElementById('capchacanvas').width / 2, document.getElementById('capchacanvas').height / 2);
+</script>
+<script>
+    $('#submitcapcha').click(function(){
+        var cap="{{ capcha }}";
+        var inpcapcha=document.getElementById('inputcapcha').value;
+        if(cap==inpcapcha)
+        {
+            return true;
+        }
+        else{
+            document.getElementById('capchaNotMatched').style="display:block";
+            return false;
+        }
+    })
+</script>
+{% endblock %}
+
+!--Footer Start-->
+{% load static %}
+{% block footer %}
+<div class="container-fluid" style="background-color: rgba(211, 211, 211, 0.767); margin-top: 200px;">
+    <div class="row mt-3" style="height:200px;">
+        <div class="col" style="max-width:400px ;">
+            <img class="img-fluid" src="{% static 'footer_logo_gray.png' %}">
+        </div>
+        <div class="col" style="max-height: 400px;">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">Links</th>
+                        <th scope="col">Guide</th>
+                        <th scope="col">User</th>
+                        <th scope="col">Vendor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--table row 1-->
+                    <tr>
+                        <!--table data for Llinks-->
+                        <td style="font-size: smaller;">Home</td>
+                        <!--table data for Guid-->
+                        <td style="font-size: smaller;">How to Signup?</td>
+                        <!--table data for user-->
+                        <td style="font-size: smaller;">User Login</td>
+                        <!--table data for vendor-->
+                        <td style="font-size: smaller;">Vendor Login</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: smaller;">Contact Us</td>
+                        <td style="font-size: smaller;">How to Login?</td>
+                        <td style="font-size: smaller;">User Signup</td>
+                        <td style="font-size: smaller;">Vendor Signup</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: smaller;">About Us</td>
+                        <td style="font-size: smaller;">How to add product?</td>
+                        <td style="font-size: smaller;"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col" style="max-width: 200px;">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--table row 1-->
+                    <tr>
+                        <!--table data for Address-->
+                        <td style="font-size: smaller;">
+                            21/6 CA Road,<br>
+                            New York City,1800800
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row justify-content-center" style="text-align: center;font-size: smaller;">
+        <p>copyright@2021</p>
+    </div>
+</div>
+{% endblock %}

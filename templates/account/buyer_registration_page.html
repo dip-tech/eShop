@@ -1,0 +1,220 @@
+{% extends 'basic.html' %}
+
+<!--add title for this page-->
+{% block title %}eStore | Registration{% endblock %}
+
+<!--add navbar brand for this page-->
+{% block nav-brand %}<span style="font-family: 'Baloo Tammudu 2', cursive;">eStore</span>{% endblock %}
+
+<!--add home navigation-->
+{% block nav-home %}<a href="/" class="nav-link">Home</a>{% endblock %}
+
+<!--add contact navigation-->
+{% block nav-contact %}<a href="/contact/" class="nav-link">Contact</a>{% endblock %}
+
+<!--add about navigation-->
+{% block nav-about %}<a href="/about/" class="nav-link">About</a>{% endblock %}
+
+<!--load static folder-->
+{% load static %}
+
+<!--STYLE TAG-->
+{% block style %}
+
+{% endblock %}
+
+<!--BODY TAG-->
+{% block body %}
+<div class="container" style="margin-top: 50px;">
+    <form action="/account/buyer/doregister/" method="POST" id="buyer-registration-form" class="row g-3">{% csrf_token %}
+        <!--/account/buyer/doregister/-->
+        <div class="col-md-6">
+            <label for="inputFirstName" class="form-label">First Name<small class="text-danger">&nbsp;*</small></label>
+            <input type="text" name="bFirstName" class="form-control" id="inputFirstName"
+                title="Only Letters Are Allowed">
+            <p id="isFirstNameEmpty" style="display: none;" class="text-danger">*First Name Empty</p>
+        </div>
+        <div class="col-md-6">
+            <label for="inputLastName" class="form-label">Last Name<small class="text-danger">&nbsp;*</small></label>
+            <input type="text" name="bLastName" class="form-control" id="inputLastName">
+            <p id="isLastNameEmpty" style="display: none;" class="text-danger">*Last Name Empty</p>
+        </div>
+        <div class="col-md-6">
+            <label for="inputUserName" class="form-label">User Name<small class="text-danger">&nbsp;*</small></label>
+            <input type="text" name="bUserName" class="form-control" id="inputUserName">
+            {% if USERNAME_TAKEN %}
+            <p class="text-danger">*User name taken</p>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <label for="inputEmail4" class="form-label">Email<small class="text-danger">&nbsp;*</small></label>
+            <input type="email" name="bEmailId" class="form-control" id="inputEmail4">
+            <p id="isEmailEmpty" style="display: none;" class="text-danger">*Email Empty</p>
+            <p id="isEmailWrong" style="display: none;" class="text-danger">*Email Format Wrong</p>
+        </div>
+        <div class="col-md-6">
+            <label for="inputBuyerPassword" class="form-label">Password<small
+                    class="text-danger">&nbsp;*</small></label>
+            <input type="password" name="bPassword" class="form-control" id="inputBuyerPassword" minlength="6">
+            <p id="isPasswordEmpty" style="display: none;" class="text-danger">*Password Empty</p>
+        </div>
+        <div class="col-md-6">
+            <label for="cinputBuyerPassword" class="form-label">Re-type Password<small
+                    class="text-danger">&nbsp;*</small></label>
+            <input type="password" name="bConfrimPassword" class="form-control" id="cinputBuyerPassword">
+            <p id="passNotMatched" style="display: none;" class="text-danger">*Password Not Matched..!</p>
+            <p id="isConfrimPasswordEmpty" style="display: none;" class="text-danger">*Confrim Password Empty</p>
+        </div>
+        <div class="col-12">
+            <label for="inputAddress" class="form-label">House/ Apartment<small
+                    class="text-danger">&nbsp;*</small></label>
+            <input type="text" name="bHouseNo" class="form-control" id="inputAddress"
+                placeholder="Apartment, studio, or floor">
+            <p id="isAddress1Empty" style="display: none;" class="text-danger">*House/Apartment Empty</p>
+        </div>
+        <div class="col-12">
+            <label for="inputAddress2" class="form-label">Locality<small class="text-danger">&nbsp;*</small></label>
+            <input type="text" name="bLocality" class="form-control" id="inputAddress2" placeholder=" 1234 Main St">
+            <p id="isAddress2Empty" style="display: none;" class="text-danger">*Locality Empty</p>
+        </div>
+        <div class="col-md-6">
+            <label for="inputCity" class="form-label">City<small class="text-danger">&nbsp;*</small></label>
+            <input type="text" name="bCity" class="form-control" id="inputCity">
+        </div>
+        <div class="col-md-4">
+            <label for="inputState" class="form-label">State<small class="text-danger">&nbsp;*</small></label>
+            <select id="inputState" class="form-select" name="bState">
+                <option selected>Choose...</option>
+                <option value="West Bengal">West Bengal</option>
+            </select>
+            <p id="isStateEmpty" style="display: none;" class="text-danger">*Choose State</p>
+        </div>
+        <div class="col-md-2">
+            <label for="inputZip" class="form-label">Zip<small class="text-danger">&nbsp;*</small></label>
+            <input type="text" name="bZip" class="form-control" id="inputZip" maxlength="6" minlength="6"
+                title="Only Numbers Are Allowed">
+            <p id="isZipEmpty" style="display: none;" class="text-danger">*Zip Empty</p>
+            <p id="isZipFormatWrong" style="display: none;" class="text-danger">*Acctept Only Numbers</p>
+        </div>
+        <div class="col-12">
+            <button type="submit" id="buyersignup" class="btn border border-dark ">Sign up</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block footer %}{% endblock %}
+{% block javaScript %}
+<script>
+    $('#buyersignup').click(function () {
+        var fname = document.getElementById('inputFirstName').value;
+        var lname = document.getElementById('inputLastName').value;
+        var usrnm = document.getElementById('inputUserName').value;
+        var eml = document.getElementById('inputEmail4').value;
+        var add1 = document.getElementById('inputAddress').value;
+        var add2 = document.getElementById('inputAddress2').value;
+        var CheckPassword = document.getElementById('inputBuyerPassword').value;
+        var CheckConfrimPassword = document.getElementById('cinputBuyerPassword').value;
+        var slstate = document.getElementById('inputState').value;
+        var cty = document.getElementById('inputCity').value;
+        var zip = document.getElementById('inputZip').value;
+        if (fname != '') {
+            if (lname != '') {
+
+                if (usrnm != '') {
+
+                    if (eml != '') {
+                        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (re.test(eml)) {
+                            if (add1 != '') {
+
+                                if (add2 != '') {
+
+                                    if (CheckPassword != '') {
+
+                                        if (CheckConfrimPassword != '') {
+
+                                            if (slstate != '') {
+
+                                                if (cty != '') {
+
+                                                    if (zip != '') {
+                                                        var REX_ZIP_FORMAT = /[0-9]/;
+                                                        if (REX_ZIP_FORMAT.test(zip)) {
+                                                            if (CheckPassword == CheckConfrimPassword && slstate != '') {
+                                                                return true;
+                                                            }
+                                                            else {
+                                                                document.getElementById('passNotMatched').style = 'display:block';
+                                                                return false;
+                                                            }
+                                                        }
+                                                        else {
+                                                            document.getElementById('isZipFormatWrong').style = 'display:block';
+                                                            return false;
+                                                        }
+
+                                                    }
+                                                    else {
+                                                        document.getElementById('isZipEmpty').style = 'display:block';
+                                                        return false;
+                                                    }
+                                                }
+                                                else {
+                                                    document.getElementById('isCityEmpty').style = 'display:block';
+                                                    return false;
+                                                }
+                                            }
+                                            else {
+                                                document.getElementById('isStateEmpty').style = 'display:block';
+                                                return false;
+                                            }
+                                        }
+                                        else {
+                                            document.getElementById('isConfrimPasswordEmpty').style = 'display:block';
+                                            return false;
+                                        }
+                                    }
+                                    else {
+                                        document.getElementById('isPasswordEmpty').style = 'display:block';
+                                        return false;
+                                    }
+                                }
+                                else {
+                                    document.getElementById('isAddress2Empty').style = 'display:block';
+                                    return false;
+                                }
+                            }
+                            else {
+                                document.getElementById('isAddress1Empty').style = 'display:block';
+                                return false;
+                            }
+                        }
+                        else {
+                            document.getElementById('isEmailWrong').style = 'display:block';
+                            return false;
+                        }
+
+                    } else {
+                        document.getElementById('isEmailEmpty').style = 'display:block';
+                        return false;
+                    }
+                }
+                else {
+                    document.getElementById('isUserNameEmpty').style = 'display:block';
+                    return false;
+                }
+            }
+            else {
+                document.getElementById('isLastNameEmpty').style = 'display:block';
+                return false;
+            }
+        }
+        else {
+            document.getElementById('isFirstNameEmpty').style = 'display:block';
+            return false;
+        }
+    });
+</script>
+{% endblock %}

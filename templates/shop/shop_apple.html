@@ -1,0 +1,155 @@
+<!--load basic html -->
+{% extends 'basic.html' %}
+
+<!--Title -->
+{% block title %}eStore | Apple{% endblock %}
+
+<!--Required nav-brand-->
+{% block nav-brand %}<span style="font-family: 'Baloo Tammudu 2', cursive;">eStore</span>{% endblock %}
+
+<!--Required Home Navigation-->
+{% block nav-home %} <a href="/" class="nav-link">Home</a>{% endblock %}
+
+<!--Required Contact Navigation-->
+{% block nav-contact %} <a href="/contact/" class="nav-link">Contact</a>{% endblock %}
+
+<!--Required about Navigation-->
+{% block nav-about %} <a href="/about/" class="nav-link">About</a>{% endblock %}
+
+<!--body-->
+{% load static %}
+{% block body %}
+<!--Carosale-->
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{% static 'Annotation 2021-06-04 122037.png' %}" class="d-block w-100" alt="image"
+                style="height: 30rem; width:20rem; ">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'Annotation 2021-06-04 122232.png' %}" class="d-block w-100" alt="image"
+                style="height: 30rem; width: 20rem;">
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'Annotation 2021-06-04 122353.png' %}" class="d-block w-100" alt="image"
+                style="height: 30rem; width: 20rem;">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<!--Product Tag-->
+<div style="margin-top: 7rem; margin-left: 5rem; background-color: lightgrey; width: 7.4rem;">
+    <h1 class="display-2" style="letter-spacing: 0.5rem;">Products</h1>
+</div>
+<!--Iphone Tag-->
+<div style="text-align: center; margin-top: 4rem;">
+    <h2 style="letter-spacing: 1.5px;font-size:2.6rem;"><strong>iPhone</strong>
+    </h2>
+</div>
+<!--Card start for iphone-->
+<div class="container justify-content-center">
+    <div class="row row-cols-1 row-cols-md-6 g-2" style="margin-top: 3rem; ">
+        {% for phones in iphones|slice:"0:6" %}
+        <div class="col">
+            <div class="card h-100" style="background-color:white; border: none;box-shadow:0px 0px 10px #ECECEC ;">
+                <a href="..."><img src="/media/{{ phones.PRODUCT_IMAGE }}" id="product-image-{{ phones.id }}"
+                        class="card-img-top" alt="image"></a>
+                <div class="card-body" style="text-align: center;">
+                    <a href="" style="text-decoration: none; color: black;">
+                        <h5 class="card-title" id="product-title-{{ phones.id }}" style="font-size: medium;">{{phones.PRODUCT_TITLE }} </h5>
+                    </a>
+                    <p class="card-text" style="font-size: small;">₹ <strong id="product-price-{{ phones.id }}"> {{phones.PRODUCT_PRICE }}</strong></p>
+                    <p id="product-soldby-{{ phones.id }}" style="display: none;">{{ phones.SOLD_BY }}</p>
+                </div>
+                <div class="card-footer">
+                    <button type="button " id="{{ phones.id }}" class="btn border border-dark btn-sm cart-button"
+                        style="border-radius:30px;width:80px;height: 30px;"><img
+                            src="{% static 'baseline_add_shopping_cart_black_24dp.png' %}"></button>
+                            <a role="button" href="/products/product-details/{{phones.id}}/" class="btn border border-dark btn-sm" style="float: right;border-radius:30px;width:80px;height:30px;font-size:medium;">View</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+<!--Card end for iphone-->
+
+<!--card start for macbook-->
+<div style="text-align: center; margin-top: 4rem;">
+    <h2 style="letter-spacing: 1.5px;font-size:2.6rem;"><strong>MacBook</strong>
+    </h2>
+</div>
+<!--Card start for macbook-->
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-6 g-2 align-middle" style="margin-top: 3rem; ">
+        {% for mac in macbooks|slice:"0:6"%}
+        <div class="col">
+            <div class="card h-100" style="background-color:white; border: none;box-shadow:0px 0px 10px #ECECEC ;">
+                <a href="..." id="link1"><img src="/media/{{ mac.PRODUCT_IMAGE }}" id="product-image-{{ mac.id }}"
+                        class="card-img-top" alt="image"></a>
+                <div class="card-body" style="text-align: center;">
+                    <a href="" style="text-decoration: none; color: black;">
+                        <h5 class="card-title" id="product-title-{{ mac.id }}" style="font-size:medium;">{{mac.PRODUCT_TITLE }}</h5>
+                    </a>
+                    <p class="card-text" style="font-size:small;"> ₹<strong id="product-price-{{ mac.id }}"> {{mac.PRODUCT_PRICE }}</strong></p>
+                    <p id="product-soldby-{{ mac.id }}" style="display: none;">{{ mac.SOLD_BY }}</p>
+                </div>
+                <div class="card-footer">
+                    <button type="button" id="{{ mac.id }}" class="btn border border-dark btn-sm cart-button"
+                        style="border-radius:30px;width:80px;height: 30px;"><img
+                            src="{% static 'baseline_add_shopping_cart_black_24dp.png' %}"></button>
+                            <a role="button" href="/products/product-details/{{mac.id}}/" class="btn border border-dark btn-sm" style="float: right;border-radius:30px;width:80px;height:30px;font-size:medium;">View</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<!--Card end for macbook-->
+<div style="text-align: center; margin-top: 4rem;">
+    <h2 style="font-family: 'Baloo Tammudu 2', cursive;letter-spacing: 1.5px;font-size:2.6rem;"><strong>iPad</strong>
+    </h2>
+</div>
+<!--Card start for ipad-->
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-4" style="margin-top: 3rem;">
+        {% for ipad in ipads|slice:"0:4" %}
+        <div class="col">
+            <div class="card h-100" style="background-color:white; border: none;box-shadow:0px 0px 10px #ECECEC ;">
+                <a href="..." id="link1"><img src="/media/{{ ipad.PRODUCT_IMAGE }}" id="product-image-{{ ipad.id }}"
+                        class="card-img-top" alt="image"></a>
+                <div class="card-body" style="text-align: center;">
+                    <a href="" style="text-decoration: none; color: black;">
+                        <h5 class="card-title" id="product-title-{{ ipad.id }}">{{ ipad.PRODUCT_TITLE}}</h5>
+                    </a>
+                    <p class="card-text" style="font-size:small;">₹ <strong id="product-price-{{ ipad.id }}">{{ipad.PRODUCT_PRICE }}</strong></p>
+                    <p id="product-soldby-{{ ipad.id }}" style="display: none;">{{ ipad.SOLD_BY }}</p>
+                </div>
+                <div class="card-footer">
+                    <button type="button" id="{{ ipad.id }}" class="btn border border-dark btn-sm cart-button"
+                        style="border-radius:30px;width:80px;height: 30px; "><img
+                            src="{% static 'baseline_add_shopping_cart_black_24dp.png' %}"></button>
+                            <a role="button" href="/products/product-details/{{ipad.id}}/" class="btn border border-dark btn-sm" style="float: right;border-radius:30px;width:80px;height:30px;font-size:medium;">View</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<!--Card end for ipad-->
+{% endblock %}
+
+<!--Footer Start-->
+{% block footer %}
+
+{% endblock %}

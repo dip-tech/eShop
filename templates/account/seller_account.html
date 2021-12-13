@@ -1,0 +1,339 @@
+<!--import eshop_basic.html page -->
+{% extends 'basic_seller.html' %}
+
+<!--add title for this page-->
+{% block title %}eStore{% endblock %}
+
+<!--add navbar brand for this page-->
+{% block nav-brand %}<span style="font-family: 'Baloo Tammudu 2', cursive;">eStore | Welcome Seller</span>{% endblock %}
+
+<!--add home navigation-->
+{% block nav-home %}<a href="/" class="nav-link active">Home</a>{% endblock %}
+
+<!--add contact navigation-->
+{% block nav-contact %}<a href="/contact/" class="nav-link">Contact</a>{% endblock %}
+
+<!--add about navigation-->
+{% block nav-about %}<a href="/about/" class="nav-link">About</a>{% endblock %}
+
+
+
+<!---static directory-->
+{% load static %}
+
+<!--Home page body-->
+{% block body %}
+<div class="container bg-white " id="loginpage"
+    style="margin-top: 150px;width:60%;box-shadow: 1px 1px 5px 1px lightblue;">
+    <div class="row justify-content-center align-items-center " style="padding:10px">
+
+        <div class="col-6 text-center">
+            <button id="createaccountbtn" class="btn border border-dark"
+                style="font-size: 30px;box-shadow: 1px 1px 5px 1px lightblue;text-shadow: 2px 2px 5px lightblue;">Create
+                Account</button>
+        </div>
+        <div class="col-6 justify-content-center"
+            style="border-left: 1px solid gray;font-size: 30px;padding-left: 20px;">
+            <p style="text-shadow: 2px 2px 5px lightblue;"> Shop Login</p>
+            <form action="/account/seller/login/" method="POST">{% csrf_token %}
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label"
+                        style="font-size:16px;text-shadow: 2px 2px 5px lightblue;">Shop ID</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" name="shopid"
+                        style="font-size:18px;" required>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label"
+                        style="font-size: 16px;text-shadow: 2px 2px 5px lightblue;">Password</label>
+                    <input type="password" class="form-control" name="shoppassword" style="font-size:18px;" required>
+                </div>
+                <button type="submit" class="btn border border-dark"
+                    style="font-size: 20px;min-width: 200px;box-shadow: 1px 1px 5px 1px lightblue;text-shadow: 2px 2px 5px lightblue;">Sign
+                    in</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+<div class="container" id="selleraccountheader"
+    style="display: none;width:70%; font-size:36px;text-shadow: 2px 2px 5px lightblue;">
+    Create New Shop
+</div>
+<div class="container  bg-white" id="createaccountpage"
+    style="display:none;width:70%; margin-top:100px;box-shadow: 1px 1px 5px 1px lightblue;padding:10px;">
+    <form action="/account/seller/create_account/" class="row g-3 needs-validation" method="POST" novalidate>{% csrf_token %}
+        <div class="col-md-4">
+            <label for="validationCustom01" class="form-label" style="font-size: 20px;">Shop Name</label>
+            <input type="text" class="form-control" id="validationCustom01" style="font-size: 20px;"
+                name="shopname" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please choose a First Name.
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="validationCustom02" class="form-label" style="font-size: 20px;">Owner Name</label>
+            <input type="text" class="form-control" id="validationCustom02" style="font-size: 20px;"
+                name="ownername" required>
+            <div class="valid-feedback">
+                Looks good!
+            </div>
+            <div class="invalid-feedback">
+                Please choose a Last Name.
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="validationCustomUsername" class="form-label" style="font-size: 20px;">Shop ID</label>
+            <div class="input-group has-validation">
+                <span class="input-group-text" id="inputGroupPrepend" style="font-size: 20px;">@</span>
+                <input type="text" class="form-control" id="validationCustomUsername" style="font-size: 20px;"  name="shop_id" value="{{GN_SH_ID}}"
+                    aria-describedby="inputGroupPrepend" readonly>
+    
+                <div class="invalid-feedback">
+                    Please choose a shop id.
+                </div>
+                <div id="usernameAlert" class="invalid-feedback">
+                    id taken.
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="validationCustom08" class="form-label" style="font-size: 20px;">Owner Email</label>
+            <input type="email" class="form-control" id="validationCustom08" style="font-size: 20px;"
+                name="owner_email" required>
+            <div id="EmailNotValid" class="invalid-feedback">
+                Please provide a valid Email.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="validationCustom09" class="form-label" style="font-size: 20px;">Owner Mobile No</label>
+            <input type="text" class="form-control" id="validationCustom09" style="font-size: 20px;"
+                name="owner_mobile" required>
+            <div class="invalid-feedback">
+                Please provide a valid Mobile No.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="validationCustom10" class="form-label" style="font-size: 20px;">Shop House/Apartment </label>
+            <input type="text" class="form-control" id="validationCustom10" style="font-size: 20px;"
+                name="shop_house_or_apartment" required>
+            <div class="invalid-feedback">
+                Please provide a valid House or Apartment.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="validationCustom11" class="form-label" style="font-size: 20px;">Shop Locality</label>
+            <input type="text" class="form-control" id="validationCustom11" style="font-size: 20px;"
+                name="shop_locality" required>
+            <div class="invalid-feedback">
+                Please provide a valid Locality.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="validationCustom03" class="form-label" style="font-size: 20px;">Shop City</label>
+            <input type="text" class="form-control" id="validationCustom03" style="font-size: 20px;" name="shop_city"
+                required>
+            <div class="invalid-feedback">
+                Please provide a valid city.
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label for="validationCustom04" class="form-label" style="font-size: 20px;">Shop State</label>
+            <select class="form-select" id="validationCustom04" name="shop_state" required style="font-size: 20px;">
+                <option selected disabled value="">Choose...</option>
+                <option value="West Bengal">West Bengal</option>
+            </select>
+            <div class="invalid-feedback">
+                Please select a valid state.
+            </div>
+        </div>
+        <div class="col-md-3">
+            <label for="validationCustom05" class="form-label" style="font-size: 20px;">Shop Zip</label>
+            <input type="text" class="form-control" id="validationCustom05" style="font-size: 20px;" name="shop_zip" maxlength="7"
+                required>
+            <div id="ZipNotValid" class="invalid-feedback">
+                Please provide a valid zip.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="validationCustom06" class="form-label" style="font-size: 20px;">Password</label>
+            <input type="password" class="form-control" id="validationCustom06" style="font-size: 20px;"
+                name="shop_password" required>
+            <div class="invalid-feedback">
+                Please provide a valid password.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="validationCustom07" class="form-label" style="font-size: 20px;">Confrim Password</label>
+            <input type="password" class="form-control" id="validationCustom07" style="font-size: 20px;"
+                name="seller_confrim_password" required>
+            <div id="ConfrimPasswordNotValid" class="invalid-feedback">
+                Please provide a valid confrim password.
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                <label class="form-check-label" for="invalidCheck">
+                    Agree to terms and conditions
+                </label>
+                <div class="invalid-feedback">
+                    You must agree before submitting.
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <button class="btn border border-dark" id="submitbtn" type="submit" style="font-size: 20px;">Sign
+                up</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+<!--Footer Block for Home Page-->
+{% block footer %}
+<div class="container-fluid" style="background-color: rgba(211, 211, 211, 0.767); margin-top: 250px;">
+    <div class="row mt-3" style="height:200px;">
+        <div class="col" style="max-width:400px ;">
+            <img class="img-fluid" src="{% static 'footer_logo_gray.png'%}">
+        </div>
+        <div class="col" style="max-height: 400px;">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">Links</th>
+                        <th scope="col">Guide</th>
+                        <th scope="col">User Account</th>
+                        <th scope="col">Seller Account</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--table row 1-->
+                    <tr>
+                        <!--table data for Llinks-->
+                        <td style="font-size: smaller;">Home</td>
+                        <!--table data for Guid-->
+                        <td style="font-size: smaller;">How to Signup?</td>
+                        <!--table data for user-->
+                        <td style="font-size: smaller;"><a class="text-dark" role="button" href="#" id="userloginbtn"
+                                style="text-decoration: none;">User Login</a></td>
+                        <!--table data for vendor-->
+                        <td style="font-size: smaller;"><a href="/account/seller/" class="text-dark"
+                                style="text-decoration: none">Seller Login</a></td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: smaller;">Contact Us</td>
+                        <td style="font-size: smaller;">How to Login?</td>
+                        <td style="font-size: smaller;"><a class="text-dark" style="text-decoration: none;"
+                                href="/account/buyer/registration/">User Signup</a></td>
+                        <td style="font-size: smaller;">Seller Signup</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: smaller;">About Us</td>
+                        <td style="font-size: smaller;">How to add product?</td>
+                        <td style="font-size: smaller;"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col" style="max-width: 200px;">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--table row 1-->
+                    <tr>
+                        <!--table data for Address-->
+                        <td style="font-size: smaller;">
+                            21/6 CA Road,<br>
+                            New York City,1800800
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row justify-content-center" style="text-align: center;font-size: smaller;">
+        <p>copyright@2021</p>
+    </div>
+</div>
+{% endblock %}
+
+<!--block javascript-->
+{% block javaScript %}
+<!--IF USERNAME ALREADY TAKEN-->
+{% if id_taken %}
+<script>
+    document.getElementById('createaccountpage').style = "display:block;width:70%; margin-top:100px;box-shadow: 1px 1px 5px 1px lightblue;padding:10px;";
+    document.getElementById('usernameAlert').style = "display:block";
+    document.getElementById('loginpage').style = "display:none";
+</script>
+{% endif %}
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                        
+                    }
+                  
+                    
+                }, false)
+            })
+    })()
+
+    $('#submitbtn').click(function () {
+        var SL_EMAIL = document.getElementById('validationCustom08').value;
+        var SL_ZIP = document.getElementById('validationCustom05').value;
+        var SL_PASSWORD = document.getElementById('validationCustom06').value;
+        var SL_CONFRIM_PASSWORD = document.getElementById('validationCustom07').value;
+        var REGX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        var REGX_PIN = /[0-9]+$/;
+        //CHECK EMAIL IS VALID OR NOT.
+        if (REGX_EMAIL.test(SL_EMAIL)) {
+            //CHECK PIN CODE VALID OR NOT.
+            if (REGX_PIN.test(SL_ZIP)) {
+                //CHECK PASSWORD MATCHED OR NOT.
+                if (SL_PASSWORD == SL_CONFRIM_PASSWORD) {
+                    return true;
+                }
+                else {
+                    document.getElementById('ConfrimPasswordNotValid').style = "display:block";
+                    return false;
+                }
+            }
+            else {
+                document.getElementById('ZipNotValid').style = "display:block";
+                return false;
+            }
+        }
+        else {
+            document.getElementById('EmailNotValid').style = "display:block";
+            return false;
+        }
+
+
+    })
+
+    $("#createaccountbtn").click(function () {
+        document.getElementById("selleraccountheader").style = "display:block;width:70%;margin-top:100px; font-size:36px;text-shadow: 2px 2px 5px lightblue;"
+        document.getElementById("createaccountpage").style = "display:block;width:70%; ;box-shadow: 1px 1px 5px 1px lightblue;padding:10px;";
+        document.getElementById("loginpage").style = "display:none";
+    })
+</script>
+{% endblock %}

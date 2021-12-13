@@ -1,0 +1,42 @@
+<!--Load Basic html-->
+{% extends 'basic.html' %}
+<!--Title-->
+{% block title %}eStore | Order Successfull{% endblock %}
+
+<!--nav-brand-->
+{% block nav-brand %}<span style="font-family: 'Baloo Tammudu 2', cursive;">eStore| Order Canceled</span>{% endblock %}
+
+<!--add home navigation-->
+{% block nav-home %}<a href="/" class="nav-link">Home</a>{% endblock %}
+
+<!--add contact navigation-->
+{% block nav-contact %}<a href="/contact/" class="nav-link">Contact</a>{% endblock %}
+
+<!--add about navigation-->
+{% block nav-about %}<a href="/about/" class="nav-link">About</a>{% endblock %}
+
+<!--body-->
+{% block body %}
+<div class="container mt-5" style="width:60%">
+    <div class="card">
+        <div class="card-header alert alert-danger" style="font-size:30px;">
+          <span class="text-danger" style="font-size:30px;"><i class="fad fa-window-close"></i></span>&nbsp;&nbsp;&nbsp;Order Canceled
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Your order with id <span class="badge border border-dark text-dark" style="font-size:20px;">{{ ordid }}</span> is Canceled</h5>
+          <p class="card-text">We are sorry for canceling your order. </p>
+          <a href="/" class="btn btn-primary">Continue Shopping</a>
+        </div>
+      </div>
+</div>
+{% endblock %}
+
+{% block javaScript %}
+
+{% endblock %}
+
+!--Footer Start-->
+{% load static %}
+{% block footer %}
+
+{% endblock %}

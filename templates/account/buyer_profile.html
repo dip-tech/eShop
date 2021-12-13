@@ -1,0 +1,185 @@
+<!--import eshop_basic.html page -->
+{% extends 'basic.html' %}
+
+<!--add title for this page-->
+{% block title %}eStore | Profile{% endblock %}
+
+<!--add navbar brand for this page-->
+{% block nav-brand %}<span style="font-family: 'Baloo Tammudu 2', cursive;">eStore | Profile</span>{% endblock %}
+
+<!--add home navigation-->
+{% block nav-home %}<a href="/" class="nav-link">Home</a>{% endblock %}
+
+<!--add contact navigation-->
+{% block nav-contact %}<a href="/contact/" class="nav-link">Contact</a>{% endblock %}
+
+<!--add about navigation-->
+{% block nav-about %}<a href="/about/" class="nav-link">About</a>{% endblock %}
+
+
+
+<!---static directory-->
+{% load static %}
+
+<!--Home page body-->
+{% block body %}
+
+<div class="container" style="margin-top: 50px;">
+    <div class="row " style="padding: 10px;">
+        <div class="col-4 align-self-start">
+            <div class="alert alert-success" role="alert" style="box-shadow:2px 2px 5px 1px lightgray;padding:10px;">
+                <div class="text-center">
+                    <img src="{% static 'avter.png' %}" class="rounded" alt="..." style="height:80px;width:80px;">
+                </div>
+                <h4 class="alert-heading text-center">Hello, {{ USER_FIRST_NAME }}</h4>
+            </div>
+            <div class="list-group" style="box-shadow:2px 2px 5px 1px lightgray;padding:10px;">
+                <a class="list-group-item list-group-item-action"
+                    href="/order/myorders/{{ request.session.sessionUserName }}" aria-current="true">
+                    <strong>My Orders</strong>
+                </a>
+                <button type="button" class="list-group-item list-group-item-action" aria-current="true">
+                    <strong>Account Settings</strong>
+                </button>
+                <button type="button" id="profileinformationbtn" class="list-group-item list-group-item-action">&nbsp;&nbsp;&nbsp;&nbsp;Profile
+                    Information</button>
+                <button type="button" id="manageaddressbtn" class="list-group-item list-group-item-action">&nbsp;&nbsp;&nbsp;&nbsp;Manage
+                    Address</button>
+            </div>
+        </div>
+        <div class="col">
+            <!--CONTAINER FOR PERSONAL INFORMATION-->
+            <div class="container bg-light" id="personalinformationcontainer" style="padding: 10px;box-shadow:2px 2px 5px 1px lightgray;">
+                <form action="" method="GET">
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label" style="font-size:36px;">Personal
+                            Information </label>&nbsp;&nbsp;<span role="button" id="editpersonaldetails"
+                            class="badge border border-dark text-dark">Edit</span>
+                        <table class="table table-borderless">
+                            <tr>
+                                <td><input type="text" class="form-control" id="userFirstName"
+                                        value="{{ USER_FIRST_NAME }}" disabled style="font-size:36px;color: gray;"></td>
+                                <td><input type="text" class="form-control" id="userLastName"
+                                        value="{{ USER_LAST_NAME }}" disabled style="font-size:36px; color: gray;"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label" style="font-size:36px;">Email</label>
+                        <input type="email" id="userEmail" class="form-control" value="{{ USER_EMAIL_ID }}"
+                            style="font-size:36px;color: gray;" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label" style="font-size:36px;">User Name</label>
+                        <input type="email" class="form-control" value="{{ USER_USERID }}"
+                            style="font-size:36px;color: gray;" disabled>
+                    </div>
+                    <button type="submit" id="personaldetailssavebtn" class="btn border border-dark"
+                        style="display:none">Save</button>
+                </form>
+            </div>
+            <!--CONTAINER FOR MANAGE ADDRESS-->
+            <div class="container bg-light" id="manageaddresscontainer" style="padding: 10px;box-shadow:2px 2px 5px 1px lightgray; display:none;">
+                <form class="" style="padding: 10px;">
+                    <div class="mb-3">
+                        <label for="inputAddress" class="form-label" style="font-size:30px;">House/ Apartment No</label>&nbsp;&nbsp;<small role="button" id="manageaddresseditbtn" class="badge border border-dark text-dark">Edit</small>
+                        <textarea class="form-control" id="inputHouse2" name="inputHouse2Value"  style="font-size:36px;color: gray;" disabled>{{ USER_HOUSE }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputAddress2" class="form-label" style="font-size:36px;">Locality</label>
+                        <input type="text" class="form-control" id="inputLocality2" name="inputLocality2Value" value="{{ USER_LOCALITY }}" disabled style="font-size:30px;color: gray;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputCity" class="form-label" style="font-size:36px;">City</label>
+                        <input type="text" class="form-control" id="inputCity2" name="inputCity2Value" value="{{ USER_CITY }}" disabled style="font-size:36px;color: gray;">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputState" class="form-label" style="font-size:36px;">State</label>
+                        <select id="inputState2" class="form-select" style="font-size:36px;color: gray;" disabled>
+                            <option selected >{{ USER_STATE }}</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Goa">Goa</option>
+                            <option value="Gujarat">Gujarat</option>
+                            <option value="Haryana">Haryana</option>
+                            <option value="Himachal Pradesh">Himachal Pradesh</option>
+                            <option value="Jharkhand">Jharkhand</option>
+                            <option value="Karnataka">Karnataka</option>
+                            <option value="Maharashtra">Maharashtra</option>
+                            <option value="Tamil Nadu">Tamil Nadu</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputZip2" class="form-label" style="font-size:36px;">Zip</label>
+                        <input type="text" class="form-control" id="inputZip2" value="{{ USER_ZIP }}" disabled style="font-size:36px;color: gray;">
+                    </div>
+                    <button type="submit" id="saveAddressbtn" class="btn border border-dark" style="display: none;">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+<!--Footer Block for Home Page-->
+{% block footer %}
+
+{% endblock %}
+
+<!--block javascript-->
+{% block javaScript %}
+<script>
+    // PERSONAL DETAILS EDIT BUTTON
+    $("#editpersonaldetails").click(function () {
+        if (document.getElementById('editpersonaldetails').innerHTML == 'Edit') {
+            document.getElementById('userFirstName').disabled = false;
+            document.getElementById('userLastName').disabled = false;
+            document.getElementById('userEmail').disabled = false;
+            document.getElementById('personaldetailssavebtn').style = "display:block";
+            document.getElementById('editpersonaldetails').innerHTML = "Cancel";
+        }
+        else {
+            document.getElementById('userFirstName').disabled = true;
+            document.getElementById('userLastName').disabled = true;
+            document.getElementById('userEmail').disabled = true;
+            document.getElementById('personaldetailssavebtn').style = "display:none";
+            document.getElementById('editpersonaldetails').innerHTML = "Edit";
+        }
+
+    })
+
+    // MANAGE ADDRESS TAB
+    $("#manageaddressbtn").click(function(){
+        document.getElementById('manageaddresscontainer').style="display:block;";
+        document.getElementById('personalinformationcontainer').style="display:none;";
+    })
+    // PROFILE INFORMATION TAB
+    $("#profileinformationbtn").click(function(){
+        document.getElementById('manageaddresscontainer').style="display:none;";
+        document.getElementById('personalinformationcontainer').style="display:block;";
+    })
+
+    //ADDRESS EDIT BUTTON
+    $("#manageaddresseditbtn").click(function () {
+        if (document.getElementById('manageaddresseditbtn').innerHTML == 'Edit') {
+            document.getElementById('inputHouse2').disabled = false;
+            document.getElementById('inputLocality2').disabled = false;
+            document.getElementById('inputCity2').disabled = false;
+            document.getElementById('inputState2').disabled = false;
+            document.getElementById('inputZip2').disabled = false;
+            document.getElementById('saveAddressbtn').style = "display:block";
+            document.getElementById('manageaddresseditbtn').innerHTML = "Cancel";
+        }
+        else {
+            document.getElementById('inputHouse2').disabled = true;
+            document.getElementById('inputLocality2').disabled = true;
+            document.getElementById('inputCity2').disabled = true;
+            document.getElementById('inputState2').disabled = true;
+            document.getElementById('inputZip2').disabled = true;
+            document.getElementById('saveAddressbtn').style = "display:none";
+            document.getElementById('manageaddresseditbtn').innerHTML = "Edit";
+        }
+
+    })
+</script>
+{% endblock %}

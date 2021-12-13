@@ -1,0 +1,121 @@
+<!--import eshop_basic.html-->
+{% extends 'basic.html'%}
+
+<!--Required Title-->
+{% block title %}eStore | Contact Us{% endblock %}
+
+<!--Required nav-brand-->
+{% block nav-brand %}<span style="font-family: 'Baloo Tammudu 2', cursive;">eStore | Contact Us</span>{% endblock %}
+
+<!--Required Home Navigation-->
+{% block nav-home %} <a href="/" class="nav-link">Home</a>{% endblock %}
+
+<!--Required Contact Navigation-->
+{% block nav-contact %} <a href="" class="nav-link active">Contact</a>{% endblock %}
+
+<!--Required about Navigation-->
+{% block nav-about %} <a href="/about/" class="nav-link">About</a>{% endblock %}
+
+
+
+<!--Required CSS -->
+{% block style %}
+<style>
+    h1 {
+        letter-spacing: 3px;
+        font-size: 55px;
+        font-family: 'Comfortaa', cursive;
+    }
+
+    #d1 {
+        margin-top: 55px;
+        background-color: lightblue;
+    }
+
+    a:link,
+    a:visited,
+    a:hover,
+    a:active {
+        text-decoration: none;
+        
+    }
+
+    #i1 {
+        display: block;
+        margin-left: 20px;
+        height: 350px;
+        width: 500px;
+        margin-top: 80px;
+        border-radius: 60%;
+
+
+    }
+
+    @media screen and (max-width: 650px) {
+        .column {
+            width: 100%;
+            display: block;
+        }
+    }
+</style>
+
+{% endblock %}
+
+<!--Required Body-->
+{% block body %}
+<!--Required to load  static directroy-->
+{% load static %}
+<div id="d1">
+    <h1 style="text-align: center;">
+        Feel free to
+        <small class="text-muted">Contact us</small>
+    </h1>
+</div>
+<div style="text-align: center;margin-top: 58px;" align="center">
+    <div style="float:left; margin-left: 250px;">
+        <img src="{% static 'twotone_place_black_24dp.png' %}" alt="address">
+        <p><span><b>Address: </b></span>21/6 CA Road,<br>
+            New York City,1800800</p>
+    </div>
+    <div style="float: left;margin-left: 120px;">
+        <img src="{% static 'twotone_phone_black_24dp.png' %}" alt="phone">
+        <p><span><b>Phone:</b></span> <a href="tel://917865213409">+917865213409</a></p>
+    </div>
+    <div style="float: left; margin-left: 120px;">
+        <img src="{% static 'twotone_email_black_24dp.png' %}" alt="email">
+        <p><span><b>Email:</b></span> <a href="mailto:info@yoursite.com">estore@gmail.com</a></p>
+    </div>
+    <div style="float: left; margin-left: 120px;">
+        <img src="{% static 'twotone_public_black_24dp.png' %}" alt="webpage">
+        <p><span><b>Website:</b></span> <a href="#">estore.com</a></p>
+    </div>
+</div>
+<div
+    style="float: left; width: 30%; margin-top: 65px; margin-left: -150px; background: lightcyan; padding: 12px 12px 12px 12px; box-sizing: border-box; border-style: outset;">
+    <form class="row g-3">
+        <div class="col-md-6">
+            <label for="fullname" class="form-label">Full Name</label>
+            <input type="name" class="form-control" id="fullname" placeholder="Name">
+        </div>
+        <div class="col-md-6">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" class="form-control" id="email" placeholder="Email">
+        </div>
+        <div class="col-12">
+            <label for="subject" class="form-label">Subject</label>
+            <input type="text" class="form-control" id="subject">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Message</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Send Message</button>
+        </div>
+    </form>
+</div>
+<div style="float: left;">
+    <img id="i1" src="{% static 'footer_logo1.png' %}">
+</div>
+
+{% endblock %}

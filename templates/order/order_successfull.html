@@ -1,0 +1,39 @@
+<!--Load Basic html-->
+{% extends 'basic.html' %}
+<!--Title-->
+{% block title %}eStore | Order Successfull{% endblock %}
+
+<!--nav-brand-->
+{% block nav-brand %}<span style="font-family: 'Baloo Tammudu 2', cursive;">eStore| Order Placed</span>{% endblock %}
+
+<!--add home navigation-->
+{% block nav-home %}<a href="/" class="nav-link">Home</a>{% endblock %}
+
+<!--add contact navigation-->
+{% block nav-contact %}<a href="/contact/" class="nav-link">Contact</a>{% endblock %}
+
+<!--add about navigation-->
+{% block nav-about %}<a href="/about/" class="nav-link">About</a>{% endblock %}
+
+<!--body-->
+{% block body %}
+<div class="container">
+  <div class="alert alert-success" role="alert">
+    Order Placed Successfull<br>
+    <a href="/" style="text-decoration: none;">Click Here </a> to continue shopping
+  </div>
+</div>
+{% endblock %}
+
+{% block javaScript %}
+<script>
+  localStorage.setItem('cartItems', '');
+  localStorage.setItem('totalItems', '0');
+</script>
+{% endblock %}
+
+!--Footer Start-->
+{% load static %}
+{% block footer %}
+
+{% endblock %}

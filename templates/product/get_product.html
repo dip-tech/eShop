@@ -1,0 +1,66 @@
+<!--import eshop_basic.html page -->
+{% extends 'basic.html' %}
+
+<!--add title for this page-->
+{% block title %}eStore{% endblock %}
+
+<!--add navbar brand for this page-->
+{% block nav-brand %}<span style="font-family: 'Baloo Tammudu 2', cursive;">eStore</span>{% endblock %}
+
+<!--add home navigation-->
+{% block nav-home %}<a href="/" class="nav-link active">Home</a>{% endblock %}
+
+<!--add contact navigation-->
+{% block nav-contact %}<a href="/contact/" class="nav-link">Contact</a>{% endblock %}
+
+<!--add about navigation-->
+{% block nav-about %}<a href="/about/" class="nav-link">About</a>{% endblock %}
+
+
+
+<!---static directory-->
+{% load static %}
+
+<!--page body-->
+{% block body %}
+<div class="container">
+  <div style="margin-top: 7rem; background-color: lightgrey; width:300px;">
+    
+  </div>
+  <h1 class="display-1" style="letter-spacing: 0.5rem; width: 50%;z-index: 99px;background: transparent;">All {{category}}s</h1>
+</div>
+<!--container for all category products-->
+<div class="container">
+  <div class="row row-cols-1 row-cols-md-6 g-2" style="margin-top: 1.5rem;">
+      {% for product in categoryproducts %}
+      <div class="col">
+        <div class="card h-100" style="background-color:white; border: none;box-shadow:0px 0px 10px #ECECEC ;">
+          <a href="..." id="link1"><img src="/media/{{ product.PRODUCT_IMAGE }}" id="product-image-{{ product.id }}" class="card-img-top" alt="image"></a>
+          <div class="card-body" style="text-align: center;">
+            <a href="" style="text-decoration: none; color: black;">
+              <h6 class="card-title" id="product-title-{{ product.id }}">{{ product.PRODUCT_TITLE }}</h6>
+            </a>
+            <p class="card-text">₹<strong id="product-price-{{ product.id }}">{{ product.PRODUCT_PRICE }}</strong></p>
+            <p id="product-soldby-{{ product.id }}" style="display: none;">{{ product.SOLD_BY }}</p>
+          </div>
+          <div class="card-footer" >
+            <button type="button" id="{{ product.id }}" class="btn border border-dark btn-sm cart-button" style="border-radius: 1rem;width:80px;height: 30px;"><img
+                src="{% static 'baseline_add_shopping_cart_black_24dp.png' %}"></button>
+                <a role="button" href="/products/product-details/{{product.id}}/" class="btn border border-dark btn-sm" style="float: right;border-radius:30px;width:80px;height:30px;font-size:medium;">View</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+<!--Footer Block for Home Page-->
+{% block footer %}
+
+{% endblock %}
+
+<!--block javascript-->
+{% block javaScript %}
+
+{% endblock %}

@@ -1,0 +1,431 @@
+<!--Load Basic html-->
+{% extends 'basic.html' %}
+<!--header-->
+{% block header %}
+{% if request.session.sessionUser is null %}
+<meta http-equiv="refresh" content="0,url=/">
+{% endif %}
+{% endblock %}
+
+<!--Title-->
+{% block title %}eShop | Cart{% endblock %}
+
+<!--nav-brand-->
+{% block nav-brand %}<span style="font-family: 'Baloo Tammudu 2', cursive;">eStore| Cart</span>{% endblock %}
+
+<!--add home navigation-->
+{% block nav-home %}<a href="/" class="nav-link">Home</a>{% endblock %}
+
+<!--add contact navigation-->
+{% block nav-contact %}<a href="/contact/" class="nav-link">Contact</a>{% endblock %}
+
+<!--add about navigation-->
+{% block nav-about %}<a href="/about/" class="nav-link">About</a>{% endblock %}
+
+<!--load static folder-->
+{% load static %}
+
+<!--body-->
+{% block body %}
+<div class="container " id="cartnotempty">
+    <div class="row">
+
+        <div class="col  cart-item-container">
+            <div class="alert alert-info" role="alert">
+                <h1>Your Cart Items</h1>
+            </div>
+
+        </div>
+        <div class="col col-lg-5">
+            <div class="alert alert-danger" role="alert">
+                <h1>Your Billing Details</h1>
+            </div>
+            <div class="card bg-light mb-3">
+                <div class="card-header">Delivery Details</div>
+                <div class="card-body">
+                    <form class="row g-3">
+                        <div class="col-md-6">
+                            <label for="inputFirstName" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="inputFirstName" value="{{ buyer_firstname }}"
+                                readonly>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputLastName" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="inputLastName" value="{{ buyer_lastname }}"
+                                readonly>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputHouse1" class="form-label">House/ Apartment No</label>
+                            <input type="text" class="form-control" id="inputHouse1" value="{{ buyer_house }}" readonly>
+                        </div>
+                        <div class="col-12">
+                            <label for="inputLocality1" class="form-label">Locality</label>
+                            <input type="text" class="form-control" id="inputLocality1" value="{{ buyer_locality }}"
+                                readonly>
+                        </div>
+                        <div class="col-md-5">
+                            <label for="inputCity1" class="form-label">City</label>
+                            <input type="text" class="form-control" id="inputCity1" value="{{ buyer_city }}" readonly>
+                        </div>
+                        <div class="col-md-5">
+                            <label for="inputState1" class="form-label">State</label>
+                            <select id="inputState1" class="form-select" readonly>
+                                <option value="{{ buyer_state }}" selected>{{ buyer_state }}</option>
+
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputZip1" class="form-label">Zip</label>
+                            <input type="text" class="form-control" id="inputZip1" value="{{ buyer_zipcode }}" readonly>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-secondary change-billing-address-btn">Change Billing Address</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card bg-light mb-3" id="billing-block" style="display:none">
+                <div class="card-header">Enter Billing Details</div>
+                <div class="card-body">
+                    <form class="row g-3">
+                        <div class="col-12">
+                            <label for="inputAddress" class="form-label">House/ Apartment No</label>
+                            <input type="text" class="form-control" id="inputHouse2">
+                        </div>
+                        <div class="col-12">
+                            <label for="inputAddress2" class="form-label">Locality</label>
+                            <input type="text" class="form-control" id="inputLocality2">
+                        </div>
+                        <div class="col-md-5">
+                            <label for="inputCity" class="form-label">City</label>
+                            <input type="text" class="form-control" id="inputCity2">
+                        </div>
+                        <div class="col-md-5">
+                            <label for="inputState" class="form-label">State</label>
+                            <select id="inputState2" class="form-select">
+                                <option selected>Choose State</option>
+                                <option value="West Bengal">West Bengal</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="inputZip2" class="form-label">Zip</label>
+                            <input type="text" class="form-control" id="inputZip2">
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary changeaddress">Save Changes</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card bg-light mb-3">
+                <div class="card-header">Amount</div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Total Amount</th>
+                                <th scope="col" id="totalamount">0</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">Total Item Qty</th>
+                                <th scope="col" id="totalitems">0</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">Discount</th>
+                                <th scope="col" id="flatdiscount">10 %</th>
+                            </tr>
+
+                        </thead>
+                    </table>
+                    <div class="alert alert-success text-center fs-2 fw-bold" id="payble-amount" role="alert">
+                        0
+                    </div>
+                </div>
+
+            </div>
+            <div class="card bg-light mb-3">
+                <div class="card-header">Select Payment Method</div>
+                <div class="card-body">
+                    <div class="container px-4">
+                        <div class="row gx-1">
+                            <div class="col col-md-6">
+                                <div class="p-3 border bg-light">
+                                    <div class="input-group">
+                                        <div class="input-group-text">
+                                            <input class="form-check-input mt-0 pay-method" id="radio1" type="radio"
+                                                name="payment" value="Net Banking"
+                                                aria-label="Radio button for following text input">
+                                        </div>
+                                        <span class="input-group-text" id="inputGroupPrepend">
+                                            <div class="badge btn border border-dark text-dark text-wrap">
+                                             Net Banking</div>
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="p-3 border bg-light">
+                                    <div class="input-group">
+                                        <div class="input-group-text">
+                                            <input class="form-check-input mt-0 pay-method" id="radio2" type="radio" name="payment"
+                                                value="Pay By UPI" aria-label="Radio button for following text input">
+                                        </div>
+                                        <span class="input-group-text" id="inputGroupPrepend">
+                                            <div class="badge btn border border-dark text-dark text-wrap" >
+                                                UPI</div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row gx-1">
+                            <div class="col col-md-6">
+                                <div class="p-3 border bg-light">
+                                    <div class="input-group">
+                                        <div class="input-group-text">
+                                            <input class="form-check-input mt-0 pay-method" id="radio3" type="radio" name="payment"
+                                                value="Cash On Delivery" aria-label="Radio button for following text input">
+                                        </div>
+                                        <span class="input-group-text" id="inputGroupPrepend">
+                                            <div class="badge btn border border-dark text-dark text-wrap">
+                                                Cash on Delivery</div>
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="p-3 border bg-light">
+                                    <div class="input-group">
+                                        <div class="input-group-text">
+                                            <input class="form-check-input mt-0 pay-method" id="radio4" type="radio" name="payment"
+                                                value="Pay by Cuppon" aria-label="Radio button for following text input">
+                                        </div>
+                                        <span class="input-group-text" id="inputGroupPrepend">
+                                            <div class="badge btn border border-dark text-dark text-wrap" >
+                                                Pay by Cuppon</div>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <form action="/order/confrim-order/{{ request.session.sessionUserName }}" method="GET">
+                            <input type="hidden" id="setCartItem" name="products">
+                            <input type="hidden" id="setName" name="fullName">
+                            <input type="hidden" id="setAddress" name="deliveryAddress">
+                            <input type="hidden" id="setTotalItems" name="totalItems">
+                            <input type="hidden" id="setTotalAmount" name="totalAmount">
+                            <input type="hidden" id="setDiscount" name="flatDiscount">
+                            <input type="hidden" id="setPaymentMethod" name="paymentMethod">
+                            <div class="d-grid gap-2 col-6 mx-auto">
+                                <button class="btn btn-lg" id="placeorderbutton" type="submit"
+                                    style="background-color: #F39C12;color:aliceblue;font-size:20px">Place
+                                    Order</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" id="cartempty" style="display: none">
+    <div class="alert alert-secondary text-center" role="alert">
+        Ohh No! Your Cart is Empty.....
+        Pls add some product in your cart
+    </div>
+</div>
+{% endblock %}
+
+{% block javaScript %}
+<script>
+
+    if (localStorage.getItem('cartItems') == "{}" || localStorage.getItem('cartItems') == '' || localStorage.getItem('cartItems') == null) {
+        var cartitems = {};
+        var productCount = 0;
+        document.getElementById('cartnotempty').style.display = 'none';
+        document.getElementById('cartempty').style.display = 'block';
+    } else {
+        cartitems = JSON.parse(localStorage.getItem('cartItems'));
+        productCount = JSON.parse(localStorage.getItem('totalItems'));
+        document.getElementById('totalitems').innerHTML = productCount;
+    }
+    var payAmount = 0;
+    for (item in cartitems) {
+        let productimage = cartitems[item][0];
+        let producttitle = cartitems[item][1];
+        let productprice = cartitems[item][2];
+        let productqty = cartitems[item][3];
+        var netAmount = Number(productprice) * Number(productqty);
+        payAmount = payAmount + netAmount;
+        cartString = `<div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="${productimage}" class=" rounded-start" style="height:200px;width:200px;" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">${producttitle}</h5>
+                                    <p class="card-text">₹${productprice}</p>
+                                    <table>
+                                        <tr>
+                                            <td><span role="button" id=${item} class="badge border border-dark text-dark add-qty" style="padding:10px;">+</span></td>
+                                            <td><p class="card-text"><small class="text-muted" id="productQtyCurrent">&nbsp;&nbsp;&nbsp;${productqty}</small></p></td>
+                                            <td>&nbsp;&nbsp;&nbsp;<span role="button" id=${item} class="badge border border-dark text-dark rm-qty" style="padding:10px;">-</span></td>
+                                        </tr>
+                                    </table>
+                            
+                                    
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <p class="card-text text-muted"><h3 class="text-success">₹ ${netAmount}</h3></p>
+                                </div>
+                                <div class="col  d-flex justify-content-end">
+                                    <button type="button" id=${item} class="btn border border-dark remove-item" style="border-radius: 30px;">Remove Item</button>  
+                                </div> 
+                            </div>
+                        </div>
+                    </div>`
+        $('.cart-item-container').append(cartString);
+
+    }
+    document.getElementById('totalamount').innerHTML = "₹ " + payAmount;
+    var finalAmount = payAmount - (payAmount * (10 / 100));
+    document.getElementById('payble-amount').innerHTML = "₹ " + parseInt(finalAmount);
+    $('.remove-item').click(function () {
+        var itemId = this.id.toString();
+        var cartitems = JSON.parse(localStorage.getItem('cartItems'));
+        var totalitem = JSON.parse(localStorage.getItem('totalItems'));
+        totalitem = totalitem - cartitems[itemId][3];
+        console.log(totalitem);
+        delete cartitems[itemId];
+        localStorage.setItem('cartItems', JSON.stringify(cartitems));
+        localStorage.setItem('totalItems', JSON.stringify(totalitem));
+        alert("Item Removed. Please reload this page");
+        location.reload();
+
+    })
+
+    $('.add-qty').click(function () {
+        var itemId = this.id.toString();
+        var cartitems = JSON.parse(localStorage.getItem('cartItems'));
+        var totalitem = JSON.parse(localStorage.getItem('totalItems'));
+        if(cartitems[itemId][3]<3)
+        {
+            cartitems[itemId][3] += 1;
+            totalitem += 1;
+            localStorage.setItem('cartItems', JSON.stringify(cartitems));
+            localStorage.setItem('totalItems', JSON.stringify(totalitem));
+            alert("Item Qty Added. Please Reload This Page. :)");
+            location.reload();
+        }
+        else{
+            alert("Maximum Quantity Reached. ;)")
+        }
+        
+
+    })
+
+    $('.rm-qty').click(function () {
+        var itemId = this.id.toString();
+        var cartitems = JSON.parse(localStorage.getItem('cartItems'));
+        var totalitem = JSON.parse(localStorage.getItem('totalItems'));
+        if(cartitems[itemId][3]>1)
+        {
+            cartitems[itemId][3] -= 1;
+            totalitem -= 1;
+            localStorage.setItem('cartItems', JSON.stringify(cartitems));
+            localStorage.setItem('totalItems', JSON.stringify(totalitem));
+            alert("Item Qty Removed. Please Reload This Page. :(");
+            location.reload();
+        }
+        else{
+            alert("Minimum Quantity Reached. ;(")
+        }
+        
+
+    })
+
+
+    $('.change-billing-address-btn').click(function () {
+        if (document.getElementById('billing-block').style.display == 'none') {
+            document.getElementById('billing-block').style.display = 'block';
+        }
+        else {
+            document.getElementById('billing-block').style.display = 'none';
+        }
+
+    })
+    $('.changeaddress').click(function () {
+        if (document.getElementById('inputHouse2').value == "" || document.getElementById('inputLocality2').value == "" || document.getElementById('inputCity2').value == "" || document.getElementById('inputState2').value == "" || document.getElementById('inputZip2').value == "") {
+            alert("Fill All The Field");
+        }
+        else {
+            document.getElementById('inputHouse1').value = document.getElementById('inputHouse2').value;
+            document.getElementById('inputLocality1').value = document.getElementById('inputLocality2').value;
+            document.getElementById('inputCity1').value = document.getElementById('inputCity2').value;
+            document.getElementById('inputState1').value = document.getElementById('inputState2').value;
+            document.getElementById('inputZip1').value = document.getElementById('inputZip2').value;
+            document.getElementById('inputHouse2').value = '';
+            document.getElementById('inputLocality2').value = '';
+            document.getElementById('inputCity2').value = '';
+            document.getElementById('inputState2').value = '';
+            document.getElementById('inputZip2').value = '';
+            document.getElementById('billing-block').style.display = 'none';
+            document.getElementById('setAddress').value = document.getElementById('inputHouse1').value + ', ' + document.getElementById('inputLocality1').value + ', ' + document.getElementById('inputCity1').value + ', ' + document.getElementById('inputState1').value + ', ' + document.getElementById('inputZip1').value;
+            alert('Address Changed');
+        }
+
+
+    })
+
+
+    $('.pay-method').click(function () {
+        document.getElementById('setPaymentMethod').value = document.getElementById(this.id).value;
+    })
+</script>
+<!--script for adding data to form-->
+<!--use in place order-->
+<script>
+    document.getElementById('setCartItem').value = (localStorage.getItem('cartItems'));
+    document.getElementById('setName').value = document.getElementById('inputFirstName').value + ' ' + document.getElementById('inputLastName').value
+    document.getElementById('setAddress').value = document.getElementById('inputHouse1').value + ', ' + document.getElementById('inputLocality1').value + ', ' + document.getElementById('inputCity1').value + ', ' + document.getElementById('inputState1').value + ', ' + document.getElementById('inputZip1').value;
+    document.getElementById('setTotalItems').value = document.getElementById('totalitems').innerHTML;
+    document.getElementById('setTotalAmount').value = document.getElementById('payble-amount').innerHTML;
+    document.getElementById('setDiscount').value = document.getElementById('flatdiscount').innerHTML;
+    document.getElementById('setPaymentMethod').value = '';
+
+    $('#placeorderbutton').click(function () {
+        var isPaymentEmpty = document.getElementById('setPaymentMethod').value;
+        if (isPaymentEmpty == '') {
+            alert("Please Select Payment Method");
+            return false;
+        }
+    })
+</script>
+{% endblock %}
+
+!--Footer Start-->
+{% load static %}
+{% block footer %}
+{% endblock %}

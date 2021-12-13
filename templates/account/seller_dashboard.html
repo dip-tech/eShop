@@ -1,0 +1,1140 @@
+<!--import eshop_basic.html page -->
+{% extends 'basic_seller.html' %}
+
+{% load static %}
+
+<!--block header-->
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{% static 'style1.css' %}">
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script src="{% static 'ckeditor/ckeditor.js' %}"></script>
+{% endblock %}
+
+<!--add title for this page-->
+{% block title %}eStore{% endblock %}
+
+<!--add navbar brand for this page-->
+{% block nav-brand %}<span style="font-family: 'Baloo Tammudu 2', cursive;">eStore | Seller Dashboard</span>{% endblock %}
+
+<!--add home navigation-->
+{% block nav-home %}<a href="#" class="nav-link active">Home</a>{% endblock %}
+
+<!--add contact navigation-->
+{% block nav-contact %}<a href="/contact/" class="nav-link">Contact</a>{% endblock %}
+
+<!--add about navigation-->
+{% block nav-about %}<a href="/about/" class="nav-link">About</a>{% endblock %}
+
+
+<!--Style for dashboard-->
+{% block style %}
+
+{% endblock %}
+
+<!--header JS-->
+{% block headerJS%}
+
+{% endblock %}
+
+<!---static directory-->
+{% load static %}
+
+<!--Home page body-->
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2 bg-dark" style="padding:10px;">
+            <nav class="nav flex-column ">
+                <a class="nav-link text-success" style="font-size:36px;" aria-current="page"
+                    href="#">Hello,&nbsp;&nbsp;{{ request.session.SHOP_NAME }}</a>
+                <a class="nav-link mt-5 text-muted" id="toggledashboard" style="font-size:24px;" aria-current="page"
+                    href="#"> <span><i class="fas fa-home"></i></span>&nbsp;&nbsp;&nbsp;DASHBOARD</a>
+                <a class="nav-link text-muted" id="toggleorder" style="font-size:24px;" href="#"><span><i
+                            class="fas fa-hand-holding-box"></i></span>&nbsp;&nbsp;&nbsp;ORDERS</a>
+                <a class="nav-link text-muted" id="toggleproducts" style="font-size:24px;" href="#"><span><i
+                            class="fas fa-boxes"></i></span>&nbsp;&nbsp;&nbsp;PRODUCTS</a>
+                <a class="nav-link text-muted" id="toggleshop" style="font-size:24px;" href="#"><span><i
+                            class="fas fa-tag"></i></span>&nbsp;&nbsp;&nbsp;MY SHOP</a>
+                <a class="nav-link text-danger disable" style="font-size:24px;" href="/account/seller/logout/"
+                    tabindex="-1" aria-disabled="true"><span><i
+                            class="fas fa-share-square"></i></span>&nbsp;&nbsp;&nbsp;LOG OUT</a>
+            </nav>
+        </div>
+        <div class="col-sm " style="padding:10px;box-shadow: 1px 1px 5px 1px lightblue;">
+            <!--SELLER DASHBOARD START-->
+            <div class=" container-fluid overflow-auto" data-bs-spy="scroll" id="sellerdashboard"
+                style="display:block;">
+
+                <h4 class="badge border border-dark text-dark" style="font-size:40px;font-weight: bold;"><span><i
+                            class="fas fa-home"></i></span>&nbsp;&nbsp; DASHBOARD</h4>
+
+                <div class="cardBox">
+                    <div class="card">
+                        <div>
+                            <div class="numbers">{{ TOTAL_ORDERS }}</div>
+                            <div class="cardName">TOTAL ORDERS</div>
+                        </div>
+                        <div class="iconBx">
+                            <span><i class="fas fa-hand-holding-box"></i></span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="numbers">{{ NO_OF_ACTIVE_ORDERS }}</div>
+                            <div class="cardName">ACTIVE ORDERS</div>
+                        </div>
+                        <div class="iconBx">
+                            <span><i class="fas fa-hand-holding-box"></i></span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="numbers">{{ NO_OF_PRODUCTS }}</div>
+                            <div class="cardName">TOTAL NO OF PRODUCTS</div>
+                        </div>
+                        <div class="iconBx">
+                            <span><i class="fas fa-boxes"></i></span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="numbers">{{ NO_OF_DELETED_PRODUCTS }}</div>
+                            <div class="cardName">DELETED PRODUCTS</div>
+                        </div>
+                        <div class="iconBx">
+                            <span><i class="fas fa-boxes"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="container mt-5">
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading"><b>RECENT ORDERS</b></h4>
+                    </div>
+                </div>
+                <div class="container justify-content-center" id="ordercontainer">
+
+                </div>
+                <div class="container">
+                    <div class="alert alert-success mt-5" role="alert">
+                        <h4 class="alert-heading"><b>RECENTLY ADDED PRODUCTS</b></h4>
+                    </div>
+                </div>
+                <div class="container mt-5">
+                    {% for item in RECENT_PRODUCTS%}
+                    <div class="card border-dark mb-3 mt-5">
+                        <div class="card-header bg-transparent border-success">{{forloop.counter}}</div>
+                        <div class="card-body">
+                            <table>
+                                <tr style="font-size:14px;">
+                                    <td style="padding-left:30px;padding-right:20px;"><img
+                                            src="/media/{{item.PRODUCT_IMAGE}}" style="height:100px;width:100px;"></td>
+                                    <td style="padding-left:30px;padding-right:20px;">
+                                        <p>{{item.PRODUCT_TITLE}}</p>
+                                    </td>
+                                    <td style="padding-left:30px;padding-right:20px;">
+                                        <p>{{item.PRODUCT_BRAND}}</p>
+                                    </td>
+                                    <td style="padding-left:30px;padding-right:20px;">
+                                        <p>{{item.PRODUCT_CATEGORY}}</p>
+                                    </td>
+                                    <td style="padding-left:30px;padding-right:20px;">
+                                        <p>{{item.PRODUCT_SERIES}}</p>
+                                    </td>
+                                    <td style="padding-left:30px;padding-right:20px;">
+                                        <p>₹&nbsp;{{item.PRODUCT_PRICE}}</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="card-footer bg-transparent border-success d-flex justify-content-center"
+                            style="padding:10px;">
+                            <table>
+                                <tr>
+                                    <td style="padding-left: 30px;padding-right:30px;"><button
+                                            class="btn border border-dark" type="button"
+                                            style="width:200px;font-size:14px;">View Product</button></td>
+                                    <td style="padding-left: 30px;padding-right:30px;"><button
+                                            class="btn border border-dark" type="button"
+                                            style="width:200px;font-size:14px;">Update Product</button></td>
+                                    <td style="padding-left: 30px;padding-right:30px;"><button
+                                            class="btn border border-dark" type="button"
+                                            style="width:200px;font-size:14px;">Delete Product</button></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+            <!--SELLER DASHBOARD END-->
+
+            <!--SELLER ORDER SECTION START-->
+            <div class="container-fluid" id="sellerorder" style="display: none;">
+                <!-- Content here -->
+                <h4 class="badge border border-dark text-dark" style="font-size:40px;font-weight: bold;"><span><i
+                            class="fas fa-hand-holding-box"></i></span>&nbsp;&nbsp;ORDERS</h4>
+                <div class="cardBox">
+                    <div class="card">
+                        <div>
+                            <div class="numbers">{{ TOTAL_ORDERS }}</div>
+                            <div class="cardName">TOTAL ORDERS</div>
+                        </div>
+                        <div class="iconBx">
+                            <span><i class="fas fa-hand-holding-box"></i></span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="numbers">{{ NO_OF_ACTIVE_ORDERS }}</div>
+                            <div class="cardName">ACTIVE ORDERS</div>
+                        </div>
+                        <div class="iconBx">
+                            <span><i class="fas fa-hand-holding-box"></i></span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="numbers">{{ NO_OF_DEVIVERED_ORDERS }}</div>
+                            <div class="cardName">DELIVERED ORDERS</div>
+                        </div>
+                        <div class="iconBx">
+                            <span><i class="fas fa-hand-holding-box"></i></span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div>
+                            <div class="numbers">{{ NO_OF_CANCELED_ORDERS }}</div>
+                            <div class="cardName">CANCELED ORDERS</div>
+                        </div>
+                        <div class="iconBx">
+                            <span><i class="fas fa-hand-holding-box"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="mt-5">Current Active Orders</h3>
+                <div class="container justify-content-center" id="activeordercontainer">
+
+                </div>
+                <h3 class="mt-5">Delivered Orders</h3>
+                <div class="container justify-content-center" id="deliveredordercontainer">
+
+                </div>
+                <h3 class="mt-5">Canceled Orders</h3>
+                <div class="container justify-content-center" id="canceledordercontainer">
+
+                </div>
+            </div>
+            <!--SELLER ORDER SECTION END-->
+
+            <!--SELLER  PRODUCTS SECTION START-->
+            <div class="container-fluid" id="sellerproducts" style="display: none;">
+                <!-- Content here -->
+                <h4 class="badge border border-dark text-dark" style="font-size:40px;font-weight: bold;"><span><i
+                            class="fas fa-boxes"></i></span>&nbsp;&nbsp;PRODUCTS</h4>
+                <div class="cardBox">
+                    <div class="card" id="addproducttoggle">
+                        <div class="text-center mt-4">
+                            <div class="numbers"><i class="fas fa-plus-square"></i></div>
+                            <div class="cardName">ADD NEW PRODUCTS</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="text-center mt-4">
+                            <div class="numbers"><i class="fas fa-pen"></i></div>
+                            <div class="cardName">UPDATE PRODUCT</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="text-center mt-4">
+                            <div class="numbers"><i class="fas fa-trash-alt"></i></div>
+                            <div class="cardName">DELETE PRODUCT</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="text-center mt-4">
+                            <div class="numbers"><i class="far fa-eye"></i></i></div>
+                            <div class="cardName">VIEW ALL PRODUCTS</div>
+                        </div>
+                    </div>
+                </div>
+                <h2 style="margin-top:50px;"><b>RECENT PRODUCTS</b></h2>
+                <table class="table mt-5">
+                    <thead>
+                        <tr>
+                            <th scope="col">PRODUCT IMAGE</th>
+                            <th scope="col">PRODUCT NAME</th>
+                            <th scope="col">PRODUCT BRAND</th>
+                            <th scope="col">PRODUCT CATEGORY</th>
+                            <th scope="col">PRODUCT PRICE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in RECENT_PRODUCTS%}
+                        <tr>
+                            <td scope="row"><img src="/media/{{ item.PRODUCT_IMAGE }}" style="height:50px;width:50px;">
+                            </td>
+                            <td scope="row">{{ item.PRODUCT_TITLE|slice:'0:50' }}...</td>
+                            <td scope="row">{{ item.PRODUCT_BRAND }}</td>
+                            <td scope="row">{{ item.PRODUCT_CATEGORY }}</td>
+                            <td scope="row">{{ item.PRODUCT_PRICE }}</td>
+                            <td scope="row"><button class="btn btn-success">View</button></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!--SELLER  PRODUCTS SECTION END-->
+
+            <!--SELLER SHOP SECTION START-->
+            <div class="container-fluid" id="sellershops" style="display: none;">
+                <!-- Content here -->
+                <h4 class="badge border border-dark text-dark" style="font-size:40px;font-weight: bold;"><span><i
+                            class="fas fa-tag"></i></span>&nbsp;&nbsp;SHOP</h4>
+                <div class="cardBox">
+                    <div class="card">
+                        <div class="text-center mt-4">
+                            <div class="numbers"><i class="fas fa-plus-square"></i></div>
+                            <div class="cardName">ADD NEW SHOP</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="text-center mt-4">
+                            <div class="numbers"><i class="fas fa-pen"></i></div>
+                            <div class="cardName">UPDATE SHOP</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="text-center mt-4">
+                            <div class="numbers"><i class="fas fa-trash-alt"></i></div>
+                            <div class="cardName">DELETE SHOP</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="text-center mt-4">
+                            <div class="numbers"><i class="far fa-eye"></i></div>
+                            <div class="cardName">TOTAL SHOP</div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td colspan="2">Larry the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--SELLER SHOP SECTION END-->
+
+            <!--ADD PRODUCT CONTAINER START-->
+            <div class="container" id="addproductcontainer" style="display: none;min-height:1000px;">
+                <h2 class="badge border border-dark text-dark" style="font-size:40px;font-weight: bold;">ADD NEW PRODUCT
+                </h2>
+                <div class="container mt-3">
+                    <h4>FILL PRODUCT DETAILS HERE</h4>
+                    <form method="post">{% csrf_token %}
+                        <div class="mb-3">
+                            <label for="productimage" class="form-label">PRODUCT IMAGE</label>
+                            <input type="file" class="form-control" id="productimage">
+                        </div>
+                        <div class="mb-3">
+                            <label for="productbrand" class="form-label">PRODUCT BRAND</label>
+                            <input type="text" class="form-control" id="productbrand">
+                        </div>
+                        <div class="mb-3">
+                            <label for="productbrand" class="form-label">PRODUCT TITLE</label>
+                            <input type="text" class="form-control" id="productbrand">
+                        </div>
+                        <div class="mb-3">
+                            <label for="prodesc" class="form-label">PRODUCT DESCRIPTION</label>
+                            <textarea id="prodesc" name="desc"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">PRODUCT CATEGORY</label>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Choose..</option>
+                                <option value="Mobile">Mobile</option>
+                                <option value="Laptop">Laptop</option>
+                                <option value="Tablet">Tablet</option>
+                                <option value="Speaker">Speaker</option>
+                                <option value="Home Theater">Home Theater</option>
+                                <option value="Television">Television</option>
+                                <option value="Refrigerators">Refrigerators</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productseries" class="form-label">PRODUCT SERIES</label>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Choose..</option>
+                                <option value="4K Series">4K Series</option>
+                                <option value="A Series">A Series</option>
+                                <option value="Bravia">Bravia</option>
+                                <option value="Direct Coolt">Direct Cool</option>
+                                <option value="Dolby Digital">Dolby Digital</option>
+                                <option value="Extra Bass">Extra Bass</option>
+                                <option value="F Series">F Series</option>
+                                <option value="Frame Series">Frame Series</option>
+                                <option value="Fully-Automatic Front Loading">Fully-Automatic Front Loading</option>
+                                <option value="Fully-Automatic Top Loading">Fully-Automatic Top Loading</option>
+                                <option value="HD Series">HD Series</option>
+                                <option value="Inverter Frost Free">Inverter Frost Free</option>
+                                <option value="M Series">M Series</option>
+                                <option value="Note Series">Note Series</option>
+                                <option value="Q Series">Q Series</option>
+                                <option value="ROG Laptop">ROG Laptop</option>
+                                <option value="ROG PHONE">ROG PHONE</option>
+                                <option value="S Series">S Series</option>
+                                <option value="TUF Laptop">TUF Laptop</option>
+                                <option value="Vivobook">Vivobook</option>
+                                <option value="Wondertainment Series">Wondertainment Series</option>
+                                <option value="Z Series">Z Series</option>
+                                <option value="Zenbook">Zenbook</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productprice" class="form-label">PRODUCT PRICE</label>
+                            <input type="text" class="form-control" id="productprice">
+                        </div>
+                        <div class="mb-3">
+                            <input type="hidden" class="form-control" id="soldby">
+                        </div>
+                        <input class="btn btn-primary" type="submit" name="submit">
+                    </form>
+                </div>
+            </div>
+            <!--ADD PRODUCT CONTAINER ENDS HERE-->
+        </div>
+    </div>
+    {% endblock %}
+
+    <!--Footer Block for Home Page-->
+    {% block footer %}
+    <div class="container-fluid" style="background-color: rgba(211, 211, 211, 0.767); margin-top: 50px;">
+        <div class="row mt-3" style="height:200px;">
+            <div class="col" style="max-width:400px ;">
+                <img class="img-fluid" src="{% static 'footer_logo_gray.png'%}">
+            </div>
+            <div class="col" style="max-height: 400px;">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Links</th>
+                            <th scope="col">Guide</th>
+                            <th scope="col">User Account</th>
+                            <th scope="col">Seller Account</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--table row 1-->
+                        <tr>
+                            <!--table data for Llinks-->
+                            <td style="font-size: smaller;">Home</td>
+                            <!--table data for Guid-->
+                            <td style="font-size: smaller;">How to Signup?</td>
+                            <!--table data for user-->
+                            <td style="font-size: smaller;"><a class="text-dark" role="button" href="#"
+                                    id="userloginbtn" style="text-decoration: none;">User Login</a></td>
+                            <!--table data for vendor-->
+                            <td style="font-size: smaller;"><a href="/account/seller/" class="text-dark"
+                                    style="text-decoration: none">Seller Login</a></td>
+                        </tr>
+                        <tr>
+                            <td style="font-size: smaller;">Contact Us</td>
+                            <td style="font-size: smaller;">How to Login?</td>
+                            <td style="font-size: smaller;"><a class="text-dark" style="text-decoration: none;"
+                                    href="/account/buyer/registration/">User Signup</a></td>
+                            <td style="font-size: smaller;">Seller Signup</td>
+                        </tr>
+                        <tr>
+                            <td style="font-size: smaller;">About Us</td>
+                            <td style="font-size: smaller;">How to add product?</td>
+                            <td style="font-size: smaller;"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col" style="max-width: 200px;">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--table row 1-->
+                        <tr>
+                            <!--table data for Address-->
+                            <td style="font-size: smaller;">
+                                21/6 CA Road,<br>
+                                New York City,1800800
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row justify-content-center" style="text-align: center;font-size: smaller;">
+            <p>copyright@2021</p>
+        </div>
+    </div>
+
+    {% endblock %}
+
+    <!--block javascript-->
+    {% block javaScript %}
+    <!--FOR LOOP START FOR RECENT ORDERS-->
+    {% for order in RECENT_ORDERS %}
+
+    {% if order.order_status == "Ordered"%}
+    <script>
+        var oid = "{{ order.order_id }}";
+        var orderitems = JSON.parse("{{ order.items|escapejs }}");
+        var totalamount = "{{ order.total_amount }}";
+        var totalitems = "{{ order.total_items }}";
+        var orderstatus = "{{ order.order_status }}";
+        var flatdiscount = "{{ order.discount }}";
+        ordstr = `<div class="card border-dark" style="margin-top:50px;">
+              <h5 class="card-header">
+                <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-warning text-wrap" >${orderstatus}</div>
+              </h5>
+                
+              <div class="card-body">
+                <table class="table table-sm table-borderless">
+                  
+                  <tbody id="order-body-${oid}">
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer bg-transparent" id="order-footer-${oid}" >
+              </div>
+            </div>`
+        $('#ordercontainer').append(ordstr);
+        for (id in orderitems) {
+            itemstr = `<tr>
+              <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
+              <td style="padding-top:40px;" >${orderitems[id][1]}</td>
+              <td style="padding-top:40px;">${orderitems[id][2]}</td>
+              <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
+              <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
+            </tr>`
+            $('#order-body-' + oid).append(itemstr);
+        }
+        footerstr = `
+            <div class="row align-items-start">
+              <div class="col-8">
+                <div class="card border-dark mb-3" style="height:130px;" >
+                    <div class="card-header">Deliver@</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ order.name }},&nbsp;{{ order.email }}</h5>
+                        <p class="card-text">{{ order.address }}</p>
+                    </div>
+                </div>
+              </div>
+              <div class="col-4 ">
+                <table class="table table-borderless" >
+                  <tbody >
+                    <tr>
+                      <td>
+                        <form action="/order/track_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="1">
+                        <button type="submit" class="btn border border-dark" style="width:100%;">Track</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <form action="/order/update_tracker/" method="GET">
+                            <input type="hidden" name="orderid" value="${oid}">
+                            <input type="hidden" name="s_code" value="0">
+                        <button type="submit" id="cancelorderbtn" class="btn border border-dark text-dark" style="width:100%;">Update Tracker</button>
+                        </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <form action="/order/cancel_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="1">
+                        <button type="submit" id="cancelorderbtn" class="btn border border-danger text-danger" style="width:100%;">Cancel</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+  `
+        $('#order-footer-' + oid).append(footerstr);
+    </script>
+    {% endif %}
+
+    {% if order.order_status == "Shipped"%}
+    <script>
+        var oid = "{{ order.order_id }}";
+        var orderitems = JSON.parse("{{ order.items|escapejs }}");
+        var totalamount = "{{ order.total_amount }}";
+        var totalitems = "{{ order.total_items }}";
+        var orderstatus = "{{ order.order_status }}";
+        var flatdiscount = "{{ order.discount }}";
+        ordstr = `<div class="card border-dark" style="margin-top:50px;">
+              <h5 class="card-header">
+                <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-primary text-wrap" >${orderstatus}</div>
+              </h5>
+                
+              <div class="card-body">
+                <table class="table table-sm table-borderless">
+                  
+                  <tbody id="order-body-${oid}">
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer bg-transparent" id="order-footer-${oid}" >
+              </div>
+            </div>`
+        $('#ordercontainer').append(ordstr);
+        for (id in orderitems) {
+            itemstr = `<tr>
+              <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
+              <td style="padding-top:40px;" >${orderitems[id][1]}</td>
+              <td style="padding-top:40px;">${orderitems[id][2]}</td>
+              <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
+              <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
+            </tr>`
+            $('#order-body-' + oid).append(itemstr);
+        }
+        footerstr = `
+            <div class="row align-items-start">
+              <div class="col-8">
+                <div class="card border-dark mb-3" style="height:130px;" >
+                    <div class="card-header">Deliver@</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ order.name }},&nbsp;{{ order.email }}</h5>
+                        <p class="card-text">{{ order.address }}</p>
+                    </div>
+                </div>
+              </div>
+              <div class="col-4 ">
+                <table class="table table-borderless" >
+                  <tbody >
+                    <tr>
+                      <td>
+                        <form action="/order/track_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="1">
+                        <button type="submit" class="btn border border-dark" style="width:100%;">Track</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <form action="/order/update_tracker/" method="GET">
+                            <input type="hidden" name="orderid" value="${oid}">
+                            <input type="hidden" name="s_code" value="0">
+                        <button type="submit" id="cancelorderbtn" class="btn border border-dark text-dark" style="width:100%;">Update Tracker</button>
+                        </form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <form action="/order/cancel_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="1">
+                        <button type="submit" id="cancelorderbtn" class="btn border border-danger text-danger" style="width:100%;">Cancel</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+  `
+        $('#order-footer-' + oid).append(footerstr);
+    </script>
+    {% endif %}
+
+    {% if order.order_status == "Delivered"%}
+    <script>
+        var oid = "{{ order.order_id }}";
+        var orderitems = JSON.parse("{{ order.items|escapejs }}");
+        var totalamount = "{{ order.total_amount }}";
+        var totalitems = "{{ order.total_items }}";
+        var orderstatus = "{{ order.order_status }}";
+        var flatdiscount = "{{ order.discount }}";
+        ordstr = `<div class="card" style="margin-top:50px;">
+              <h5 class="card-header">
+                <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-success text-wrap" >${orderstatus}</div>
+              </h5>
+                
+              <div class="card-body">
+                <table class="table table-sm table-borderless">
+                  
+                  <tbody id="order-body-${oid}">
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer bg-transparent" id="order-footer-${oid}" >
+              </div>
+            </div>`
+        $('#ordercontainer').append(ordstr);
+        for (id in orderitems) {
+            itemstr = `<tr>
+              <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
+              <td style="padding-top:40px;" >${orderitems[id][1]}</td>
+              <td style="padding-top:40px;">${orderitems[id][2]}</td>
+              <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
+              <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
+            </tr>`
+            $('#order-body-' + oid).append(itemstr);
+        }
+        footerstr = `
+  <div class="row align-items-start">
+                <div class="col-8 ">
+                <div class="card border-dark mb-3">
+                    <div class="card-header">Deliver@</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ order.name }},&nbsp;{{ order.email }}</h5>
+                        <p class="card-text">{{ order.address }}</p>
+                    </div>
+                </div>
+              </div>
+              <div class="col-4 ">
+                <table class="table table-borderless" >
+                  <tbody >
+                    <tr>
+                      <td>
+                        <form action="/order/track_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="1">
+                        <button type="submit" class="btn border border-dark" style="width:100%;">Track</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <button type="submit" id="cancelorderbtn" class="btn border border-dark text-dark" style="width:100%;" disabled>Update Tracker</button>
+                      </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <form action="/order/cancel_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <button type="submit" id="cancelorderbtn" class="btn border border-danger text-danger" style="width:100%;" disabled>Cancel</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+  `
+        $('#order-footer-' + oid).append(footerstr);
+    </script>
+    {% endif %}
+
+    {% if order.order_status == "Canceled"%}
+    <script>
+        var oid = "{{ order.order_id }}";
+        var orderitems = JSON.parse("{{ order.items|escapejs }}");
+        var totalamount = "{{ order.total_amount }}";
+        var totalitems = "{{ order.total_items }}";
+        var orderstatus = "{{ order.order_status }}";
+        var flatdiscount = "{{ order.discount }}";
+        ordstr = `<div class="card border-danger" style="margin-top:50px;">
+              <h5 class="card-header">
+                <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-danger text-wrap" >${orderstatus}</div>
+              </h5>
+                
+              <div class="card-body">
+                <table class="table table-sm table-borderless">
+                  
+                  <tbody id="order-body-${oid}">
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer bg-transparent" id="order-footer-${oid}" >
+              </div>
+            </div>`
+        $('#ordercontainer').append(ordstr);
+        for (id in orderitems) {
+            itemstr = `<tr>
+              <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
+              <td style="padding-top:40px;" >${orderitems[id][1]}</td>
+              <td style="padding-top:40px;">${orderitems[id][2]}</td>
+              <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
+              <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
+            </tr>`
+            $('#order-body-' + oid).append(itemstr);
+        }
+        footerstr = `
+            <div class="row align-items-start">
+                <div class="col-8 ">
+                <div class="card border-dark mb-3" style="height:130px;">
+                    <div class="card-header">Deliver@</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ order.name }},&nbsp;{{ order.email }}</h5>
+                        <p class="card-text">{{ order.address }}</p>
+                    </div>
+                </div>
+              </div>
+              <div class="col-4 ">
+                <table class="table table-borderless" >
+                  <tbody >
+                    <tr>
+                      <td>
+                        <form action="/order/track_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="1">
+                        <button type="submit" class="btn border border-dark" style="width:100%;">Track</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <button type="submit" id="cancelorderbtn" class="btn border border-dark text-dark" style="width:100%;" disabled>Update Tracker</button>
+                      </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <form action="/order/cancel_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="1">
+                        <button type="submit" id="cancelorderbtn" class="btn border border-danger text-danger" style="width:100%;" disabled>Cancel</button>
+                        </form>
+                      </td>
+                    </tr>
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+  `
+        $('#order-footer-' + oid).append(footerstr);
+    </script>
+    {% endif %}
+
+    {% endfor %}
+    <!--FORLOOP END FOR RECENT ORDERS-->
+
+    <!--FORLOOP START FOR ACTIVE ORDERS-->
+    {% for order in ACTIVE_ORDERS %}
+    <script>
+        var oid = "{{ order.order_id }}";
+        var orderitems = JSON.parse("{{ order.items|escapejs }}");
+        var totalamount = "{{ order.total_amount }}";
+        var totalitems = "{{ order.total_items }}";
+        var orderstatus = "{{ order.order_status }}";
+        var flatdiscount = "{{ order.discount }}";
+        ordstr = `<div class="card border-dark" style="margin-top:50px;">
+              <h5 class="card-header">
+                <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-success text-wrap" >${orderstatus}</div>
+              </h5>
+                
+              <div class="card-body">
+                <table class="table table-sm table-borderless">
+                  
+                  <tbody id="active-order-body-${oid}">
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer bg-transparent" id="active-order-footer-${oid}" >
+              </div>
+            </div>`
+        $('#activeordercontainer').append(ordstr);
+        for (id in orderitems) {
+            itemstr = `<tr>
+              <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
+              <td style="padding-top:40px;" >${orderitems[id][1]}</td>
+              <td style="padding-top:40px;">${orderitems[id][2]}</td>
+              <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
+              <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
+            </tr>`
+            $('#active-order-body-' + oid).append(itemstr);
+        }
+        footerstr = `
+            <div class="row align-items-start">
+              <div class="col-8">
+                <div class="card border-dark mb-3" style="height:130px;" >
+                    <div class="card-header">Deliver@</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ order.name }},&nbsp;{{ order.email }}</h5>
+                        <p class="card-text">{{ order.address }}</p>
+                    </div>
+                </div>
+              </div>
+              <div class="col-4 ">
+                <table class="table table-borderless" >
+                  <tbody >
+                    <tr>
+                      <td>
+                        <form action="/order/track_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="1">
+                        <button type="submit" class="btn border border-dark" style="width:100%;">Track</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <button type="submit" id="cancelorderbtn" class="btn border border-dark text-dark" style="width:100%;">Update Tracker</button>
+                      </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <form action="/order/cancel_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="1">
+                        <button type="submit" id="cancelorderbtn" class="btn border border-danger text-danger" style="width:100%;">Cancel</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+  `
+        $('#active-order-footer-' + oid).append(footerstr);
+    </script>
+    {% endfor %}
+    <!--FORLOOP END FOR ACTIVE ORDERS-->
+
+    <!--FOR LOOP START FOR DELIVERED ORDERS-->
+    {% for order in DELIVERED_ORDERS %}
+    <script>
+        var oid = "{{ order.order_id }}";
+        var orderitems = JSON.parse("{{ order.items|escapejs }}");
+        var totalamount = "{{ order.total_amount }}";
+        var totalitems = "{{ order.total_items }}";
+        var orderstatus = "{{ order.order_status }}";
+        var flatdiscount = "{{ order.discount }}";
+        ordstr = `<div class="card border-dark" style="margin-top:50px;">
+              <h5 class="card-header">
+                <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-success text-wrap" >${orderstatus}</div>
+              </h5>
+                
+              <div class="card-body">
+                <table class="table table-sm table-borderless">
+                  
+                  <tbody id="delivered-order-body-${oid}">
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer bg-transparent" id="delivered-order-footer-${oid}" >
+              </div>
+            </div>`
+        $('#deliveredordercontainer').append(ordstr);
+        for (id in orderitems) {
+            itemstr = `<tr>
+              <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
+              <td style="padding-top:40px;" >${orderitems[id][1]}</td>
+              <td style="padding-top:40px;">${orderitems[id][2]}</td>
+              <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
+              <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
+            </tr>`
+            $('#delivered-order-body-' + oid).append(itemstr);
+        }
+        footerstr = `
+            <div class="row align-items-start">
+              <div class="col-8">
+                <div class="card border-dark mb-3" style="height:130px;" >
+                    <div class="card-header">Deliver@</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ order.name }},&nbsp;{{ order.email }}</h5>
+                        <p class="card-text">{{ order.address }}</p>
+                    </div>
+                </div>
+              </div>
+              <div class="col-4 ">
+                <table class="table table-borderless" >
+                  <tbody >
+                    <tr>
+                      <td>
+                        <form action="/order/track_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="1">
+                        <button type="submit" class="btn border border-dark" style="width:100%;">Track</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <button type="submit" id="cancelorderbtn" class="btn border border-dark text-dark" style="width:100%;" disabled>Update Tracker</button>
+                      </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <form action="/order/cancel_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="1">
+                        <button type="submit" id="cancelorderbtn" class="btn border border-danger text-danger" style="width:100%;" disabled>Cancel</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+  `
+        $('#delivered-order-footer-' + oid).append(footerstr);
+    </script>
+    {% endfor %}
+    <!--FOR LOOP END FOR DELIVERED ORDERS-->
+
+    <!--FOR LOOP START FOR CANCELED ORDERS-->
+    {% for order in CANCELED_ORDERS %}
+    <script>
+        var oid = "{{ order.order_id }}";
+        var orderitems = JSON.parse("{{ order.items|escapejs }}");
+        var totalamount = "{{ order.total_amount }}";
+        var totalitems = "{{ order.total_items }}";
+        var orderstatus = "{{ order.order_status }}";
+        var flatdiscount = "{{ order.discount }}";
+        ordstr = `<div class="card border-dark" style="margin-top:50px;">
+              <h5 class="card-header">
+                <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-danger text-wrap" >${orderstatus}</div>
+              </h5>
+                
+              <div class="card-body">
+                <table class="table table-sm table-borderless">
+                  
+                  <tbody id="canceled-order-body-${oid}">
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer bg-transparent" id="canceled-order-footer-${oid}" >
+              </div>
+            </div>`
+        $('#canceledordercontainer').append(ordstr);
+        for (id in orderitems) {
+            itemstr = `<tr>
+              <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
+              <td style="padding-top:40px;" >${orderitems[id][1]}</td>
+              <td style="padding-top:40px;">${orderitems[id][2]}</td>
+              <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
+              <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
+            </tr>`
+            $('#canceled-order-body-' + oid).append(itemstr);
+        }
+        footerstr = `
+            <div class="row align-items-start">
+              <div class="col-8">
+                <div class="card border-dark mb-3" style="height:130px;" >
+                    <div class="card-header">Deliver@</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ order.name }},&nbsp;{{ order.email }}</h5>
+                        <p class="card-text">{{ order.address }}</p>
+                    </div>
+                </div>
+              </div>
+              <div class="col-4 ">
+                <table class="table table-borderless" >
+                  <tbody >
+                    <tr>
+                      <td>
+                        <form action="/order/track_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="1">
+                        <button type="submit" class="btn border border-dark" style="width:100%;">Track</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <button type="submit" id="cancelorderbtn" class="btn border border-dark text-dark" style="width:100%;" disabled>Update Tracker</button>
+                      </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <form action="/order/cancel_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="1">
+                        <button type="submit" id="cancelorderbtn" class="btn border border-danger text-danger" style="width:100%;" disabled>Cancel</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+  `
+        $('#canceled-order-footer-' + oid).append(footerstr);
+    </script>
+    {% endfor %}
+    <!--FOR LOOP END FOR CANCELED ORDERS-->
+
+    <script>
+        CKEDITOR.replace("prodesc");
+    </script>
+    <script>
+        $("#toggleorder").click(function () {
+            $("#sellerdashboard").hide();
+            $("#sellerproducts").hide();
+            $("#sellershop").hide();
+            $("#addproductcontainer").hide();
+            $("#sellerorder").fadeIn(2000);
+        });
+
+        $("#toggleproducts").click(function () {
+            $("#sellerdashboard").hide();
+            $("#sellerproducts").fadeIn(2000);
+            $("#sellershops").hide();
+            $("#addproductcontainer").hide();
+            $("#sellerorder").hide();
+        });
+
+        $("#toggleshop").click(function () {
+            $("#sellerdashboard").hide();
+            $("#sellerproducts").hide();
+            $("#addproductcontainer").hide();
+            $("#sellershops").fadeIn(2000);
+            $("#sellerorder").hide();
+        });
+
+        $("#toggledashboard").click(function () {
+            $("#sellerdashboard").fadeIn(2000);
+            $("#sellerproducts").hide();
+            $("#sellershops").hide();
+            $("#sellerorder").hide();
+            $("#addproductcontainer").hide();
+        });
+
+        $("#addproducttoggle").click(function () {
+            $("#sellerdashboard").hide();
+            $("#sellerproducts").hide();
+            $("#sellershops").hide();
+            $("#sellerorder").hide();
+            $("#addproductcontainer").fadeIn(2000);
+        });
+    </script>
+    {% endblock %}

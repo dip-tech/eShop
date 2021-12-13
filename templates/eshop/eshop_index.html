@@ -1,0 +1,247 @@
+<!--import eshop_basic.html page -->
+{% extends 'basic.html' %}
+
+<!--add title for this page-->
+{% block title %}eStore{% endblock %}
+
+<!--add navbar brand for this page-->
+{% block nav-brand %}<span style="font-family: 'Baloo Tammudu 2', cursive;">eStore</span>{% endblock %}
+
+<!--add home navigation-->
+{% block nav-home %}<a href="" class="nav-link active">Home</a>{% endblock %}
+
+<!--add contact navigation-->
+{% block nav-contact %}<a href="/contact/" class="nav-link">Contact</a>{% endblock %}
+
+<!--add about navigation-->
+{% block nav-about %}<a href="/about/" class="nav-link">About</a>{% endblock %}
+
+
+
+<!---static directory-->
+{% load static %}
+
+<!--Home page body-->
+{% block body %}
+
+
+<!--temporary alert-->
+<div class="container-fluid ">
+  <div class="alert alert-warning alert-dismissible fade show placeholder-glow" role="alert">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <h4 class="alert-heading"><strong>Welcome!</strong></h4>
+    <p>It's <strong>Not an E-Commerce Website</strong>. It's a project, made for practice purpose.</p>
+    <hr>
+    <p class="mb-0">But don't worry, If you register here your data will be <strong>Protected and Encrypted</strong>. Nobody can <strong>Access or Read</strong> Your Informations.</p>
+    <small class="alert-heading"><strong>For better view please use large screen device.</strong></small>
+    <hr>
+    <small class="alert-heading" style="float: right;"> Build no &nbsp;&nbsp;<strong>v2 2021.12.09</strong></small>
+  </div>
+</div>
+
+
+<!--container div-->
+<div class="container-fluid">
+  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'eshop_carousel_1.png' %}" class="d-block w-100 ">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'eshop_carousel_2.png' %}" class="d-block w-100">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'eshop_carousel_3.png' %}" class="d-block w-100">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>
+<!--Top Brands Badge-->
+<div class="container mt-5">
+  <div class="alert" role="alert" style="text-align: center;font-size:50px;background-color: #F2F3F3;text-shadow: 2px 2px 5px lightblue;">
+    Top Brands
+  </div>
+</div>
+
+<div class="container">
+  <div class="row  row-cols-md-4 g-4">
+    <div class="col">
+      <a href="/shop/apple/">
+        <img src="{% static 'apple_logo.png' %}" class="rounded float-start border border-dark" style="box-shadow: 1px 1px 5px 1px lightblue;"  alt="...">
+      </a>
+    </div>
+    <div class="col">
+      <a href="/shop/samsung/">
+        <img src="{% static 'samsung_logo.png' %}" class="rounded float-start border border-dark" style="box-shadow: 1px 1px 5px 1px lightblue;" alt="...">
+      </a>
+    </div>
+    <div class="col">
+      <a href="/shop/sony/">
+        <img src="{% static 'sony_logo.png' %}" class="rounded float-start border border-dark" style="box-shadow: 1px 1px 5px 1px lightblue;" alt="...">
+      </a>
+    </div>
+    <div class="col">
+      <a href="/shop/asus/">
+        <img src="{% static 'asus_logo.png' %}" class="rounded float-start border border-dark" style="box-shadow: 1px 1px 5px 1px lightblue;"  alt="...">
+      </a>
+    </div>
+  </div>
+</div>
+<!--Top products badge-->
+<div class="container mt-5">
+  <div class="alert" role="alert" style="text-align: center;font-size:50px;background-color: #F2F3F3;text-shadow: 2px 2px 5px lightblue;">
+    Top Products
+  </div>
+</div>
+<!--top products-->
+<div class="container mt-3">
+  <div class="row row-cols-1 row-cols-md-6 g-2" style="margin-top: 3rem;">
+    <!--card 1-->
+    {% for product in ALLPRODUCTS|slice:"0:6" %}
+    <div class="col">
+      <div class="card h-100" style="background-color:white; border: none;box-shadow:0px 0px 10px #ECECEC ;">
+        <a href="..."><img src="/media/{{ product.PRODUCT_IMAGE }}" id="product-image-{{ product.id }}"
+            class="card-img-top" alt="image"></a>
+        <div class="card-body" style="text-align: center;">
+          <a href="" style="text-decoration: none; color: black;">
+            <h5 class="card-title" id="product-title-{{ product.id }}" style="font-size: medium;">{{product.PRODUCT_TITLE }} </h5>
+          </a>
+          <p class="card-text" style="font-size: small;">₹ <strong id="product-price-{{ product.id }}"> {{product.PRODUCT_PRICE }}</strong></p>
+          <p id="product-soldby-{{ product.id }}" style="display: none;">{{ product.SOLD_BY }}</p>
+        </div>
+        <div class="card-footer" style="box-shadow: 1px 1px 5px 1px lightblue;">
+          <button type="button " id="{{ product.id }}" class="btn border border-dark btn-sm cart-button"
+            style="border-radius:30px;width:80px;height: 30px;"><img src="{% static 'baseline_add_shopping_cart_black_24dp.png' %}"></button>
+            <a role="button" href="/products/product-details/{{product.id}}/" class="btn border border-dark btn-sm" style="float: right;border-radius:30px;width:80px;height:30px;font-size:medium;">View</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="row row-cols-1 row-cols-md-6 g-2" style="margin-top: 3rem;">
+    <!--card 1-->
+    {% for product in ALLPRODUCTS|slice:"6:12" %}
+    <div class="col">
+      <div class="card h-100" style="background-color:white; border: none;box-shadow:0px 0px 10px #ECECEC ;">
+        <a href="..."><img src="/media/{{ product.PRODUCT_IMAGE }}" id="product-image-{{ product.id }}"
+            class="card-img-top" alt="image"></a>
+        <div class="card-body" style="text-align: center;">
+          <a href="" style="text-decoration: none; color: black;">
+            <h5 class="card-title" id="product-title-{{ product.id }}" style="font-size: medium;">{{product.PRODUCT_TITLE }} </h5>
+          </a>
+          <p class="card-text" style="font-size: small;">₹ <strong id="product-price-{{ product.id }}"> {{product.PRODUCT_PRICE }}</strong></p>
+          <p id="product-soldby-{{ product.id }}" style="display: none;">{{ product.SOLD_BY }}</p>
+        </div>
+        <div class="card-footer" style="box-shadow: 1px 1px 5px 1px lightblue;">
+          <button type="button " id="{{ product.id }}" class="btn border border-dark btn-sm cart-button"
+            style="border-radius:30px;width:80px;height: 30px;"><img src="{% static 'baseline_add_shopping_cart_black_24dp.png' %}"></button>
+            <a role="button" href="/products/product-details/{{product.id}}/" class="btn border border-dark btn-sm" style="float: right;border-radius:30px;width:80px;height:30px;font-size:medium;">View</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<!--button for all products-->
+<div class="container">
+  <div class="alert btn-primary mt-3" role="alert" style="text-align: center;">
+    See All
+  </div>
+</div>
+
+<!--Title for best selling mobiles-->
+<div class="container mt-5">
+  <div class="alert" role="alert" style="text-align: center;font-size:50px;background-color: #F2F3F3;text-shadow: 2px 2px 5px lightblue;">
+    Best Selling Mobiles
+  </div>
+</div>
+<!--Best selling Mobiles-->
+<div class="container">
+  <div class="row row-cols-1 row-cols-md-6 g-2" style="margin-top: 3rem;">
+    <!--card 1-->
+    {% for mobile in MOBILES %}
+    <div class="col">
+      <div class="card h-100" style="background-color:white; border: none;box-shadow:0px 0px 10px #ECECEC ;">
+        <a href="..."><img src="/media/{{ mobile.PRODUCT_IMAGE }}" id="product-image-{{ mobile.id }}"
+            class="card-img-top" alt="image"></a>
+        <div class="card-body" style="text-align: center;">
+          <a href="" style="text-decoration: none; color: black;">
+            <h5 class="card-title" id="product-title-{{ mobile.id }}" style="font-size: medium;">{{ mobile.PRODUCT_TITLE}} </h5>
+          </a>
+          <p class="card-text" style="font-size: small;">₹ <strong id="product-price-{{ mobile.id }}"> {{mobile.PRODUCT_PRICE }}</strong></p>
+          <p id="product-soldby-{{ mobile.id }}" style="display: none;">{{ mobile.SOLD_BY }}</p>
+        </div>
+        <div class="card-footer" style="box-shadow: 1px 1px 5px 1px lightblue;">
+          <button type="button " id="{{ mobile.id }}" class="btn border border-dark btn-sm cart-button"
+            style="border-radius:30px;width:80px;height: 30px;"><img src="{% static 'baseline_add_shopping_cart_black_24dp.png' %}"></button>
+            <a role="button" href="/products/product-details/{{mobile.id}}/" class="btn border border-dark btn-sm" style="float: right;border-radius:30px;width:80px;height:30px;font-size:medium;">View</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+</div>
+<div class="container">
+  <div class="alert btn-primary mt-3" role="alert" style="text-align: center;">
+    <a class="nav-link text-white text-center"  href="/products/get_products/Mobile/"><small>See All</small></a>
+  </div>
+</div>
+
+<!--Title for Top Rated Television-->
+<div class="container mt-5">
+  <div class="alert" role="alert" style="text-align: center;font-size:50px;background-color: #F2F3F3;text-shadow: 2px 2px 5px lightblue;">
+    Top Rated Televisions
+  </div>
+</div>
+<div class="container">
+  <div class="row row-cols-1 row-cols-md-6 g-2" style="margin-top: 3rem;">
+    <!--card 1-->
+    {% for television in TELEVISIONS %}
+    <div class="col">
+      <div class="card h-100" style="background-color:white; border: none;box-shadow:0px 0px 10px #ECECEC ;">
+        <a href="..."><img src="/media/{{ television.PRODUCT_IMAGE }}" id="product-image-{{ television.id }}"
+            class="card-img-top" alt="image"></a>
+        <div class="card-body" style="text-align: center;">
+          <a href="" style="text-decoration: none; color: black;">
+            <h5 class="card-title" id="product-title-{{ television.id }}" style="font-size: medium;">{{ television.PRODUCT_TITLE|slice:"0:30"}}... </h5>
+          </a>
+          <p class="card-text" style="font-size: small;">₹ <strong id="product-price-{{ television.id }}"> {{television.PRODUCT_PRICE }}</strong></p>
+          <p id="product-soldby-{{ television.id }}" style="display: none;">{{ television.SOLD_BY }}</p>
+        </div>
+        <div class="card-footer" style="box-shadow: 1px 1px 5px 1px lightblue;">
+          <button type="button " id="{{ television.id }}" class="btn border border-dark btn-sm cart-button"
+            style="border-radius:30px;width:80px;height: 30px;"><img src="{% static 'baseline_add_shopping_cart_black_24dp.png' %}"></button>
+            <a role="button" href="/products/product-details/{{television.id}}/" class="btn border border-dark btn-sm" style="float: right;border-radius:30px;width:80px;height:30px;font-size:medium;">View</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<div class="container">
+  <div class="alert btn-primary mt-3" role="alert" style="text-align: center;">
+    <a class="nav-link text-white text-center"  href="/products/get_products/Television/"><small>See All</small></a>
+  </div>
+</div>
+
+
+{% endblock %}
+
+<!--Footer Block for Home Page-->
+{% block footer %}
+
+{% endblock %}
+
+<!--block javascript-->
+{% block javaScript %}
+
+{% endblock %}

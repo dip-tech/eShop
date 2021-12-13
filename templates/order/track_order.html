@@ -1,0 +1,124 @@
+<!--Load Basic html-->
+{% extends 'basic.html' %}
+<!--Title-->
+{% block title %}eStore | Track Order{% endblock %}
+
+<!--nav-brand-->
+{% block nav-brand %}<span style="font-family: 'Baloo Tammudu 2', cursive;">eStore| Track Order</span>{% endblock %}
+
+<!--add home navigation-->
+{% block nav-home %}<a href="/" class="nav-link">Home</a>{% endblock %}
+
+<!--add contact navigation-->
+{% block nav-contact %}<a href="/contact/" class="nav-link">Contact</a>{% endblock %}
+
+<!--add about navigation-->
+{% block nav-about %}<a href="/about/" class="nav-link">About</a>{% endblock %}
+<!--Load Static Folder-->
+{% load static %}
+<!--body-->
+{% block body %}
+<div class="container bg-light " style="margin-top: 50px;padding:10px;">
+    <ul id="trackdetails" style="text-align: center;">
+        <li id="orderplacedli" style="display: inline-block; width: 300px;">
+            <i id="icorderplaced" class="fas fa-shopping-bag " style="font-size:50px;padding: 10px;color:#E3E3E3;"></i>
+            <p id="txtorderplaced" style="color:#E3E3E3;">Order Placed</p>
+            <i id="orderplacedchecked" class="fas fa-check-square" style="color:#E3E3E3;"></i>
+            <div id="orderplacedbar" style="height: 5px;width:100%;background-color: #E3E3E3;"></div>
+        </li>
+        <li id="ordershipedli" style="display: inline-block;width: 300px;">
+            <i id="icordershipped" class="fas fa-shipping-fast" style="font-size:50px;padding: 10px;color:#E3E3E3;"></i>
+            <p id="txtordershipped" style="color:#E3E3E3;">Order Shipped</p>
+            <i id="ordershippedchecked" class="fas fa-check-square" style="color:#E3E3E3;"></i>
+            <div id="ordershippedbar" style="height: 5px;width:100%;background-color: #E3E3E3;"></div>
+        </li>
+        <li id="orderdeliveredli" style="display: inline-block;width: 300px;">
+            <i id="icorderdelivered" class="fas fa-handshake" style="font-size:50px;padding: 10px;color:#E3E3E3;"></i>
+            <p id="txtorderdelivered" style="color:#E3E3E3;">Order delivered</p>
+            <i id="orderdeliveredchecked" class="fas fa-check-square" style="color:#E3E3E3;"></i>
+            <div id="orderdeliveredbar" style="height: 5px;width:100%;background-color: #E3E3E3;"></div>
+        </li>
+        <li id="ordercanceledli" style="display:none;width: 300px;">
+            <i id="icordercancled" class="fas fa-window-close" style="font-size:50px;padding: 10px;color:#E3E3E3;"></i>
+            <p id="textordercanceled" style="color:#E3E3E3;">Order Canceled</p>
+            <i id="ordercanceledchecked" class="fas fa-check-square" style="color:#E3E3E3;"></i>
+            <div id="ordercanceledbar" style="height: 5px;width:100%;background-color: #E3E3E3;"></div>
+        </li>
+    </ul>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <ol class="list-group list-group-numbered" id="trackContainer">
+
+            </ol>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javaScript %}
+<script>
+    var Trigger=false;
+</script>
+{% for trackdata in trackdatas %}
+<script>
+    var orderstatus = "{{trackdata.order_status}}";
+    var orderstatusdetails = "{{trackdata.order_status_desc}}";
+    var orderstatustime = "{{ trackdata.order_datetime|slice:'0:19' }}";
+    if (orderstatus == "Ordered") {
+        document.getElementById('icorderplaced').style = "font-size:50px;padding: 10px;color:#0d6efd;";
+        document.getElementById('txtorderplaced').style = "color:#0d6efd;";
+        document.getElementById('orderplacedchecked').style = "color:#0d6efd;";
+        document.getElementById('orderplacedbar').style = "height: 5px;width:100%;background-color:#0d6efd;";
+
+    }
+    if (orderstatus == "Shipped") {
+        Trigger=true;
+        document.getElementById('icordershipped').style = "font-size:50px;padding: 10px;color:#0d6efd;";
+        document.getElementById('txtordershipped').style = "color:#0d6efd;";
+        document.getElementById('ordershippedchecked').style = "color:#0d6efd;";
+        document.getElementById('ordershippedbar').style = "height: 5px;width:100%;background-color:#0d6efd;";
+
+    }
+    if (orderstatus == "Delivered") {
+        document.getElementById('icorderdelivered').style = "font-size:50px;padding: 10px;color:#0d6efd;";
+        document.getElementById('txtorderdelivered').style = "color:#0d6efd;";
+        document.getElementById('orderdeliveredchecked').style = "color:#0d6efd;";
+        document.getElementById('orderdeliveredbar').style = "height: 5px;width:100%;background-color:#0d6efd;";
+
+    }
+    if (orderstatus == "Canceled") {
+        if (Trigger!=true) {
+            document.getElementById('ordershipedli').style = "display:none;width: 300px;";
+            
+        }
+        document.getElementById('orderdeliveredli').style = "display:none;width: 300px;";
+        document.getElementById('ordercanceledli').style = "display:inline-block;width: 300px;";
+        document.getElementById('icordercancled').style = "font-size:50px;padding: 10px;color:red;";
+        document.getElementById('textordercanceled').style = "color:red;";
+        document.getElementById('ordercanceledchecked').style = "color:red;";
+        document.getElementById('ordercanceledbar').style = "height: 5px;width:100%;background-color:red;";
+
+    }
+    containerStr = `<li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold">${orderstatus}</div>
+                        ${orderstatusdetails}
+                    </div>
+                    <span class="badge bg-primary rounded-pill">${orderstatustime}</span>
+                </li>
+    `
+    $('#trackContainer').append(containerStr);
+</script>
+{% endfor %}
+{% endblock %}
+
+!--Footer Start-->
+{% load static %}
+{% block footer %}
+
+{% endblock %}

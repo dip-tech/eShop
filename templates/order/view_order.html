@@ -1,0 +1,345 @@
+<!--Load Basic html-->
+{% extends 'basic.html' %}
+<!--Title-->
+{% block title %}eStore | Your Order {% endblock %}
+
+<!--nav-brand-->
+{% block nav-brand %}<span style="font-family: 'Baloo Tammudu 2', cursive;">eStore| Your Order</span>{% endblock %}
+
+<!--add home navigation-->
+{% block nav-home %}<a href="/" class="nav-link">Home</a>{% endblock %}
+
+<!--add contact navigation-->
+{% block nav-contact %}<a href="/contact/" class="nav-link">Contact</a>{% endblock %}
+
+<!--add about navigation-->
+{% block nav-about %}<a href="/about/" class="nav-link">About</a>{% endblock %}
+
+<!--body-->
+{% block body %}
+<div class="jumbotron container" style="background-color: #ccffff;margin-top: 20px;">
+  <h1 class="display-4">Hello, {{ request.session.sessionUser }}</h1>
+  <p class="lead">Quality in a product or service is not what the supplier puts in. it is what the customer gets out and
+    is willing to pay for. A product is not quality because it is hard to make and costs a lot of money, as
+    manufacturers typically believe.</p>
+  <p class="lead">Check Your Order Details Here .</p>
+</div>
+<div class="container justify-content-center" id="ordercontainer">
+
+</div>
+{% endblock %}
+
+{% block javaScript %}
+{% for order in allorders %}
+
+{% if order.order_status == "Ordered"%}
+<script>
+  var oid = "{{ order.order_id }}";
+  var orderitems = JSON.parse("{{ order.items|escapejs }}");
+  var totalamount = "{{ order.total_amount }}";
+  var totalitems = "{{ order.total_items }}";
+  var orderstatus = "{{ order.order_status }}";
+  var flatdiscount = "{{ order.discount }}";
+  ordstr = `<div class="card" style="margin-top:50px;">
+              <h5 class="card-header">
+                <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-warning text-wrap" >${orderstatus}</div>
+              </h5>
+                
+              <div class="card-body">
+                <table class="table table-sm table-borderless">
+                  
+                  <tbody id="order-body-${oid}">
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer bg-transparent" id="order-footer-${oid}" >
+              </div>
+            </div>`
+  $('#ordercontainer').append(ordstr);
+  for (id in orderitems) {
+    itemstr = `<tr>
+              <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
+              <td style="padding-top:40px;" >${orderitems[id][1]}</td>
+              <td style="padding-top:40px;">${orderitems[id][2]}</td>
+              <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
+              <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
+            </tr>`
+    $('#order-body-' + oid).append(itemstr);
+  }
+  footerstr = `
+  <div class="row align-items-start">
+                <div class="col-8 ">
+                <div class="card border-dark mb-3">
+                    <div class="card-header">Deliver@</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ order.name }},&nbsp;{{ order.email }}</h5>
+                        <p class="card-text">{{ order.address }}</p>
+                    </div>
+                </div>
+              </div>
+              <div class="col-4 ">
+                <table class="table table-borderless" >
+                  <tbody >
+                    <tr>
+                      <td>
+                        <form action="/order/track_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="0">
+                        <button type="submit" class="btn border border-dark" style="width:100%;">Track</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <form action="/order/cancel_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="0">
+                        <button type="submit" id="cancelorderbtn" class="btn border border-danger text-danger" style="width:100%;" >Cancel</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+  `
+  $('#order-footer-' + oid).append(footerstr);
+</script>
+{% endif %}
+
+{% if order.order_status == "Shipped"%}
+<script>
+  var oid = "{{ order.order_id }}";
+  var orderitems = JSON.parse("{{ order.items|escapejs }}");
+  var totalamount = "{{ order.total_amount }}";
+  var totalitems = "{{ order.total_items }}";
+  var orderstatus = "{{ order.order_status }}";
+  var flatdiscount = "{{ order.discount }}";
+  ordstr = `<div class="card" style="margin-top:50px;">
+              <h5 class="card-header">
+                <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-primary text-wrap" >${orderstatus}</div>
+              </h5>
+                
+              <div class="card-body">
+                <table class="table table-sm table-borderless">
+                  
+                  <tbody id="order-body-${oid}">
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer bg-transparent" id="order-footer-${oid}" >
+              </div>
+            </div>`
+  $('#ordercontainer').append(ordstr);
+  for (id in orderitems) {
+    itemstr = `<tr>
+              <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
+              <td style="padding-top:40px;" >${orderitems[id][1]}</td>
+              <td style="padding-top:40px;">${orderitems[id][2]}</td>
+              <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
+              <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
+            </tr>`
+    $('#order-body-' + oid).append(itemstr);
+  }
+  footerstr = `
+  <div class="row align-items-start">
+                <div class="col-8 ">
+                <div class="card border-dark mb-3">
+                    <div class="card-header">Deliver@</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ order.name }},&nbsp;{{ order.email }}</h5>
+                        <p class="card-text">{{ order.address }}</p>
+                    </div>
+                </div>
+              </div>
+              <div class="col-4 ">
+                <table class="table table-borderless" >
+                  <tbody >
+                    <tr>
+                      <td>
+                        <form action="/order/track_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="0">
+                        <button type="submit" class="btn border border-dark" style="width:100%;">Track</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <form action="/order/cancel_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="0">
+                        <button type="submit" id="cancelorderbtn" class="btn border border-danger text-danger" style="width:100%;" >Cancel</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+  `
+  $('#order-footer-' + oid).append(footerstr);
+</script>
+{% endif %}
+
+{% if order.order_status == "Delivered"%}
+<script>
+  var oid = "{{ order.order_id }}";
+  var orderitems = JSON.parse("{{ order.items|escapejs }}");
+  var totalamount = "{{ order.total_amount }}";
+  var totalitems = "{{ order.total_items }}";
+  var orderstatus = "{{ order.order_status }}";
+  var flatdiscount = "{{ order.discount }}";
+  ordstr = `<div class="card" style="margin-top:50px;">
+              <h5 class="card-header">
+                <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-success text-wrap" >${orderstatus}</div>
+              </h5>
+                
+              <div class="card-body">
+                <table class="table table-sm table-borderless">
+                  
+                  <tbody id="order-body-${oid}">
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer bg-transparent" id="order-footer-${oid}" >
+              </div>
+            </div>`
+  $('#ordercontainer').append(ordstr);
+  for (id in orderitems) {
+    itemstr = `<tr>
+              <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
+              <td style="padding-top:40px;" >${orderitems[id][1]}</td>
+              <td style="padding-top:40px;">${orderitems[id][2]}</td>
+              <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
+              <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
+            </tr>`
+    $('#order-body-' + oid).append(itemstr);
+  }
+  footerstr = `
+  <div class="row align-items-start">
+                <div class="col-8 ">
+                <div class="card border-dark mb-3">
+                    <div class="card-header">Deliver@</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ order.name }},&nbsp;{{ order.email }}</h5>
+                        <p class="card-text">{{ order.address }}</p>
+                    </div>
+                </div>
+              </div>
+              <div class="col-4 ">
+                <table class="table table-borderless" >
+                  <tbody >
+                    <tr>
+                      <td>
+                        <form action="/order/track_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="0">
+                        <button type="submit" class="btn border border-dark" style="width:100%;">Track</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <form action="/order/cancel_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <button type="submit" id="cancelorderbtn" class="btn border border-danger text-danger" style="width:100%;" disabled>Cancel</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+  `
+  $('#order-footer-' + oid).append(footerstr);
+</script>
+{% endif %}
+
+{% if order.order_status == "Canceled"%}
+<script>
+  var oid = "{{ order.order_id }}";
+  var orderitems = JSON.parse("{{ order.items|escapejs }}");
+  var totalamount = "{{ order.total_amount }}";
+  var totalitems = "{{ order.total_items }}";
+  var orderstatus = "{{ order.order_status }}";
+  var flatdiscount = "{{ order.discount }}";
+  ordstr = `<div class="card" style="margin-top:50px;">
+              <h5 class="card-header">
+                <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-danger text-wrap" >${orderstatus}</div>
+              </h5>
+                
+              <div class="card-body">
+                <table class="table table-sm table-borderless">
+                  
+                  <tbody id="order-body-${oid}">
+                  </tbody>
+                </table>
+              </div>
+              <div class="card-footer bg-transparent" id="order-footer-${oid}" >
+              </div>
+            </div>`
+  $('#ordercontainer').append(ordstr);
+  for (id in orderitems) {
+    itemstr = `<tr>
+              <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
+              <td style="padding-top:40px;" >${orderitems[id][1]}</td>
+              <td style="padding-top:40px;">${orderitems[id][2]}</td>
+              <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
+              <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
+            </tr>`
+    $('#order-body-' + oid).append(itemstr);
+  }
+  footerstr = `
+  <div class="row align-items-start">
+                <div class="col-8 ">
+                <div class="card border-dark mb-3">
+                    <div class="card-header">Deliver@</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ order.name }},&nbsp;{{ order.email }}</h5>
+                        <p class="card-text">{{ order.address }}</p>
+                    </div>
+                </div>
+              </div>
+              <div class="col-4 ">
+                <table class="table table-borderless" >
+                  <tbody >
+                    <tr>
+                      <td>
+                        <form action="/order/track_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <input type="hidden" name="s_code" value="0">
+                        <button type="submit" class="btn border border-dark" style="width:100%;">Track</button>
+                        </form>
+                      </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        <form action="/order/cancel_order/" method="GET">
+                        <input type="hidden" name="orderid" value="${oid}">
+                        <button type="submit" id="cancelorderbtn" class="btn border border-danger text-danger" style="width:100%;" disabled>Cancel</button>
+                        </form>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+  `
+  $('#order-footer-' + oid).append(footerstr);
+</script>
+{% endif %}
+
+
+{% endfor %}
+{% endblock %}
+
+!--Footer Start-->
+{% load static %}
+{% block footer %}
+
+{% endblock %}

@@ -1,0 +1,49 @@
+<!--import eshop_basic.html page -->
+{% extends 'basic.html' %}
+
+<!--add title for this page-->
+{% block title %}eStore{% endblock %}
+
+<!--add navbar brand for this page-->
+{% block nav-brand %}<span style="font-family: 'Baloo Tammudu 2', cursive;">eStore | Account Created</span>{% endblock %}
+
+<!--add home navigation-->
+{% block nav-home %}<a href="" class="nav-link active">Home</a>{% endblock %}
+
+<!--add contact navigation-->
+{% block nav-contact %}<a href="/contact/" class="nav-link">Contact</a>{% endblock %}
+
+<!--add about navigation-->
+{% block nav-about %}<a href="/about/" class="nav-link">About</a>{% endblock %}
+
+
+
+<!---static directory-->
+{% load static %}
+
+<!--Home page body-->
+{% block body %}
+
+<div class="card container" style="width:30%;margin-top:10%;">
+    <div class="card-header">
+        <div class="alert alert-success" style="font-size:30px;">  <span class="text-success" style="font-size:30px;"><i class="fas fa-check"></i></span>&nbsp;&nbsp;&nbsp;Your Account Created Successfully</div>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">YOUR USER NAME:  </h5>
+        <p class="card-text"><b>{{ username }}</b></p>
+        <a href="/account/seller/" class="btn btn-primary">Login</a>
+    </div>
+</div>
+{% endblock %}
+
+<!--Footer Block for Home Page-->
+{% block footer %}
+
+{% endblock %}
+
+<!--block javascript-->
+{% block javaScript %}
+<script>
+
+</script>
+{% endblock %}

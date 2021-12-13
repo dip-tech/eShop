@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="en">
+{% load static %}
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  {% block header %}{% endblock %}
+
+  <!-- Required webpage logo -->
+  <link rel="icon" href="{% static 'eshop_logo.png'%}">
+  <!-- Required Google Font Support -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2&display=swap" rel="stylesheet">
+
+  <!--fontawsome CDN-->
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+  <!--Required JQuery CDN-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+  <!-- Optional JavaScript; choose one of the two! -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+    crossorigin="anonymous"></script>
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+    crossorigin="anonymous"></script>
+
+  <!-- Option 2: Separate Popper and Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
+    integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
+    crossorigin="anonymous"></script>
+    
+  <!--general structure of block-->
+  <title>
+    {% block title %}{% endblock %}
+  </title>
+  <!--Required block for CSS -->
+  <style>
+    #webpreloader {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: white url("{%static 'preloader.gif'%}") no-repeat center;
+      z-index: 999;
+      align-content: center;
+    }
+
+    #webpreloader.img {
+      align-content: center;
+    }
+
+    body {
+      background-color: #F2F3F3;
+    }
+
+
+    #myBtn {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 30px;
+      z-index: 99;
+      font-size: 18px;
+      border: none;
+      outline: none;
+      background-color: rgb(0, 0, 0);
+      color: white;
+      cursor: pointer;
+      padding: 15px;
+      border-radius: 4px;
+    }
+  </style>
+  {% block style %}{% endblock %}
+
+</head>
+
+<body onload="disablePreloader()">
+  <!--preloader-->
+  <div id="webpreloader">
+
+  </div>
+
+
+  <!--go to top button-->
+  <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+  <!--Toast for cart-->
+  <!--<div class="position-fixed end-0 p-3 " id="toastdisplay" style="z-index: 11;display:none">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <button type="button" class="btn-close text-white" data-bs-dismiss="toast" aria-label="Close" style="float: right;"></button>
+      <div class="toast-body bg-success text-white">
+        Your Item is in the cart.<br>
+        Checkout "{{ request.session.sessionUser }}->cart".
+      </div>
+    </div>
+  </div>-->
+  <div class="position-fixed end-0 p-3 " id="toastdisplay" style="z-index: 11;display:none;">
+    <div id="liveToast" class="toast align-items-center bg-light text-black-50  border-0 " role="alert"
+      aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <strong class="me-auto">eStore | Item Added</strong>
+        <small>Just Now</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-3"><img id="cartProductImage" style="max-width: 80px; max-height:150px;"></div>
+            <div class="col" style="margin-left:10px;margin-top: 20px;">
+              <p id="cartProductName"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--navigation bar start here-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+    <div class="container-fluid">
+      <a href="" class="navbar-brand">
+        <img src="{% static 'eshop_logo.png'%}" alt="" width="30" height="30" class="d-inline-block align-text-top">
+        {% block nav-brand %} {% endblock %}
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav mb-2 mb-lg-0 ">
+          <li class="nav-item">
+            {% block nav-home %}{% endblock %}
+          </li>
+          <li class="nav-item">
+            {% block nav-contact %}{% endblock %}
+          </li>
+          <li class="nav-item">
+            {% block nav-about %}{% endblock %}
+          </li>
+          <li class="nav-item dropdown">
+            {% if request.session.sessionUser is null %}
+            <a class="nav-link dropdown-toggle" href="#" id="toggledropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false" data-bs-target="#tergetdropdown">
+              Sign in
+            </a>
+            <div class="dropdown-menu px-4" id="tergetdropdown" style="width: 400px;">
+              <form action="/account/buyer/login/" method="POST"> {% csrf_token %}
+                <div class="mb-3">
+                  <label for="exampleDropdownFormEmail1" class="form-label">User Name</label>
+                  <input type="text" class="form-control" id="exampleDropdownFormEmail1" name="loginusername"
+                    placeholder="email@example.com">
+                </div>
+                <div class="mb-3">
+                  <label for="exampleDropdownFormPassword1" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="exampleDropdownFormPassword1" name="loginuserpassword"
+                    placeholder="Password">
+                </div>
+                <button type="submit" id="userLoginButton" class="btn border border-dark">Login</button>
+              </form>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/account/buyer/registration/">New around here? Sign up</a>
+              <a class="dropdown-item" href="#">Forgot password?</a>
+            </div>
+            {% endif %}
+          </li>
+          <li class="nav-item dropdown">
+            {% if request.session.sessionUser is not null %}
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              {{request.session.sessionUser}}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <form class="dropdown-item" action="/account/buyer/myprofile/" method="GET">
+                  <input type="hidden" name="profile_id" value="{{ request.session.sessionUserName }}">
+                  <button type="submit" class="badge btn border border-dark text-dark text-wrap">Profile</button>
+                </form>
+              </li>
+              <li>
+                <form id="form-active-user" action="/shop/shop-cart/{{ request.session.sessionUserName }}"
+                  method="POST">{% csrf_token %}
+                  <input type="hidden" style="display: none;" value="{{ request.session.sessionUserName }}"
+                    name="active-user">
+                  <a class="dropdown-item" role="button" onclick="activeUserSubmit()" style="font-size: smaller;">
+                    <div class="badge btn border border-dark text-dark text-wrap">Cart</div>
+                    &nbsp;<span id="cart-display" class="badge bg-warning"> 0 </span>
+                  </a>
+                </form>
+              </li>
+              <li><a class="dropdown-item" href="/order/myorders/{{ request.session.sessionUserName }}"
+                  style="font-size: smaller;">
+                  <div class="badge btn border border-dark text-dark text-wrap">My Orders</div>
+                </a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="/account/buyer/logout/" style="font-size: smaller;">
+                  <div class="badge btn border border-danger text-danger text-wrap">Log out</div>
+                </a></li>
+            </ul>
+            {% endif %}
+          </li>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <!--Navigationbar End here-->
+
+  <!--category navigation-->
+  <ul class="nav container justify-content-center" style="background: transparent;">
+    <li class="nav-item">
+      <a class="nav-link text-secondary text-center" href="/products/get_products/Mobile/"><small class="badge border border-dark text-dark"
+          style="font-size:12px;">Mobiles</small></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-secondary text-center" href="/products/get_products/Laptop/"><small class="badge border border-dark text-dark"
+          style="font-size:12px;">Laptops</small></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-secondary text-center" href="/products/get_products/Tablet/"><small class="badge border border-dark text-dark"
+          style="font-size:12px;box-shadow: 1px 1px 5px 1px lightblue;">Tablets</small></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-secondary text-center" href="/products/get_products/Bluetooth Speaker/"><small class="badge border border-dark text-dark"
+          style="font-size:12px;box-shadow: 1px 1px 5px 1px lightblue;">Speakers</small></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-secondary text-center" href="/products/get_products/Home Theater/"><small class="badge border border-dark text-dark"
+          style="font-size:12px;box-shadow: 1px 1px 5px 1px lightblue;">Home Theaters</small></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-secondary text-center" href="/products/get_products/Television/"><small class="badge border border-dark text-dark"
+          style="font-size:12px;box-shadow: 1px 1px 5px 1px lightblue;">Televisions</small></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-secondary text-center" href="/products/get_products/Refrigerator/"><small class="badge border border-dark text-dark"
+          style="font-size:12px;box-shadow: 1px 1px 5px 1px lightblue;">Refrigerators</small></a>
+    </li>
+  </ul>
+
+  {% block body %}{% endblock %}
+</body>
+<!--required footer tag-->
+<footer>
+  {% block footer %}{% endblock %}
+  {% block javaScript %}{% endblock %}
+
+
+  <script>
+    var toastLiveExample = document.getElementById('liveToast')
+    var isSession = "{{request.session.sessionUser}}";
+    function disablePreloader() {
+      document.getElementById('webpreloader').style.display = 'none';
+    }
+
+    $("#userLoginButton").click(function () {
+      if (document.getElementById('exampleDropdownFormEmail1').value == '' || document.getElementById('exampleDropdownFormPassword1').value == '') {
+        return false;
+      }
+    })
+
+    if (localStorage.getItem('cartItems') == null || localStorage.getItem('cartItems') == '' || localStorage.getItem('cartItems') == "{}") {
+      var cartitems = {};
+      var productCount = 0;
+    } else {
+      cartitems = JSON.parse(localStorage.getItem('cartItems'));
+      productCount = JSON.parse(localStorage.getItem('totalItems'));
+      if (isSession) {
+        document.getElementById('cart-display').innerHTML = productCount;
+      }
+
+    }
+
+    $('.cart-button').click(function () {
+
+      if (isSession) {
+        var productId = this.id.toString();
+        if (cartitems[productId] == undefined) {
+          qty = 1
+          img = document.getElementById('product-image-' + productId).src;
+          title = document.getElementById('product-title-' + productId).innerHTML;
+          price = document.getElementById('product-price-' + productId).innerHTML;
+          soldby= document.getElementById('product-soldby-' + productId).innerHTML;
+          cartitems[productId] = [img, title, price, qty,soldby];
+          productCount = productCount + 1;
+        }
+        localStorage.setItem('cartItems', JSON.stringify(cartitems));
+        localStorage.setItem('totalItems', JSON.stringify(productCount));
+        document.getElementById('cart-display').innerHTML = productCount;
+
+        document.getElementById('cartProductImage').src = document.getElementById('product-image-' + productId).src;
+        document.getElementById('cartProductName').innerHTML = document.getElementById('product-title-' + productId).innerHTML;
+        document.getElementById('toastdisplay').style.display = 'block';
+        var toast = new bootstrap.Toast(toastLiveExample)
+        toast.show()
+
+      }
+      else {
+        alert("Please login to Add products in cart");
+        document.getElementById("toggledropdown").click();
+        document.getElementById("tergetdropdown").style = "display:block";
+
+      }
+
+    })
+
+    $("#userloginbtn").click(function(){
+        alert("Clicked");
+        document.getElementById("toggledropdown").click();
+        document.getElementById("tergetdropdown").style = "display:block";
+    })
+  </script>
+
+  <script>
+    function activeUserSubmit() {
+      document.getElementById('form-active-user').submit();
+    }
+  </script>
+  <script>
+    var mybutton = document.getElementById("myBtn");
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function () { scrollFunction() };
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
+      }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+
+
+  </script>
+
+
+
+  <!--General footer-->
+  <div class="container-fluid" style="background-color: rgba(211, 211, 211, 0.767); margin-top: 450px;">
+    <div class="row mt-3" style="height:200px;">
+      <div class="col" style="max-width:400px ;">
+        <img class="img-fluid" src="{% static 'footer_logo_gray.png'%}">
+      </div>
+      <div class="col" style="max-height: 400px;">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Links</th>
+              <th scope="col">Guide</th>
+              <th scope="col">User Account</th>
+              <th scope="col">Shop Account</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!--table row 1-->
+            <tr>
+              <!--table data for Llinks-->
+              <td style="font-size: smaller;">Home</td>
+              <!--table data for Guid-->
+              <td style="font-size: smaller;">How to Signup?</td>
+              <!--table data for user-->
+              <td style="font-size: smaller;"><a class="text-dark"  role="button" href="#" id="userloginbtn" style="text-decoration: none;" >User Login</a></td>
+              <!--table data for vendor-->
+              <td style="font-size: smaller;"><a href="/account/seller/" class="text-dark" style="text-decoration: none">Shop Login</a></td>
+            </tr>
+            <tr>
+              <td style="font-size: smaller;">Contact Us</td>
+              <td style="font-size: smaller;">How to Login?</td>
+              <td style="font-size: smaller;"><a class="text-dark"
+                style="text-decoration: none;" href="/account/buyer/registration/">User Signup</a></td>
+              <td style="font-size: smaller;">Shop Signup</td>
+            </tr>
+            <tr>
+              <td style="font-size: smaller;">About Us</td>
+              <td style="font-size: smaller;">How to add product?</td>
+              <td style="font-size: smaller;"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col" style="max-width: 200px;">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th scope="col">Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!--table row 1-->
+            <tr>
+              <!--table data for Address-->
+              <td style="font-size: smaller;">
+                21/6 CA Road,<br>
+                New York City,1800800
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row justify-content-center" style="text-align: center;font-size: smaller;">
+      <p>copyright@2021</p>
+    </div>
+  </div>
+
+  <script>
+    $("#userloginbtn").click(function(){
+        document.getElementById("toggledropdown").click();
+        document.getElementById("tergetdropdown").style = "display:block";
+    })
+  </script>
+</footer>
+
+</html>

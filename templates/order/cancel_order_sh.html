@@ -1,0 +1,111 @@
+<!--Load Basic html-->
+{% extends 'basic_seller.html' %}
+<!--Title-->
+{% block title %}eStore | Order Successfull{% endblock %}
+
+<!--nav-brand-->
+{% block nav-brand %}<span style="font-family: 'Baloo Tammudu 2', cursive;">eStore| Order Canceled</span>{% endblock %}
+
+<!--add home navigation-->
+{% block nav-home %}<a href="/" class="nav-link">Home</a>{% endblock %}
+
+<!--add contact navigation-->
+{% block nav-contact %}<a href="/contact/" class="nav-link">Contact</a>{% endblock %}
+
+<!--add about navigation-->
+{% block nav-about %}<a href="/about/" class="nav-link">About</a>{% endblock %}
+
+<!--body-->
+{% block body %}
+<div class="container" style="width:60%;margin-top: 100px;">
+  <div class="card">
+    <div class="card-header alert alert-danger" style="font-size:30px;">
+      <span class="text-danger" style="font-size:30px;"><i
+          class="fad fa-window-close"></i></span>&nbsp;&nbsp;&nbsp;Order Canceled
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Your order with id <span class="badge border border-dark text-dark"
+          style="font-size:20px;">{{ ordid }}</span> is Canceled</h5>
+      <p class="card-text">User's order has been canceled by you. </p>
+      <!-- <a href="/" class="btn btn-primary">Continue Shopping</a> -->
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javaScript %}
+
+{% endblock %}
+
+!--Footer Start-->
+{% load static %}
+{% block footer %}
+<div class="container-fluid" style="background-color: rgba(211, 211, 211, 0.767); margin-top: 400px;">
+  <div class="row mt-3" style="height:200px;">
+    <div class="col" style="max-width:400px ;">
+      <img class="img-fluid" src="{% static 'footer_logo_gray.png'%}">
+    </div>
+    <div class="col" style="max-height: 400px;">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Links</th>
+            <th scope="col">Guide</th>
+            <th scope="col">User Account</th>
+            <th scope="col">Shop Account</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--table row 1-->
+          <tr>
+            <!--table data for Llinks-->
+            <td style="font-size: smaller;">Home</td>
+            <!--table data for Guid-->
+            <td style="font-size: smaller;">How to Signup?</td>
+            <!--table data for user-->
+            <td style="font-size: smaller;"><a class="text-dark" role="button" href="#" id="userloginbtn"
+                style="text-decoration: none;">User Login</a></td>
+            <!--table data for vendor-->
+            <td style="font-size: smaller;"><a href="/account/seller/" class="text-dark"
+                style="text-decoration: none">Shop Login</a></td>
+          </tr>
+          <tr>
+            <td style="font-size: smaller;">Contact Us</td>
+            <td style="font-size: smaller;">How to Login?</td>
+            <td style="font-size: smaller;"><a class="text-dark" style="text-decoration: none;"
+                href="/account/buyer/registration/">User Signup</a></td>
+            <td style="font-size: smaller;">Shop Signup</td>
+          </tr>
+          <tr>
+            <td style="font-size: smaller;">About Us</td>
+            <td style="font-size: smaller;">How to add product?</td>
+            <td style="font-size: smaller;"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col" style="max-width: 200px;">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--table row 1-->
+          <tr>
+            <!--table data for Address-->
+            <td style="font-size: smaller;">
+              21/6 CA Road,<br>
+              New York City,1800800
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row justify-content-center" style="text-align: center;font-size: smaller;">
+    <p>copyright@2021</p>
+  </div>
+</div>
+{% endblock %}
