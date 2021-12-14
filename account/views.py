@@ -118,6 +118,7 @@ def shop(request):
                 'NO_OF_DELETED_PRODUCTS':len(DELETED_PRODUCTS),
                 'ACTIVE_ORDERS':ACTIVE_ORDERS,
                 'DELIVERED_ORDERS':DELIVERED_ORDERS,
+                'SHIPPED_ORDERS':SHIPPED_ORDERS,
                 'CANCELED_ORDERS':CANCELED_ORDERS
             }
             return render(request, 'account/seller_dashboard.html',DASHBOARD_DATA)
