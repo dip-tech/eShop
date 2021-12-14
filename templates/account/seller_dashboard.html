@@ -280,32 +280,57 @@
               <div class="cardName">VIEW ALL PRODUCTS</div>
             </div>
           </div>
+        
         </div>
-        <h2 style="margin-top:50px;"><b>RECENT PRODUCTS</b></h2>
-        <table class="table mt-5">
-          <thead>
-            <tr>
-              <th scope="col">PRODUCT IMAGE</th>
-              <th scope="col">PRODUCT NAME</th>
-              <th scope="col">PRODUCT BRAND</th>
-              <th scope="col">PRODUCT CATEGORY</th>
-              <th scope="col">PRODUCT PRICE</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for item in RECENT_PRODUCTS%}
-            <tr>
-              <td scope="row"><img src="/media/{{ item.PRODUCT_IMAGE }}" style="height:50px;width:50px;">
-              </td>
-              <td scope="row">{{ item.PRODUCT_TITLE|slice:'0:50' }}...</td>
-              <td scope="row">{{ item.PRODUCT_BRAND }}</td>
-              <td scope="row">{{ item.PRODUCT_CATEGORY }}</td>
-              <td scope="row">{{ item.PRODUCT_PRICE }}</td>
-              <td scope="row"><button class="btn btn-success">View</button></td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+        <!--HEADER FOR RECENT PRODUCTS-->
+        <div class="container mt-5">
+          <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading"><b>RECENT ADDED PRODUCTS</b></h4>
+          </div>
+        </div>
+        <!--RECENTLY ADDED PRODUCTS CONTAINER-->
+        <div class="container mt-5">
+          {% for item in RECENT_PRODUCTS%}
+          <div class="card border-dark mb-3 mt-5">
+            <div class="card-header bg-transparent border-success">{{forloop.counter}}</div>
+            <div class="card-body">
+              <table>
+                <tr style="font-size:14px;">
+                  <td style="padding-left:30px;padding-right:20px;"><img src="/media/{{item.PRODUCT_IMAGE}}"
+                      style="height:100px;width:100px;"></td>
+                  <td style="padding-left:30px;padding-right:20px;">
+                    <p>{{item.PRODUCT_TITLE}}</p>
+                  </td>
+                  <td style="padding-left:30px;padding-right:20px;">
+                    <p>{{item.PRODUCT_BRAND}}</p>
+                  </td>
+                  <td style="padding-left:30px;padding-right:20px;">
+                    <p>{{item.PRODUCT_CATEGORY}}</p>
+                  </td>
+                  <td style="padding-left:30px;padding-right:20px;">
+                    <p>{{item.PRODUCT_SERIES}}</p>
+                  </td>
+                  <td style="padding-left:30px;padding-right:20px;">
+                    <p>₹&nbsp;{{item.PRODUCT_PRICE}}</p>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="card-footer bg-transparent border-success d-flex justify-content-center" style="padding:10px;">
+              <table>
+                <tr>
+                  <td style="padding-left: 30px;padding-right:30px;"><button class="btn border border-dark"
+                      type="button" style="width:200px;font-size:14px;">View Product</button></td>
+                  <td style="padding-left: 30px;padding-right:30px;"><button class="btn border border-dark"
+                      type="button" style="width:200px;font-size:14px;">Update Product</button></td>
+                  <td style="padding-left: 30px;padding-right:30px;"><button class="btn border border-dark"
+                      type="button" style="width:200px;font-size:14px;">Delete Product</button></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
       </div>
       <!--SELLER  PRODUCTS SECTION END-->
 
@@ -1208,9 +1233,13 @@
   {% endfor %}
   <!--FOR LOOP END FOR CANCELED ORDERS-->
 
+  <!--SCRIPT STARTS FOR CKEDITOR-->
   <script>
     CKEDITOR.replace("prodesc");
   </script>
+  <!--SCRIPT END FOR CKEDITOR-->
+
+  <!--SCRIPT TAG START FOR MENU TOGGLE-->
   <script>
     $("#toggleorder").click(function () {
       $("#sellerdashboard").hide();
@@ -1252,4 +1281,5 @@
       $("#addproductcontainer").fadeIn(2000);
     });
   </script>
+  <!--SCRIPT TAG END FOR MENU TOGGLE-->
   {% endblock %}
