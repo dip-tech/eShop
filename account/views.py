@@ -103,6 +103,7 @@ def shop(request):
             DELETED_PRODUCTS=list(EshopProducts.objects.filter(SOLD_BY=request.session['SHOP_ID'],IS_ACTIVE="0"))
             TOTAL_ORDERS=list(Order.objects.filter(shop_id=request.session['SHOP_ID']))
             ACTIVE_ORDERS=list(Order.objects.filter(shop_id=request.session['SHOP_ID'],order_status="Ordered"))
+            SHIPPED_ORDERS=list(Order.objects.filter(shop_id=request.session['SHOP_ID'],order_status="Shipped"))
             DELIVERED_ORDERS=list(Order.objects.filter(shop_id=request.session['SHOP_ID'],order_status="Delivered"))
             CANCELED_ORDERS=list(Order.objects.filter(shop_id=request.session['SHOP_ID'],order_status="Canceled"))
             DASHBOARD_DATA={
@@ -110,6 +111,7 @@ def shop(request):
                 'RECENT_ORDERS':TOTAL_ORDERS[-10:],
                 'TOTAL_ORDERS':len(TOTAL_ORDERS),
                 'NO_OF_ACTIVE_ORDERS':len(ACTIVE_ORDERS),
+                'NO_OF_SHIPPED_ORDERS':len(SHIPPED_ORDERS),
                 'NO_OF_DEVIVERED_ORDERS':len(DELIVERED_ORDERS),
                 'NO_OF_CANCELED_ORDERS':len(CANCELED_ORDERS),
                 'NO_OF_PRODUCTS':len(TOTAL_PRODUCTS),
