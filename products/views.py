@@ -21,3 +21,19 @@ def getProducts(request,category):
         'category':category
     }
     return render(request,'product/get_product.html',data)
+
+def addNewProdutcs(request):
+    if request.method=='POST':
+        p_image=request.FILES.get('pimg')
+        p_title=request.POST.get('ptitle')
+        p_brand=request.POST.get('pbrand')
+        p_desc=request.POST.get('pdesc')
+        p_category=request.POST.get('pcategory')
+        p_series=request.POST.get('pseries')
+        p_price=request.POST.get('pprice')
+        p_soldby=request.POST.get('psoldby')
+        NEW_PRODUCT=EshopProducts.objects.create(PRODUCT_BRAND=p_brand,PRODUCT_TITLE=p_title,
+                    PRODUCT_DESC=p_desc,PRODUCT_CATEGORY=p_category,PRODUCT_SERIES=p_series,PRODUCT_PRICE=p_price,SOLD_BY=p_soldby)
+        NEW_PRODUCT.PRODUCT_IMAGE=p_image
+        NEW_PRODUCT.save()
+        return render(request,'product/success_message.html',{'message':'New Product Added Successfully'})

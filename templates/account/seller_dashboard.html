@@ -262,7 +262,7 @@
               <div class="cardName">ADD NEW PRODUCTS</div>
             </div>
           </div>
-          <div class="card">
+          <div class="card" id="updateproducttoggle">
             <div class="text-center mt-4">
               <div class="numbers"><i class="fas fa-pen"></i></div>
               <div class="cardName">UPDATE PRODUCT</div>
@@ -403,26 +403,26 @@
         </h2>
         <div class="container mt-3">
           <h4>FILL PRODUCT DETAILS HERE</h4>
-          <form method="post">{% csrf_token %}
+          <form action="/products/add-new-product/" method="post" enctype="multipart/form-data">{% csrf_token %}
             <div class="mb-3">
               <label for="productimage" class="form-label">PRODUCT IMAGE</label>
-              <input type="file" class="form-control" id="productimage">
+              <input type="file" class="form-control" id="productimage" name="pimg">
             </div>
             <div class="mb-3">
               <label for="productbrand" class="form-label">PRODUCT BRAND</label>
-              <input type="text" class="form-control" id="productbrand">
+              <input type="text" class="form-control" id="productbrand" name="pbrand">
             </div>
             <div class="mb-3">
               <label for="productbrand" class="form-label">PRODUCT TITLE</label>
-              <input type="text" class="form-control" id="productbrand">
+              <input type="text" class="form-control" id="producttitle"  name="ptitle">
             </div>
             <div class="mb-3">
               <label for="prodesc" class="form-label">PRODUCT DESCRIPTION</label>
-              <textarea id="prodesc" name="desc"></textarea>
+              <textarea id="prodesc" name="pdesc"></textarea>
             </div>
             <div class="mb-3">
               <label for="" class="form-label">PRODUCT CATEGORY</label>
-              <select class="form-select" aria-label="Default select example">
+              <select class="form-select" aria-label="Default select example" name="pcategory">
                 <option selected>Choose..</option>
                 <option value="Mobile">Mobile</option>
                 <option value="Laptop">Laptop</option>
@@ -435,7 +435,7 @@
             </div>
             <div class="mb-3">
               <label for="productseries" class="form-label">PRODUCT SERIES</label>
-              <select class="form-select" aria-label="Default select example">
+              <select class="form-select" aria-label="Default select example" name="pseries">
                 <option selected>Choose..</option>
                 <option value="4K Series">4K Series</option>
                 <option value="A Series">A Series</option>
@@ -464,16 +464,28 @@
             </div>
             <div class="mb-3">
               <label for="productprice" class="form-label">PRODUCT PRICE</label>
-              <input type="text" class="form-control" id="productprice">
+              <input type="text" class="form-control" id="productprice" name="pprice">
             </div>
             <div class="mb-3">
-              <input type="hidden" class="form-control" id="soldby">
+              <input type="hidden" class="form-control" id="soldby" name="psoldby" value="{{request.session.SHOP_ID}}">
             </div>
             <input class="btn btn-primary" type="submit" name="submit">
           </form>
         </div>
       </div>
       <!--ADD PRODUCT CONTAINER ENDS HERE-->
+
+
+      <!--UPDATE PRODUCT CONTAINER START-->
+      <div class="container" id="updateproductcontainer" style="display:none;">
+        <h2 class="badge border border-dark text-dark" style="font-size:40px;font-weight: bold;">UPDATE EXSISTING PRODUCT
+        </h2>
+        <div class="container mt-3">
+          <h4>SELECT PRODUCT FOR UPDATE</h4>
+          
+        </div>
+      </div>
+      <!--UPDATE PRODUCT CONTAINER ENDS HERE-->
     </div>
   </div>
   {% endblock %}
@@ -1246,6 +1258,7 @@
       $("#sellerproducts").hide();
       $("#sellershop").hide();
       $("#addproductcontainer").hide();
+      $("#updateproductcontainer").hide();
       $("#sellerorder").fadeIn(2000);
     });
 
@@ -1253,6 +1266,7 @@
       $("#sellerdashboard").hide();
       $("#sellerproducts").fadeIn(2000);
       $("#sellershops").hide();
+      $("#updateproductcontainer").hide();
       $("#addproductcontainer").hide();
       $("#sellerorder").hide();
     });
@@ -1261,6 +1275,7 @@
       $("#sellerdashboard").hide();
       $("#sellerproducts").hide();
       $("#addproductcontainer").hide();
+      $("#updateproductcontainer").hide();
       $("#sellershops").fadeIn(2000);
       $("#sellerorder").hide();
     });
@@ -1270,6 +1285,7 @@
       $("#sellerproducts").hide();
       $("#sellershops").hide();
       $("#sellerorder").hide();
+      $("#updateproductcontainer").hide();
       $("#addproductcontainer").hide();
     });
 
@@ -1278,7 +1294,17 @@
       $("#sellerproducts").hide();
       $("#sellershops").hide();
       $("#sellerorder").hide();
+      $("#updateproductcontainer").hide();
       $("#addproductcontainer").fadeIn(2000);
+    });
+
+    $("#updateproducttoggle").click(function () {
+      $("#sellerdashboard").hide();
+      $("#sellerproducts").hide();
+      $("#sellershops").hide();
+      $("#sellerorder").hide();
+      $("#addproductcontainer").hide();
+      $("#updateproductcontainer").fadeIn(2000);
     });
   </script>
   <!--SCRIPT TAG END FOR MENU TOGGLE-->
