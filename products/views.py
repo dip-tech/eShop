@@ -37,3 +37,9 @@ def addNewProdutcs(request):
         NEW_PRODUCT.PRODUCT_IMAGE=p_image
         NEW_PRODUCT.save()
         return render(request,'product/success_message.html',{'message':'New Product Added Successfully'})
+
+def updateProduct(request):
+    if request.method=='GET':
+        scode=request.GET.get('s_code','')
+        return render(request,'product/update_product.html')
+    return render(request,'product/update_product.html')

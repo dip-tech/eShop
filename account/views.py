@@ -106,6 +106,10 @@ def shop(request):
             SHIPPED_ORDERS=list(Order.objects.filter(shop_id=request.session['SHOP_ID'],order_status="Shipped"))
             DELIVERED_ORDERS=list(Order.objects.filter(shop_id=request.session['SHOP_ID'],order_status="Delivered"))
             CANCELED_ORDERS=list(Order.objects.filter(shop_id=request.session['SHOP_ID'],order_status="Canceled"))
+            PRODUCT_MOBILES=list(EshopProducts.objects.filter(PRODUCT_CATEGORY='Mobile',SOLD_BY=request.session['SHOP_ID']))
+            PRODUCT_LAPTOPS=list(EshopProducts.objects.filter(PRODUCT_CATEGORY='Laptop',SOLD_BY=request.session['SHOP_ID']))
+            PRODUCT_TABLETS=list(EshopProducts.objects.filter(PRODUCT_CATEGORY='Tablet',SOLD_BY=request.session['SHOP_ID']))
+            PRODUCT_TELEVISIONS=list(EshopProducts.objects.filter(PRODUCT_CATEGORY='Television',SOLD_BY=request.session['SHOP_ID']))
             DASHBOARD_DATA={
                 'RECENT_PRODUCTS':TOTAL_PRODUCTS[-10:],
                 'RECENT_ORDERS':TOTAL_ORDERS[-10:],
@@ -119,7 +123,11 @@ def shop(request):
                 'ACTIVE_ORDERS':ACTIVE_ORDERS,
                 'DELIVERED_ORDERS':DELIVERED_ORDERS,
                 'SHIPPED_ORDERS':SHIPPED_ORDERS,
-                'CANCELED_ORDERS':CANCELED_ORDERS
+                'CANCELED_ORDERS':CANCELED_ORDERS,
+                'PRODUCT_MOBILES':PRODUCT_MOBILES,
+                'PRODUCT_LAPTOPS':PRODUCT_LAPTOPS,
+                'PRODUCT_TABLETS':PRODUCT_TABLETS,
+                'PRODUCT_TELEVISIONS':PRODUCT_TELEVISIONS
             }
             return render(request, 'account/seller_dashboard.html',DASHBOARD_DATA)
         else:

@@ -5,5 +5,6 @@ urlpatterns=[
     path('',views.productHome,name='ProductHome'),
     path('get_products/<str:category>/',views.getProducts,name='GetProducts'),
     path('product-details/<str:pid>/',views.productDetails,name='ProductDetails'),
-    path('add-new-product/',views.addNewProdutcs,name="addNewProdutcs")
+    path('add-new-product/',views.addNewProdutcs,name="addNewProdutcs"),
+    path('update-product-details/',views.updateProduct,name="updateProductDetails")
 ]

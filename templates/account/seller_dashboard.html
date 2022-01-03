@@ -482,7 +482,132 @@
         </h2>
         <div class="container mt-3">
           <h4>SELECT PRODUCT FOR UPDATE</h4>
-          
+          <!--PRODUCT MOBILES-->
+          <div class="alert alert-success mt-5" role="alert">
+            <h4 class="alert-heading"><b>MOBILES</b></h4>
+          </div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">SL NO</th>
+                <th scope="col">IMAGE</th>
+                <th scope="col">TITLE</th>
+                <th scope="col">BRAND</th>
+                <th scope="col">PRICE</th>
+                <th scope="col">OPTION</th>
+              </tr>
+            </thead>
+            <tbody style="font-size:16px;">
+              {% for pmob in PRODUCT_MOBILES %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td><img src="/media/{{pmob.PRODUCT_IMAGE}}" style="height: 50px;width:50px;"/></td>
+                <td>{{pmob.PRODUCT_TITLE}}</td>
+                <td>{{pmob.PRODUCT_BRAND}}</td>
+                <td>{{pmob.PRODUCT_PRICE}}</td>
+                <td>
+                  <form action="/products/update-product-details/" request="GET">
+                    <input type="hidden" value="{{pmob.id}}" name="p_id"/>
+                    <button type="submit" class="btn btn-warning text-white" >&nbsp;&nbsp;<i class="fas fa-edit" ></i></button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <!--PRODUCT LAPTOPS-->
+          <div class="alert alert-success mt-5" role="alert">
+            <h4 class="alert-heading"><b>LAPTOPS</b></h4>
+          </div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">SL NO</th>
+                <th scope="col">IMAGE</th>
+                <th scope="col">TITLE</th>
+                <th scope="col">BRAND</th>
+                <th scope="col">PRICE</th>
+                <th scope="col">OPTION</th>
+              </tr>
+            </thead>
+            <tbody style="font-size:16px;">
+              {% for plap in PRODUCT_LAPTOPS %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td><img src="/media/{{plap.PRODUCT_IMAGE}}" style="height: 50px;width:50px;"/></td>
+                <td>{{plap.PRODUCT_TITLE}}</td>
+                <td>{{plap.PRODUCT_BRAND}}</td>
+                <td>{{plap.PRODUCT_PRICE}}</td>
+                <td><form action="/products/update-product-details/" request="GET">
+                  <input type="hidden" value="{{plap.id}}" name="p_id"/>
+                  <button type="submit" class="btn btn-warning text-white" >&nbsp;&nbsp;<i class="fas fa-edit" ></i></button>
+                </form></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <!--PRODUCT TAB-->
+          <div class="alert alert-success mt-5" role="alert">
+            <h4 class="alert-heading"><b>TABLETS</b></h4>
+          </div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">SL NO</th>
+                <th scope="col">IMAGE</th>
+                <th scope="col">TITLE</th>
+                <th scope="col">BRAND</th>
+                <th scope="col">PRICE</th>
+                <th scope="col">OPTION</th>
+              </tr>
+            </thead>
+            <tbody style="font-size:16px;">
+              {% for ptab in PRODUCT_TABLETS %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td><img src="/media/{{ptab.PRODUCT_IMAGE}}" style="height: 50px;width:50px;"/></td>
+                <td>{{ptab.PRODUCT_TITLE}}</td>
+                <td>{{ptab.PRODUCT_BRAND}}</td>
+                <td>{{ptab.PRODUCT_PRICE}}</td>
+                <td><form action="/products/update-product-details/" request="GET">
+                  <input type="hidden" value="{{ptab.id}}" name="p_id"/>
+                  <button type="submit" class="btn btn-warning text-white" >&nbsp;&nbsp;<i class="fas fa-edit" ></i></button>
+                </form></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <!--PRODUCT TELEVISIONS-->
+          <div class="alert alert-success mt-5" role="alert">
+            <h4 class="alert-heading"><b>TELEVISIONS</b></h4>
+          </div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">SL NO</th>
+                <th scope="col">IMAGE</th>
+                <th scope="col">TITLE</th>
+                <th scope="col">BRAND</th>
+                <th scope="col">PRICE</th>
+                <th scope="col">OPTION</th>
+              </tr>
+            </thead>
+            <tbody style="font-size:16px;">
+              {% for ptele in PRODUCT_TELEVISIONS %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td><img src="/media/{{ptele.PRODUCT_IMAGE}}" style="height: 50px;width:50px;"/></td>
+                <td>{{ptele.PRODUCT_TITLE}}</td>
+                <td>{{ptele.PRODUCT_BRAND}}</td>
+                <td>{{ptele.PRODUCT_PRICE}}</td>
+                <td><form action="/products/update-product-details/" request="GET">
+                  <input type="hidden" value="{{ptele.id}}" name="p_id"/>
+                  <button type="submit" class="btn btn-warning text-white" >&nbsp;&nbsp;<i class="fas fa-edit" ></i></button>
+                </form></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
       </div>
       <!--UPDATE PRODUCT CONTAINER ENDS HERE-->
