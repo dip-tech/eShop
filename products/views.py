@@ -41,5 +41,21 @@ def addNewProdutcs(request):
 def updateProduct(request):
     if request.method=='GET':
         scode=request.GET.get('s_code','')
-        return render(request,'product/update_product.html')
+        if scode=='':
+            pid=request.GET.get('p_id')
+            item=EshopProducts.objects.get(id=pid)
+            item_info={
+                'img':item.PRODUCT_IMAGE,
+                'brand':item.PRODUCT_BRAND,
+                'title':item.PRODUCT_TITLE,
+                'desc':item.PRODUCT_DESC,
+                'category':item.PRODUCT_CATEGORY,
+                'series':item.PRODUCT_SERIES,
+                'price':item.PRODUCT_PRICE
+            }
+            return render(request,'product/update_product.html',item_info)
+        else:
+            return render(request,'product/success_message.html')
+
+
     return render(request,'product/update_product.html')

@@ -46,27 +46,27 @@
     <div class="alert border border-dark" role="alert" style="font-size:40px;font-weight: bold;">
         UPDATE PRODUCT DETAILS HERE
     </div>
-    <form class="mt-5" action="" method="GET" enctype="multipart/form-data" style="font-size: 18px;">{% csrf_token %}
+    <form class="mt-5" action="" method="GET" enctype="multipart/form-data" style="font-size: 18px;">
         <div class="mb-3">
           <label for="productimage" class="form-label">PRODUCT IMAGE</label>
           <input type="file" class="form-control" id="productimage" name="pimg">
         </div>
         <div class="mb-3">
           <label for="productbrand" class="form-label">PRODUCT BRAND</label>
-          <input type="text" class="form-control" id="productbrand" name="pbrand">
+          <input type="text" class="form-control" id="productbrand" name="pbrand" value="{{brand}}">
         </div>
         <div class="mb-3">
           <label for="productbrand" class="form-label">PRODUCT TITLE</label>
-          <input type="text" class="form-control" id="producttitle"  name="ptitle">
+          <input type="text" class="form-control" id="producttitle"  name="ptitle" value="{{ title }}">
         </div>
         <div class="mb-3">
           <label for="prodesc" class="form-label">PRODUCT DESCRIPTION</label>
-          <textarea id="prodesc" name="pdesc"></textarea>
+          <textarea id="prodesc" name="pdesc">{{desc|safe}}</textarea>
         </div>
         <div class="mb-3">
           <label for="" class="form-label">PRODUCT CATEGORY</label>
           <select class="form-select" aria-label="Default select example" name="pcategory">
-            <option selected>Choose..</option>
+            <option selected>{{ category }}</option>
             <option value="Mobile">Mobile</option>
             <option value="Laptop">Laptop</option>
             <option value="Tablet">Tablet</option>
@@ -78,8 +78,8 @@
         </div>
         <div class="mb-3">
           <label for="productseries" class="form-label">PRODUCT SERIES</label>
-          <select class="form-select" aria-label="Default select example" name="pseries">
-            <option selected>Choose..</option>
+          <select class="form-select" aria-label="Default select example" name="pseries" value="{{ series }}">
+            <option selected>{{ series }}</option>
             <option value="4K Series">4K Series</option>
             <option value="A Series">A Series</option>
             <option value="Bravia">Bravia</option>
@@ -107,11 +107,14 @@
         </div>
         <div class="mb-3">
           <label for="productprice" class="form-label">PRODUCT PRICE</label>
-          <input type="text" class="form-control" id="productprice" name="pprice">
+          <input type="text" class="form-control" id="productprice" name="pprice" value="{{ price }}">
         </div>
         <div class="mb-3">
           <input type="hidden" class="form-control" id="soldby" name="psoldby" value="{{request.session.SHOP_ID}}">
         </div>
+        <div class="mb-3">
+            <input type="hidden" class="form-control" name="s_code" value="1">
+          </div>
         <input class="btn btn-primary" type="submit" name="submit">
       </form>
 </div>
