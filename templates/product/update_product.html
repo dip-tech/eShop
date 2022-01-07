@@ -43,157 +43,161 @@
 <!--Home page body-->
 {% block body %}
 <div class="container mt-5">
-    <div class="alert border border-dark" role="alert" style="font-size:40px;font-weight: bold;">
-        UPDATE PRODUCT DETAILS HERE
+  <div class="alert border border-dark" role="alert" style="font-size:40px;font-weight: bold;">
+    UPDATE PRODUCT DETAILS HERE
+  </div>
+  <form class="mt-5" action="/products/update-product-details/" method="GET" enctype="multipart/form-data" style="font-size: 18px;">
+    <div class="mb-3">
+      <label for="productimage" class="form-label">PRODUCT IMAGE</label>
+      <input type="file" class="form-control" id="productimage" name="pimg">
+      
     </div>
-    <form class="mt-5" action="" method="GET" enctype="multipart/form-data" style="font-size: 18px;">
-        <div class="mb-3">
-          <label for="productimage" class="form-label">PRODUCT IMAGE</label>
-          <input type="file" class="form-control" id="productimage" name="pimg">
-        </div>
-        <div class="mb-3">
-          <label for="productbrand" class="form-label">PRODUCT BRAND</label>
-          <input type="text" class="form-control" id="productbrand" name="pbrand" value="{{brand}}">
-        </div>
-        <div class="mb-3">
-          <label for="productbrand" class="form-label">PRODUCT TITLE</label>
-          <input type="text" class="form-control" id="producttitle"  name="ptitle" value="{{ title }}">
-        </div>
-        <div class="mb-3">
-          <label for="prodesc" class="form-label">PRODUCT DESCRIPTION</label>
-          <textarea id="prodesc" name="pdesc">{{desc|safe}}</textarea>
-        </div>
-        <div class="mb-3">
-          <label for="" class="form-label">PRODUCT CATEGORY</label>
-          <select class="form-select" aria-label="Default select example" name="pcategory">
-            <option selected>{{ category }}</option>
-            <option value="Mobile">Mobile</option>
-            <option value="Laptop">Laptop</option>
-            <option value="Tablet">Tablet</option>
-            <option value="Speaker">Speaker</option>
-            <option value="Home Theater">Home Theater</option>
-            <option value="Television">Television</option>
-            <option value="Refrigerators">Refrigerators</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="productseries" class="form-label">PRODUCT SERIES</label>
-          <select class="form-select" aria-label="Default select example" name="pseries" value="{{ series }}">
-            <option selected>{{ series }}</option>
-            <option value="4K Series">4K Series</option>
-            <option value="A Series">A Series</option>
-            <option value="Bravia">Bravia</option>
-            <option value="Direct Coolt">Direct Cool</option>
-            <option value="Dolby Digital">Dolby Digital</option>
-            <option value="Extra Bass">Extra Bass</option>
-            <option value="F Series">F Series</option>
-            <option value="Frame Series">Frame Series</option>
-            <option value="Fully-Automatic Front Loading">Fully-Automatic Front Loading</option>
-            <option value="Fully-Automatic Top Loading">Fully-Automatic Top Loading</option>
-            <option value="HD Series">HD Series</option>
-            <option value="Inverter Frost Free">Inverter Frost Free</option>
-            <option value="M Series">M Series</option>
-            <option value="Note Series">Note Series</option>
-            <option value="Q Series">Q Series</option>
-            <option value="ROG Laptop">ROG Laptop</option>
-            <option value="ROG PHONE">ROG PHONE</option>
-            <option value="S Series">S Series</option>
-            <option value="TUF Laptop">TUF Laptop</option>
-            <option value="Vivobook">Vivobook</option>
-            <option value="Wondertainment Series">Wondertainment Series</option>
-            <option value="Z Series">Z Series</option>
-            <option value="Zenbook">Zenbook</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="productprice" class="form-label">PRODUCT PRICE</label>
-          <input type="text" class="form-control" id="productprice" name="pprice" value="{{ price }}">
-        </div>
-        <div class="mb-3">
-          <input type="hidden" class="form-control" id="soldby" name="psoldby" value="{{request.session.SHOP_ID}}">
-        </div>
-        <div class="mb-3">
-            <input type="hidden" class="form-control" name="s_code" value="1">
-          </div>
-        <input class="btn btn-primary" type="submit" name="submit">
-      </form>
+    <div class="mb-3">
+      <label for="productbrand" class="form-label">PRODUCT BRAND</label>
+      <input type="text" class="form-control" id="productbrand" name="pbrand" value="{{brand}}">
+    </div>
+    <div class="mb-3">
+      <label for="productbrand" class="form-label">PRODUCT TITLE</label>
+      <input type="text" class="form-control" id="producttitle" name="ptitle" value="{{ title }}">
+    </div>
+    <div class="mb-3">
+      <label for="prodesc" class="form-label">PRODUCT DESCRIPTION</label>
+      <textarea id="prodesc" name="pdesc">{{desc|safe}}</textarea>
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">PRODUCT CATEGORY</label>
+      <select class="form-select" aria-label="Default select example" name="pcategory">
+        <option selected>{{ category }}</option>
+        <option value="Mobile">Mobile</option>
+        <option value="Laptop">Laptop</option>
+        <option value="Tablet">Tablet</option>
+        <option value="Speaker">Speaker</option>
+        <option value="Home Theater">Home Theater</option>
+        <option value="Television">Television</option>
+        <option value="Refrigerators">Refrigerators</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="productseries" class="form-label">PRODUCT SERIES</label>
+      <select class="form-select" aria-label="Default select example" name="pseries" value="{{ series }}">
+        <option selected>{{ series }}</option>
+        <option value="4K Series">4K Series</option>
+        <option value="A Series">A Series</option>
+        <option value="Bravia">Bravia</option>
+        <option value="Direct Coolt">Direct Cool</option>
+        <option value="Dolby Digital">Dolby Digital</option>
+        <option value="Extra Bass">Extra Bass</option>
+        <option value="F Series">F Series</option>
+        <option value="Frame Series">Frame Series</option>
+        <option value="Fully-Automatic Front Loading">Fully-Automatic Front Loading</option>
+        <option value="Fully-Automatic Top Loading">Fully-Automatic Top Loading</option>
+        <option value="HD Series">HD Series</option>
+        <option value="Inverter Frost Free">Inverter Frost Free</option>
+        <option value="M Series">M Series</option>
+        <option value="Note Series">Note Series</option>
+        <option value="Q Series">Q Series</option>
+        <option value="ROG Laptop">ROG Laptop</option>
+        <option value="ROG PHONE">ROG PHONE</option>
+        <option value="S Series">S Series</option>
+        <option value="TUF Laptop">TUF Laptop</option>
+        <option value="Vivobook">Vivobook</option>
+        <option value="Wondertainment Series">Wondertainment Series</option>
+        <option value="Z Series">Z Series</option>
+        <option value="Zenbook">Zenbook</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="productprice" class="form-label">PRODUCT PRICE</label>
+      <input type="text" class="form-control" id="productprice" name="pprice" value="{{ price }}">
+    </div>
+    <div class="mb-3">
+      <input type="hidden" class="form-control" id="soldby" name="psoldby" value="{{request.session.SHOP_ID}}">
+    </div>
+    <div class="mb-3">
+      <input type="hidden" class="form-control" name="s_code" value="1">
+    </div>
+    <div class="mb-3">
+      <input type="hidden" class="form-control" name="p_id" value="{{id}}">
+    </div>
+    <input class="btn btn-primary" type="submit" name="submit">
+  </form>
 </div>
 {% endblock %}
 
 <!--Footer Block for Home Page-->
 {% block footer %}
 <div class="container-fluid" style="background-color: rgba(211, 211, 211, 0.767); margin-top: 50px;">
-    <div class="row mt-3" style="height:200px;">
-        <div class="col" style="max-width:400px ;">
-            <img class="img-fluid" src="{% static 'footer_logo_gray.png'%}">
-        </div>
-        <div class="col" style="max-height: 400px;">
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col">Links</th>
-                        <th scope="col">Guide</th>
-                        <th scope="col">User Account</th>
-                        <th scope="col">Seller Account</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!--table row 1-->
-                    <tr>
-                        <!--table data for Llinks-->
-                        <td style="font-size: smaller;">Home</td>
-                        <!--table data for Guid-->
-                        <td style="font-size: smaller;">How to Signup?</td>
-                        <!--table data for user-->
-                        <td style="font-size: smaller;"><a class="text-dark" role="button" href="#" id="userloginbtn"
-                                style="text-decoration: none;">User Login</a></td>
-                        <!--table data for vendor-->
-                        <td style="font-size: smaller;"><a href="/account/seller/" class="text-dark"
-                                style="text-decoration: none">Seller Login</a></td>
-                    </tr>
-                    <tr>
-                        <td style="font-size: smaller;">Contact Us</td>
-                        <td style="font-size: smaller;">How to Login?</td>
-                        <td style="font-size: smaller;"><a class="text-dark" style="text-decoration: none;"
-                                href="/account/buyer/registration/">User Signup</a></td>
-                        <td style="font-size: smaller;">Seller Signup</td>
-                    </tr>
-                    <tr>
-                        <td style="font-size: smaller;">About Us</td>
-                        <td style="font-size: smaller;">How to add product?</td>
-                        <td style="font-size: smaller;"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col" style="max-width: 200px;">
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <th scope="col">Address</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!--table row 1-->
-                    <tr>
-                        <!--table data for Address-->
-                        <td style="font-size: smaller;">
-                            21/6 CA Road,<br>
-                            New York City,1800800
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+  <div class="row mt-3" style="height:200px;">
+    <div class="col" style="max-width:400px ;">
+      <img class="img-fluid" src="{% static 'footer_logo_gray.png'%}">
     </div>
-    <div class="row justify-content-center" style="text-align: center;font-size: smaller;">
-        <p>copyright@2021</p>
+    <div class="col" style="max-height: 400px;">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Links</th>
+            <th scope="col">Guide</th>
+            <th scope="col">User Account</th>
+            <th scope="col">Seller Account</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--table row 1-->
+          <tr>
+            <!--table data for Llinks-->
+            <td style="font-size: smaller;">Home</td>
+            <!--table data for Guid-->
+            <td style="font-size: smaller;">How to Signup?</td>
+            <!--table data for user-->
+            <td style="font-size: smaller;"><a class="text-dark" role="button" href="#" id="userloginbtn"
+                style="text-decoration: none;">User Login</a></td>
+            <!--table data for vendor-->
+            <td style="font-size: smaller;"><a href="/account/seller/" class="text-dark"
+                style="text-decoration: none">Seller Login</a></td>
+          </tr>
+          <tr>
+            <td style="font-size: smaller;">Contact Us</td>
+            <td style="font-size: smaller;">How to Login?</td>
+            <td style="font-size: smaller;"><a class="text-dark" style="text-decoration: none;"
+                href="/account/buyer/registration/">User Signup</a></td>
+            <td style="font-size: smaller;">Seller Signup</td>
+          </tr>
+          <tr>
+            <td style="font-size: smaller;">About Us</td>
+            <td style="font-size: smaller;">How to add product?</td>
+            <td style="font-size: smaller;"></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+    <div class="col" style="max-width: 200px;">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Address</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!--table row 1-->
+          <tr>
+            <!--table data for Address-->
+            <td style="font-size: smaller;">
+              21/6 CA Road,<br>
+              New York City,1800800
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row justify-content-center" style="text-align: center;font-size: smaller;">
+    <p>copyright@2021</p>
+  </div>
 </div>
 {% endblock %}
 
 {% block javaScript %}
 <script>
-    CKEDITOR.replace("prodesc");
+  CKEDITOR.replace("prodesc");
 </script>
 {% endblock %}

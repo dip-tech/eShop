@@ -32,7 +32,6 @@ def ConfrimOrder(request, uid):
 
 def PlaceOrder(request):
     userobj = User.objects.get(username=userid)
-    print(cartItems)
     for item in cartItems:
         datetimeobj = datetime.datetime.now()
         RANDOM_STRING = "".join(

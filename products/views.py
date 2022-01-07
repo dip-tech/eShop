@@ -1,3 +1,4 @@
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import EshopProducts
@@ -39,23 +40,44 @@ def addNewProdutcs(request):
         return render(request,'product/success_message.html',{'message':'New Product Added Successfully'})
 
 def updateProduct(request):
-    if request.method=='GET':
-        scode=request.GET.get('s_code','')
-        if scode=='':
+    try:
+        if request.session['SHOP_ID']!=None:
+            scode=request.GET.get('s_code','')
             pid=request.GET.get('p_id')
             item=EshopProducts.objects.get(id=pid)
-            item_info={
-                'img':item.PRODUCT_IMAGE,
-                'brand':item.PRODUCT_BRAND,
-                'title':item.PRODUCT_TITLE,
-                'desc':item.PRODUCT_DESC,
-                'category':item.PRODUCT_CATEGORY,
-                'series':item.PRODUCT_SERIES,
-                'price':item.PRODUCT_PRICE
-            }
-            return render(request,'product/update_product.html',item_info)
-        else:
-            return render(request,'product/success_message.html')
+            if scode=='':
+                item_info={
+                    'id':item.id,
+                    'img':item.PRODUCT_IMAGE,
+                    'brand':item.PRODUCT_BRAND,
+                    'title':item.PRODUCT_TITLE,
+                    'desc':item.PRODUCT_DESC,
+                    'category':item.PRODUCT_CATEGORY,
+                    'series':item.PRODUCT_SERIES,
+                    'price':item.PRODUCT_PRICE
+                }
+                return render(request,'product/update_product.html',item_info)
+            elif scode=='1':
+                if request.GET.get('pimg'):
+                    item.PRODUCT_IMAGE=request.GET.get('pimg')
+                if request.GET.get('pbrand'):
+                    item.PRODUCT_BRAND=request.GET.get('pbrand')
+                if request.GET.get('ptitle'):
+                    item.PRODUCT_TITLE=request.GET.get('ptitle')
+                if request.GET.get('pdesc'):
+                    item.PRODUCT_DESC=request.GET.get('pdesc')
+                if request.GET.get('pcategory'):
+                    item.PRODUCT_CATEGORY=request.GET.get('pcategory')
+                if request.GET.get('pseries'):
+                    item.PRODUCT_SERIES=request.GET.get('pseries')
+                if request.GET.get('pprice'):
+                    item.PRODUCT_PRICE=request.GET.get('pprice')
+                item.save()
+
+                return render(request,'product/success_message.html',{'message':'PRODUCT UPDATE SUCCESSFULL.'})
+    except KeyError:
+        return HttpResponseRedirect('/account/seller/')
+    return HttpResponse("Error")
 
 
-    return render(request,'product/update_product.html')
+    
