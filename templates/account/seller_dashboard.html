@@ -149,8 +149,12 @@
                 <tr>
                   <td style="padding-left: 30px;padding-right:30px;"><button class="btn border border-dark"
                       type="button" style="width:200px;font-size:14px;">View Product</button></td>
-                  <td style="padding-left: 30px;padding-right:30px;"><button class="btn border border-dark"
-                      type="button" style="width:200px;font-size:14px;">Update Product</button></td>
+                  <td style="padding-left: 30px;padding-right:30px;">
+                    <form action="/products/update-product-details/" method="GET">
+                      <input type="hidden" name='p_id' value="{{ item.id }}">
+                      <button class="btn border border-dark" type="submit" style="width:200px;font-size:14px;">Update Product</button>
+                    </form>
+                  </td>
                   <td style="padding-left: 30px;padding-right:30px;"><button class="btn border border-dark"
                       type="button" style="width:200px;font-size:14px;">Delete Product</button></td>
                 </tr>
@@ -225,25 +229,25 @@
         </div>
         <div class="container">
           <div class="alert alert-success mt-5" role="alert">
-              <h4 class="alert-heading"><b>SHIPPED ITEMS</b></h4>
+            <h4 class="alert-heading"><b>SHIPPED ITEMS</b></h4>
           </div>
-      </div>
-      <div class="container justify-content-center" id="shippedordercontainer">
-
-      </div>
-      <div class="container">
-        <div class="alert alert-success mt-5" role="alert">
-            <h4 class="alert-heading"><b>DELIIVERED ITEMS</b></h4>
         </div>
-    </div>
+        <div class="container justify-content-center" id="shippedordercontainer">
+
+        </div>
+        <div class="container">
+          <div class="alert alert-success mt-5" role="alert">
+            <h4 class="alert-heading"><b>DELIIVERED ITEMS</b></h4>
+          </div>
+        </div>
         <div class="container justify-content-center" id="deliveredordercontainer">
 
         </div>
         <div class="container">
           <div class="alert alert-success mt-5" role="alert">
-              <h4 class="alert-heading"><b>CANCELED ITEMS</b></h4>
+            <h4 class="alert-heading"><b>CANCELED ITEMS</b></h4>
           </div>
-      </div>
+        </div>
         <div class="container justify-content-center" id="canceledordercontainer">
 
         </div>
@@ -268,19 +272,19 @@
               <div class="cardName">UPDATE PRODUCT</div>
             </div>
           </div>
-          <div class="card">
+          <div class="card" >
             <div class="text-center mt-4">
               <div class="numbers"><i class="fas fa-trash-alt"></i></div>
               <div class="cardName">DELETE PRODUCT</div>
             </div>
           </div>
-          <div class="card">
+          <div class="card" id="viewproducttoggle">
             <div class="text-center mt-4">
               <div class="numbers"><i class="far fa-eye"></i></i></div>
               <div class="cardName">VIEW ALL PRODUCTS</div>
             </div>
           </div>
-        
+
         </div>
         <!--HEADER FOR RECENT PRODUCTS-->
         <div class="container mt-5">
@@ -321,8 +325,13 @@
                 <tr>
                   <td style="padding-left: 30px;padding-right:30px;"><button class="btn border border-dark"
                       type="button" style="width:200px;font-size:14px;">View Product</button></td>
-                  <td style="padding-left: 30px;padding-right:30px;"><button class="btn border border-dark"
-                      type="button" style="width:200px;font-size:14px;">Update Product</button></td>
+                  <td style="padding-left: 30px;padding-right:30px;">
+                    <form action="/products/update-product-details/" method="GET">
+                      <input type="hidden" name="p_id" value="{{item.id}}">
+                      <button class="btn border border-dark" type="submit" style="width:200px;font-size:14px;">Update
+                        Product</button>
+                    </form>
+                  </td>
                   <td style="padding-left: 30px;padding-right:30px;"><button class="btn border border-dark"
                       type="button" style="width:200px;font-size:14px;">Delete Product</button></td>
                 </tr>
@@ -414,7 +423,7 @@
             </div>
             <div class="mb-3">
               <label for="productbrand" class="form-label">PRODUCT TITLE</label>
-              <input type="text" class="form-control" id="producttitle"  name="ptitle">
+              <input type="text" class="form-control" id="producttitle" name="ptitle">
             </div>
             <div class="mb-3">
               <label for="prodesc" class="form-label">PRODUCT DESCRIPTION</label>
@@ -478,7 +487,8 @@
 
       <!--UPDATE PRODUCT CONTAINER START-->
       <div class="container" id="updateproductcontainer" style="display:none;">
-        <h2 class="badge border border-dark text-dark" style="font-size:40px;font-weight: bold;">UPDATE EXSISTING PRODUCT
+        <h2 class="badge border border-dark text-dark" style="font-size:40px;font-weight: bold;">UPDATE EXSISTING
+          PRODUCT
         </h2>
         <div class="container mt-3">
           <h4>SELECT PRODUCT FOR UPDATE</h4>
@@ -501,14 +511,15 @@
               {% for pmob in PRODUCT_MOBILES %}
               <tr>
                 <td>{{forloop.counter}}</td>
-                <td><img src="/media/{{pmob.PRODUCT_IMAGE}}" style="height: 50px;width:50px;"/></td>
+                <td><img src="/media/{{pmob.PRODUCT_IMAGE}}" style="height: 50px;width:50px;" /></td>
                 <td>{{pmob.PRODUCT_TITLE}}</td>
                 <td>{{pmob.PRODUCT_BRAND}}</td>
                 <td>{{pmob.PRODUCT_PRICE}}</td>
                 <td>
                   <form action="/products/update-product-details/" request="GET">
-                    <input type="hidden" value="{{pmob.id}}" name="p_id"/>
-                    <button type="submit" class="btn btn-warning text-white" >&nbsp;&nbsp;<i class="fas fa-edit" ></i></button>
+                    <input type="hidden" value="{{pmob.id}}" name="p_id" />
+                    <button type="submit" class="btn btn-warning text-white">&nbsp;&nbsp;<i
+                        class="fas fa-edit"></i></button>
                   </form>
                 </td>
               </tr>
@@ -534,14 +545,17 @@
               {% for plap in PRODUCT_LAPTOPS %}
               <tr>
                 <td>{{forloop.counter}}</td>
-                <td><img src="/media/{{plap.PRODUCT_IMAGE}}" style="height: 50px;width:50px;"/></td>
+                <td><img src="/media/{{plap.PRODUCT_IMAGE}}" style="height: 50px;width:50px;" /></td>
                 <td>{{plap.PRODUCT_TITLE}}</td>
                 <td>{{plap.PRODUCT_BRAND}}</td>
                 <td>{{plap.PRODUCT_PRICE}}</td>
-                <td><form action="/products/update-product-details/" request="GET">
-                  <input type="hidden" value="{{plap.id}}" name="p_id"/>
-                  <button type="submit" class="btn btn-warning text-white" >&nbsp;&nbsp;<i class="fas fa-edit" ></i></button>
-                </form></td>
+                <td>
+                  <form action="/products/update-product-details/" request="GET">
+                    <input type="hidden" value="{{plap.id}}" name="p_id" />
+                    <button type="submit" class="btn btn-warning text-white">&nbsp;&nbsp;<i
+                        class="fas fa-edit"></i></button>
+                  </form>
+                </td>
               </tr>
               {% endfor %}
             </tbody>
@@ -565,14 +579,17 @@
               {% for ptab in PRODUCT_TABLETS %}
               <tr>
                 <td>{{forloop.counter}}</td>
-                <td><img src="/media/{{ptab.PRODUCT_IMAGE}}" style="height: 50px;width:50px;"/></td>
+                <td><img src="/media/{{ptab.PRODUCT_IMAGE}}" style="height: 50px;width:50px;" /></td>
                 <td>{{ptab.PRODUCT_TITLE}}</td>
                 <td>{{ptab.PRODUCT_BRAND}}</td>
                 <td>{{ptab.PRODUCT_PRICE}}</td>
-                <td><form action="/products/update-product-details/" request="GET">
-                  <input type="hidden" value="{{ptab.id}}" name="p_id"/>
-                  <button type="submit" class="btn btn-warning text-white" >&nbsp;&nbsp;<i class="fas fa-edit" ></i></button>
-                </form></td>
+                <td>
+                  <form action="/products/update-product-details/" request="GET">
+                    <input type="hidden" value="{{ptab.id}}" name="p_id" />
+                    <button type="submit" class="btn btn-warning text-white">&nbsp;&nbsp;<i
+                        class="fas fa-edit"></i></button>
+                  </form>
+                </td>
               </tr>
               {% endfor %}
             </tbody>
@@ -596,14 +613,17 @@
               {% for ptele in PRODUCT_TELEVISIONS %}
               <tr>
                 <td>{{forloop.counter}}</td>
-                <td><img src="/media/{{ptele.PRODUCT_IMAGE}}" style="height: 50px;width:50px;"/></td>
+                <td><img src="/media/{{ptele.PRODUCT_IMAGE}}" style="height: 50px;width:50px;" /></td>
                 <td>{{ptele.PRODUCT_TITLE}}</td>
                 <td>{{ptele.PRODUCT_BRAND}}</td>
                 <td>{{ptele.PRODUCT_PRICE}}</td>
-                <td><form action="/products/update-product-details/" request="GET">
-                  <input type="hidden" value="{{ptele.id}}" name="p_id"/>
-                  <button type="submit" class="btn btn-warning text-white" >&nbsp;&nbsp;<i class="fas fa-edit" ></i></button>
-                </form></td>
+                <td>
+                  <form action="/products/update-product-details/" request="GET">
+                    <input type="hidden" value="{{ptele.id}}" name="p_id" />
+                    <button type="submit" class="btn btn-warning text-white">&nbsp;&nbsp;<i
+                        class="fas fa-edit"></i></button>
+                  </form>
+                </td>
               </tr>
               {% endfor %}
             </tbody>
@@ -611,6 +631,149 @@
         </div>
       </div>
       <!--UPDATE PRODUCT CONTAINER ENDS HERE-->
+
+      <!--VIEW PRODUCT CONTAINER START HERE-->
+      <div class="container" id="viewproductcontainer" style="display:none;">
+        <h2 class="badge border border-dark text-dark" style="font-size:40px;font-weight: bold;">VIEW EXSISTING
+          PRODUCT
+        </h2>
+        <div class="container mt-3">
+          <h4>SELECT PRODUCT TO VIEW</h4>
+          <!--PRODUCT MOBILES-->
+          <div class="alert alert-success mt-5" role="alert">
+            <h4 class="alert-heading"><b>MOBILES</b></h4>
+          </div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">SL NO</th>
+                <th scope="col">IMAGE</th>
+                <th scope="col">TITLE</th>
+                <th scope="col">BRAND</th>
+                <th scope="col">PRICE</th>
+                <th scope="col">OPTION</th>
+              </tr>
+            </thead>
+            <tbody style="font-size:16px;">
+              {% for pmob in PRODUCT_MOBILES %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td><img src="/media/{{pmob.PRODUCT_IMAGE}}" style="height: 50px;width:50px;" /></td>
+                <td>{{pmob.PRODUCT_TITLE}}</td>
+                <td>{{pmob.PRODUCT_BRAND}}</td>
+                <td>{{pmob.PRODUCT_PRICE}}</td>
+                <td>
+                  <form action="/products/view/" request="GET">
+                    <input type="hidden" value="{{pmob.id}}" name="p_id" />
+                    <button type="submit" class="btn btn-warning text-white">&nbsp;&nbsp;<i class="fas fa-eye"></i></button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <!--PRODUCT LAPTOPS-->
+          <div class="alert alert-success mt-5" role="alert">
+            <h4 class="alert-heading"><b>LAPTOPS</b></h4>
+          </div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">SL NO</th>
+                <th scope="col">IMAGE</th>
+                <th scope="col">TITLE</th>
+                <th scope="col">BRAND</th>
+                <th scope="col">PRICE</th>
+                <th scope="col">OPTION</th>
+              </tr>
+            </thead>
+            <tbody style="font-size:16px;">
+              {% for plap in PRODUCT_LAPTOPS %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td><img src="/media/{{plap.PRODUCT_IMAGE}}" style="height: 50px;width:50px;" /></td>
+                <td>{{plap.PRODUCT_TITLE}}</td>
+                <td>{{plap.PRODUCT_BRAND}}</td>
+                <td>{{plap.PRODUCT_PRICE}}</td>
+                <td>
+                  <form action="/products/view/" request="GET">
+                    <input type="hidden" value="{{plap.id}}" name="p_id" />
+                    <button type="submit" class="btn btn-warning text-white">&nbsp;&nbsp;<i class="fas fa-eye"></i></button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <!--PRODUCT TAB-->
+          <div class="alert alert-success mt-5" role="alert">
+            <h4 class="alert-heading"><b>TABLETS</b></h4>
+          </div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">SL NO</th>
+                <th scope="col">IMAGE</th>
+                <th scope="col">TITLE</th>
+                <th scope="col">BRAND</th>
+                <th scope="col">PRICE</th>
+                <th scope="col">OPTION</th>
+              </tr>
+            </thead>
+            <tbody style="font-size:16px;">
+              {% for ptab in PRODUCT_TABLETS %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td><img src="/media/{{ptab.PRODUCT_IMAGE}}" style="height: 50px;width:50px;" /></td>
+                <td>{{ptab.PRODUCT_TITLE}}</td>
+                <td>{{ptab.PRODUCT_BRAND}}</td>
+                <td>{{ptab.PRODUCT_PRICE}}</td>
+                <td>
+                  <form action="/products/view/" request="GET">
+                    <input type="hidden" value="{{ptab.id}}" name="p_id" />
+                    <button type="submit" class="btn btn-warning text-white">&nbsp;&nbsp;<i class="fas fa-eye"></i></button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <!--PRODUCT TELEVISIONS-->
+          <div class="alert alert-success mt-5" role="alert">
+            <h4 class="alert-heading"><b>TELEVISIONS</b></h4>
+          </div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">SL NO</th>
+                <th scope="col">IMAGE</th>
+                <th scope="col">TITLE</th>
+                <th scope="col">BRAND</th>
+                <th scope="col">PRICE</th>
+                <th scope="col">OPTION</th>
+              </tr>
+            </thead>
+            <tbody style="font-size:16px;">
+              {% for ptele in PRODUCT_TELEVISIONS %}
+              <tr>
+                <td>{{forloop.counter}}</td>
+                <td><img src="/media/{{ptele.PRODUCT_IMAGE}}" style="height: 50px;width:50px;" /></td>
+                <td>{{ptele.PRODUCT_TITLE}}</td>
+                <td>{{ptele.PRODUCT_BRAND}}</td>
+                <td>{{ptele.PRODUCT_PRICE}}</td>
+                <td>
+                  <form action="/products/view/" request="GET">
+                    <input type="hidden" value="{{ptele.id}}" name="p_id" />
+                    <button type="submit" class="btn btn-warning text-white">&nbsp;&nbsp;<i class="fas fa-eye"></i></button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!--VIEW PRODUCT CONTAINER END HERE-->
     </div>
   </div>
   {% endblock %}
@@ -1384,6 +1547,7 @@
       $("#sellershop").hide();
       $("#addproductcontainer").hide();
       $("#updateproductcontainer").hide();
+      $("#viewproductcontainer").hide();
       $("#sellerorder").fadeIn(2000);
     });
 
@@ -1393,6 +1557,7 @@
       $("#sellershops").hide();
       $("#updateproductcontainer").hide();
       $("#addproductcontainer").hide();
+      $("#viewproductcontainer").hide();
       $("#sellerorder").hide();
     });
 
@@ -1401,6 +1566,7 @@
       $("#sellerproducts").hide();
       $("#addproductcontainer").hide();
       $("#updateproductcontainer").hide();
+      $("#viewproductcontainer").hide();
       $("#sellershops").fadeIn(2000);
       $("#sellerorder").hide();
     });
@@ -1411,6 +1577,7 @@
       $("#sellershops").hide();
       $("#sellerorder").hide();
       $("#updateproductcontainer").hide();
+      $("#viewproductcontainer").hide();
       $("#addproductcontainer").hide();
     });
 
@@ -1420,6 +1587,7 @@
       $("#sellershops").hide();
       $("#sellerorder").hide();
       $("#updateproductcontainer").hide();
+      $("#viewproductcontainer").hide();
       $("#addproductcontainer").fadeIn(2000);
     });
 
@@ -1429,7 +1597,18 @@
       $("#sellershops").hide();
       $("#sellerorder").hide();
       $("#addproductcontainer").hide();
+      $("#viewproductcontainer").hide();
       $("#updateproductcontainer").fadeIn(2000);
+    });
+
+    $("#viewproducttoggle").click(function () {
+      $("#sellerdashboard").hide();
+      $("#sellerproducts").hide();
+      $("#sellershops").hide();
+      $("#sellerorder").hide();
+      $("#addproductcontainer").hide();
+      $("#viewproductcontainer").fadeIn(2000);
+      $("#updateproductcontainer").hide();
     });
   </script>
   <!--SCRIPT TAG END FOR MENU TOGGLE-->

@@ -79,5 +79,16 @@ def updateProduct(request):
         return HttpResponseRedirect('/account/seller/')
     return HttpResponse("Error")
 
+def viewProduct(request):
+    try:
+        if request.session['SHOP_ID']!=None:
+            pid=request.GET.get('p_id')
+            item=EshopProducts.objects.get(id=pid)
+            return render(request,'product/view_product.html',{'item':item})     
+    except KeyError:
+        return HttpResponseRedirect('/account/seller/')
+    return HttpResponse("Error")
+
+
 
     
