@@ -110,6 +110,9 @@ def shop(request):
             PRODUCT_LAPTOPS=list(EshopProducts.objects.filter(PRODUCT_CATEGORY='Laptop',SOLD_BY=request.session['SHOP_ID']))
             PRODUCT_TABLETS=list(EshopProducts.objects.filter(PRODUCT_CATEGORY='Tablet',SOLD_BY=request.session['SHOP_ID']))
             PRODUCT_TELEVISIONS=list(EshopProducts.objects.filter(PRODUCT_CATEGORY='Television',SOLD_BY=request.session['SHOP_ID']))
+            SHOP_DATA=Shop.objects.get(SHOP_ID=request.session['SHOP_ID'])
+            SHOP_DATA_USER=User.objects.get(username=request.session['SHOP_ID'])
+            SHOP_ID=Signer().unsign_object(SHOP_DATA_USER.username)
             DASHBOARD_DATA={
                 'RECENT_PRODUCTS':TOTAL_PRODUCTS[-10:],
                 'RECENT_ORDERS':TOTAL_ORDERS[-10:],
@@ -127,7 +130,11 @@ def shop(request):
                 'PRODUCT_MOBILES':PRODUCT_MOBILES,
                 'PRODUCT_LAPTOPS':PRODUCT_LAPTOPS,
                 'PRODUCT_TABLETS':PRODUCT_TABLETS,
-                'PRODUCT_TELEVISIONS':PRODUCT_TELEVISIONS
+                'PRODUCT_TELEVISIONS':PRODUCT_TELEVISIONS,
+                'SHOP':SHOP_DATA,
+                'SHOP_ID':SHOP_ID,
+                'SHOP_EMAIL':SHOP_DATA_USER.email
+
             }
             return render(request, 'account/seller_dashboard.html',DASHBOARD_DATA)
         else:

@@ -149,19 +149,19 @@
                 <tr>
                   <td style="padding-left: 30px;padding-right:30px;">
                     <form action="/products/view/" method="GET">
-                    <input type="hidden" name="p_id" value="{{ item.id }}"  >
-                    <button class="btn border border-dark"
-                      type="submit" style="width:200px;font-size:14px;">View Product</button>
+                      <input type="hidden" name="p_id" value="{{ item.id }}">
+                      <button class="btn border border-dark" type="submit" style="width:200px;font-size:14px;">View
+                        Product</button>
                     </form>
-                    </td>
+                  </td>
                   <td style="padding-left: 30px;padding-right:30px;">
                     <form action="/products/update-product-details/" method="GET">
                       <input type="hidden" name='p_id' value="{{ item.id }}">
-                      <button class="btn border border-dark" type="submit" style="width:200px;font-size:14px;">Update Product</button>
+                      <button class="btn border border-dark" type="submit" style="width:200px;font-size:14px;">Update
+                        Product</button>
                     </form>
                   </td>
-                  <td style="padding-left: 30px;padding-right:30px;"><button class="btn border border-dark"
-                      type="button" style="width:200px;font-size:14px;">Delete Product</button></td>
+
                 </tr>
               </table>
             </div>
@@ -277,12 +277,6 @@
               <div class="cardName">UPDATE PRODUCT</div>
             </div>
           </div>
-          <div class="card" >
-            <div class="text-center mt-4">
-              <div class="numbers"><i class="fas fa-trash-alt"></i></div>
-              <div class="cardName">DELETE PRODUCT</div>
-            </div>
-          </div>
           <div class="card" id="viewproducttoggle">
             <div class="text-center mt-4">
               <div class="numbers"><i class="far fa-eye"></i></i></div>
@@ -331,10 +325,10 @@
                   <td style="padding-left: 30px;padding-right:30px;">
                     <form action="/products/view/" method="GET">
                       <input type="hidden" name="p_id" value="{{item.id}}">
-                    <button class="btn border border-dark"
-                      type="submit" style="width:200px;font-size:14px;">View Product</button>
+                      <button class="btn border border-dark" type="submit" style="width:200px;font-size:14px;">View
+                        Product</button>
                     </form>
-                    </td>
+                  </td>
                   <td style="padding-left: 30px;padding-right:30px;">
                     <form action="/products/update-product-details/" method="GET">
                       <input type="hidden" name="p_id" value="{{item.id}}">
@@ -342,8 +336,6 @@
                         Product</button>
                     </form>
                   </td>
-                  <td style="padding-left: 30px;padding-right:30px;"><button class="btn border border-dark"
-                      type="button" style="width:200px;font-size:14px;">Delete Product</button></td>
                 </tr>
               </table>
             </div>
@@ -358,61 +350,92 @@
         <!-- Content here -->
         <h4 class="badge border border-dark text-dark" style="font-size:40px;font-weight: bold;"><span><i
               class="fas fa-tag"></i></span>&nbsp;&nbsp;SHOP</h4>
-        <div class="cardBox">
-          <div class="card">
-            <div class="text-center mt-4">
-              <div class="numbers"><i class="fas fa-plus-square"></i></div>
-              <div class="cardName">ADD NEW SHOP</div>
+              <div class="row " style="padding: 10px;">
+                <div class="col-4 align-self-start">
+                    <div class="alert alert-success" role="alert" style="box-shadow:2px 2px 5px 1px lightgray;padding:10px;">
+                        <div class="text-center">
+                            <img src="{% static 'avter.png' %}" class="rounded" alt="..." style="height:80px;width:80px;">
+                        </div>
+                        <h4 class="alert-heading text-center">Hello, {{ SHOP.SHOP_NAME }}</h4>
+                    </div>
+                    <div class="list-group" style="box-shadow:2px 2px 5px 1px lightgray;padding:10px;">
+                        <button type="button" class="list-group-item list-group-item-action" aria-current="true">
+                            <strong>Account Settings</strong>
+                        </button>
+                        <button type="button" id="profileinformationbtn" class="list-group-item list-group-item-action">&nbsp;&nbsp;&nbsp;&nbsp;Profile
+                            Information</button>
+                        <button type="button" id="manageaddressbtn" class="list-group-item list-group-item-action">&nbsp;&nbsp;&nbsp;&nbsp;Manage
+                            Address</button>
+                    </div>
+                </div>
+                <div class="col">
+                    <!--CONTAINER FOR PERSONAL INFORMATION-->
+                    <div class="container bg-light" id="personalinformationcontainer" style="padding: 10px;box-shadow:2px 2px 5px 1px lightgray;">
+                        <form action="" method="GET">
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label" style="font-size:36px;">Owner Name </label>&nbsp;&nbsp;<span role="button" id="editpersonaldetails"
+                                    class="badge border border-dark text-dark">Edit</span>
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <td><input type="text" class="form-control" id="userFirstName"
+                                                value="{{ SHOP.OWNER_NAME }}" disabled style="font-size:36px;color: gray;"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label" style="font-size:36px;">Email</label>
+                                <input type="email" id="userEmail" class="form-control" value="{{ SHOP_EMAIL }}"
+                                    style="font-size:36px;color: gray;" disabled>
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputPassword1" class="form-label" style="font-size:36px;">Shop ID</label>
+                                <input type="email" class="form-control" value="{{ SHOP_ID }}"
+                                    style="font-size:36px;color: gray;" disabled>
+                            </div>
+                            <button type="submit" id="personaldetailssavebtn" class="btn border border-dark"
+                                style="display:none">Save</button>
+                        </form>
+                    </div>
+                    <!--CONTAINER FOR MANAGE ADDRESS-->
+                    <div class="container bg-light" id="manageaddresscontainer" style="padding: 10px;box-shadow:2px 2px 5px 1px lightgray; display:none;">
+                        <form class="" style="padding: 10px;">
+                            <div class="mb-3">
+                                <label for="inputAddress" class="form-label" style="font-size:30px;">House/ Apartment No</label>&nbsp;&nbsp;<small role="button" id="manageaddresseditbtn" class="badge border border-dark text-dark">Edit</small>
+                                <textarea class="form-control" id="inputHouse2" name="inputHouse2Value"  style="font-size:36px;color: gray;" disabled>{{ SHOP.SHOP_HOUSE_NO }}</textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="inputAddress2" class="form-label" style="font-size:36px;">Locality</label>
+                                <input type="text" class="form-control" id="inputLocality2" name="inputLocality2Value" value="{{ SHOP.SHOP_LOCALITY }}" disabled style="font-size:30px;color: gray;">
+                            </div>
+                            <div class="mb-3">
+                                <label for="inputCity" class="form-label" style="font-size:36px;">City</label>
+                                <input type="text" class="form-control" id="inputCity2" name="inputCity2Value" value="{{ SHOP.SHOP_CITY }}" disabled style="font-size:36px;color: gray;">
+                            </div>
+                            <div class="mb-3">
+                                <label for="inputState" class="form-label" style="font-size:36px;">State</label>
+                                <select id="inputState2" class="form-select" style="font-size:36px;color: gray;" disabled>
+                                    <option selected >{{ SHOP.SHOP_STATE }}</option>
+                                    <option value="Delhi">Delhi</option>
+                                    <option value="Goa">Goa</option>
+                                    <option value="Gujarat">Gujarat</option>
+                                    <option value="Haryana">Haryana</option>
+                                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                    <option value="Jharkhand">Jharkhand</option>
+                                    <option value="Karnataka">Karnataka</option>
+                                    <option value="Maharashtra">Maharashtra</option>
+                                    <option value="Tamil Nadu">Tamil Nadu</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="inputZip2" class="form-label" style="font-size:36px;">Zip</label>
+                                <input type="text" class="form-control" id="inputZip2" value="{{ SHOP.SHOP_ZIP_CODE }}" disabled style="font-size:36px;color: gray;">
+                            </div>
+                            <button type="submit" id="saveAddressbtn" class="btn border border-dark" style="display: none;">Save</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="card">
-            <div class="text-center mt-4">
-              <div class="numbers"><i class="fas fa-pen"></i></div>
-              <div class="cardName">UPDATE SHOP</div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="text-center mt-4">
-              <div class="numbers"><i class="fas fa-trash-alt"></i></div>
-              <div class="cardName">DELETE SHOP</div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="text-center mt-4">
-              <div class="numbers"><i class="far fa-eye"></i></div>
-              <div class="cardName">TOTAL SHOP</div>
-            </div>
-          </div>
-        </div>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td colspan="2">Larry the Bird</td>
-              <td>@twitter</td>
-            </tr>
-          </tbody>
-        </table>
+
       </div>
       <!--SELLER SHOP SECTION END-->
 
@@ -675,7 +698,8 @@
                 <td>
                   <form action="/products/view/" request="GET">
                     <input type="hidden" value="{{pmob.id}}" name="p_id" />
-                    <button type="submit" class="btn btn-warning text-white">&nbsp;&nbsp;<i class="fas fa-eye"></i></button>
+                    <button type="submit" class="btn btn-warning text-white">&nbsp;&nbsp;<i
+                        class="fas fa-eye"></i></button>
                   </form>
                 </td>
               </tr>
@@ -708,7 +732,8 @@
                 <td>
                   <form action="/products/view/" request="GET">
                     <input type="hidden" value="{{plap.id}}" name="p_id" />
-                    <button type="submit" class="btn btn-warning text-white">&nbsp;&nbsp;<i class="fas fa-eye"></i></button>
+                    <button type="submit" class="btn btn-warning text-white">&nbsp;&nbsp;<i
+                        class="fas fa-eye"></i></button>
                   </form>
                 </td>
               </tr>
@@ -741,7 +766,8 @@
                 <td>
                   <form action="/products/view/" request="GET">
                     <input type="hidden" value="{{ptab.id}}" name="p_id" />
-                    <button type="submit" class="btn btn-warning text-white">&nbsp;&nbsp;<i class="fas fa-eye"></i></button>
+                    <button type="submit" class="btn btn-warning text-white">&nbsp;&nbsp;<i
+                        class="fas fa-eye"></i></button>
                   </form>
                 </td>
               </tr>
@@ -774,7 +800,8 @@
                 <td>
                   <form action="/products/view/" request="GET">
                     <input type="hidden" value="{{ptele.id}}" name="p_id" />
-                    <button type="submit" class="btn btn-warning text-white">&nbsp;&nbsp;<i class="fas fa-eye"></i></button>
+                    <button type="submit" class="btn btn-warning text-white">&nbsp;&nbsp;<i
+                        class="fas fa-eye"></i></button>
                   </form>
                 </td>
               </tr>
@@ -784,97 +811,97 @@
         </div>
       </div>
       <!--VIEW PRODUCT CONTAINER END HERE-->
+
     </div>
-  </div>
-  {% endblock %}
+    {% endblock %}
 
-  <!--Footer Block for Home Page-->
-  {% block footer %}
-  <div class="container-fluid" style="background-color: rgba(211, 211, 211, 0.767); margin-top: 50px;">
-    <div class="row mt-3" style="height:200px;">
-      <div class="col" style="max-width:400px ;">
-        <img class="img-fluid" src="{% static 'footer_logo_gray.png'%}">
+    <!--Footer Block for Home Page-->
+    {% block footer %}
+    <div class="container-fluid" style="background-color: rgba(211, 211, 211, 0.767); margin-top: 50px;">
+      <div class="row mt-3" style="height:200px;">
+        <div class="col" style="max-width:400px ;">
+          <img class="img-fluid" src="{% static 'footer_logo_gray.png'%}">
+        </div>
+        <div class="col" style="max-height: 400px;">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Links</th>
+                <th scope="col">Guide</th>
+                <th scope="col">User Account</th>
+                <th scope="col">Seller Account</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!--table row 1-->
+              <tr>
+                <!--table data for Llinks-->
+                <td style="font-size: smaller;">Home</td>
+                <!--table data for Guid-->
+                <td style="font-size: smaller;">How to Signup?</td>
+                <!--table data for user-->
+                <td style="font-size: smaller;"><a class="text-dark" role="button" href="#" id="userloginbtn"
+                    style="text-decoration: none;">User Login</a></td>
+                <!--table data for vendor-->
+                <td style="font-size: smaller;"><a href="/account/seller/" class="text-dark"
+                    style="text-decoration: none">Seller Login</a></td>
+              </tr>
+              <tr>
+                <td style="font-size: smaller;">Contact Us</td>
+                <td style="font-size: smaller;">How to Login?</td>
+                <td style="font-size: smaller;"><a class="text-dark" style="text-decoration: none;"
+                    href="/account/buyer/registration/">User Signup</a></td>
+                <td style="font-size: smaller;">Seller Signup</td>
+              </tr>
+              <tr>
+                <td style="font-size: smaller;">About Us</td>
+                <td style="font-size: smaller;">How to add product?</td>
+                <td style="font-size: smaller;"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col" style="max-width: 200px;">
+          <table class="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Address</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!--table row 1-->
+              <tr>
+                <!--table data for Address-->
+                <td style="font-size: smaller;">
+                  21/6 CA Road,<br>
+                  New York City,1800800
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="col" style="max-height: 400px;">
-        <table class="table table-sm">
-          <thead>
-            <tr>
-              <th scope="col">Links</th>
-              <th scope="col">Guide</th>
-              <th scope="col">User Account</th>
-              <th scope="col">Seller Account</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!--table row 1-->
-            <tr>
-              <!--table data for Llinks-->
-              <td style="font-size: smaller;">Home</td>
-              <!--table data for Guid-->
-              <td style="font-size: smaller;">How to Signup?</td>
-              <!--table data for user-->
-              <td style="font-size: smaller;"><a class="text-dark" role="button" href="#" id="userloginbtn"
-                  style="text-decoration: none;">User Login</a></td>
-              <!--table data for vendor-->
-              <td style="font-size: smaller;"><a href="/account/seller/" class="text-dark"
-                  style="text-decoration: none">Seller Login</a></td>
-            </tr>
-            <tr>
-              <td style="font-size: smaller;">Contact Us</td>
-              <td style="font-size: smaller;">How to Login?</td>
-              <td style="font-size: smaller;"><a class="text-dark" style="text-decoration: none;"
-                  href="/account/buyer/registration/">User Signup</a></td>
-              <td style="font-size: smaller;">Seller Signup</td>
-            </tr>
-            <tr>
-              <td style="font-size: smaller;">About Us</td>
-              <td style="font-size: smaller;">How to add product?</td>
-              <td style="font-size: smaller;"></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="col" style="max-width: 200px;">
-        <table class="table table-sm">
-          <thead>
-            <tr>
-              <th scope="col">Address</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!--table row 1-->
-            <tr>
-              <!--table data for Address-->
-              <td style="font-size: smaller;">
-                21/6 CA Road,<br>
-                New York City,1800800
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="row justify-content-center" style="text-align: center;font-size: smaller;">
+        <p>copyright@2021</p>
       </div>
     </div>
-    <div class="row justify-content-center" style="text-align: center;font-size: smaller;">
-      <p>copyright@2021</p>
-    </div>
-  </div>
 
-  {% endblock %}
+    {% endblock %}
 
-  <!--block javascript-->
-  {% block javaScript %}
-  <!--FOR LOOP START FOR RECENT ORDERS-->
-  {% for order in RECENT_ORDERS %}
+    <!--block javascript-->
+    {% block javaScript %}
+    <!--FOR LOOP START FOR RECENT ORDERS-->
+    {% for order in RECENT_ORDERS %}
 
-  {% if order.order_status == "Ordered"%}
-  <script>
-    var oid = "{{ order.order_id }}";
-    var orderitems = JSON.parse("{{ order.items|escapejs }}");
-    var totalamount = "{{ order.total_amount }}";
-    var totalitems = "{{ order.total_items }}";
-    var orderstatus = "{{ order.order_status }}";
-    var flatdiscount = "{{ order.discount }}";
-    ordstr = `<div class="card border-dark" style="margin-top:50px;">
+    {% if order.order_status == "Ordered"%}
+    <script>
+      var oid = "{{ order.order_id }}";
+      var orderitems = JSON.parse("{{ order.items|escapejs }}");
+      var totalamount = "{{ order.total_amount }}";
+      var totalitems = "{{ order.total_items }}";
+      var orderstatus = "{{ order.order_status }}";
+      var flatdiscount = "{{ order.discount }}";
+      ordstr = `<div class="card border-dark" style="margin-top:50px;">
               <h5 class="card-header">
                 <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-warning text-wrap" >${orderstatus}</div>
               </h5>
@@ -889,18 +916,18 @@
               <div class="card-footer bg-transparent" id="order-footer-${oid}" >
               </div>
             </div>`
-    $('#ordercontainer').append(ordstr);
-    for (id in orderitems) {
-      itemstr = `<tr>
+      $('#ordercontainer').append(ordstr);
+      for (id in orderitems) {
+        itemstr = `<tr>
               <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
               <td style="padding-top:40px;" >${orderitems[id][1]}</td>
               <td style="padding-top:40px;">${orderitems[id][2]}</td>
               <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
               <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
             </tr>`
-      $('#order-body-' + oid).append(itemstr);
-    }
-    footerstr = `
+        $('#order-body-' + oid).append(itemstr);
+      }
+      footerstr = `
             <div class="row align-items-start">
               <div class="col-8">
                 <div class="card border-dark mb-3" style="height:130px;" >
@@ -947,19 +974,19 @@
             </div>
             
   `
-    $('#order-footer-' + oid).append(footerstr);
-  </script>
-  {% endif %}
+      $('#order-footer-' + oid).append(footerstr);
+    </script>
+    {% endif %}
 
-  {% if order.order_status == "Shipped"%}
-  <script>
-    var oid = "{{ order.order_id }}";
-    var orderitems = JSON.parse("{{ order.items|escapejs }}");
-    var totalamount = "{{ order.total_amount }}";
-    var totalitems = "{{ order.total_items }}";
-    var orderstatus = "{{ order.order_status }}";
-    var flatdiscount = "{{ order.discount }}";
-    ordstr = `<div class="card border-dark" style="margin-top:50px;">
+    {% if order.order_status == "Shipped"%}
+    <script>
+      var oid = "{{ order.order_id }}";
+      var orderitems = JSON.parse("{{ order.items|escapejs }}");
+      var totalamount = "{{ order.total_amount }}";
+      var totalitems = "{{ order.total_items }}";
+      var orderstatus = "{{ order.order_status }}";
+      var flatdiscount = "{{ order.discount }}";
+      ordstr = `<div class="card border-dark" style="margin-top:50px;">
               <h5 class="card-header">
                 <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-primary text-wrap" >${orderstatus}</div>
               </h5>
@@ -974,18 +1001,18 @@
               <div class="card-footer bg-transparent" id="order-footer-${oid}" >
               </div>
             </div>`
-    $('#ordercontainer').append(ordstr);
-    for (id in orderitems) {
-      itemstr = `<tr>
+      $('#ordercontainer').append(ordstr);
+      for (id in orderitems) {
+        itemstr = `<tr>
               <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
               <td style="padding-top:40px;" >${orderitems[id][1]}</td>
               <td style="padding-top:40px;">${orderitems[id][2]}</td>
               <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
               <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
             </tr>`
-      $('#order-body-' + oid).append(itemstr);
-    }
-    footerstr = `
+        $('#order-body-' + oid).append(itemstr);
+      }
+      footerstr = `
             <div class="row align-items-start">
               <div class="col-8">
                 <div class="card border-dark mb-3" style="height:130px;" >
@@ -1032,19 +1059,19 @@
             </div>
             
   `
-    $('#order-footer-' + oid).append(footerstr);
-  </script>
-  {% endif %}
+      $('#order-footer-' + oid).append(footerstr);
+    </script>
+    {% endif %}
 
-  {% if order.order_status == "Delivered"%}
-  <script>
-    var oid = "{{ order.order_id }}";
-    var orderitems = JSON.parse("{{ order.items|escapejs }}");
-    var totalamount = "{{ order.total_amount }}";
-    var totalitems = "{{ order.total_items }}";
-    var orderstatus = "{{ order.order_status }}";
-    var flatdiscount = "{{ order.discount }}";
-    ordstr = `<div class="card border border-dark" style="margin-top:50px;">
+    {% if order.order_status == "Delivered"%}
+    <script>
+      var oid = "{{ order.order_id }}";
+      var orderitems = JSON.parse("{{ order.items|escapejs }}");
+      var totalamount = "{{ order.total_amount }}";
+      var totalitems = "{{ order.total_items }}";
+      var orderstatus = "{{ order.order_status }}";
+      var flatdiscount = "{{ order.discount }}";
+      ordstr = `<div class="card border border-dark" style="margin-top:50px;">
               <h5 class="card-header">
                 <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-success text-wrap" >${orderstatus}</div>
               </h5>
@@ -1059,18 +1086,18 @@
               <div class="card-footer bg-transparent" id="order-footer-${oid}" >
               </div>
             </div>`
-    $('#ordercontainer').append(ordstr);
-    for (id in orderitems) {
-      itemstr = `<tr>
+      $('#ordercontainer').append(ordstr);
+      for (id in orderitems) {
+        itemstr = `<tr>
               <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
               <td style="padding-top:40px;" >${orderitems[id][1]}</td>
               <td style="padding-top:40px;">${orderitems[id][2]}</td>
               <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
               <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
             </tr>`
-      $('#order-body-' + oid).append(itemstr);
-    }
-    footerstr = `
+        $('#order-body-' + oid).append(itemstr);
+      }
+      footerstr = `
   <div class="row align-items-start">
                 <div class="col-8 ">
                 <div class="card border-dark mb-3">
@@ -1112,19 +1139,19 @@
             </div>
             
   `
-    $('#order-footer-' + oid).append(footerstr);
-  </script>
-  {% endif %}
+      $('#order-footer-' + oid).append(footerstr);
+    </script>
+    {% endif %}
 
-  {% if order.order_status == "Canceled"%}
-  <script>
-    var oid = "{{ order.order_id }}";
-    var orderitems = JSON.parse("{{ order.items|escapejs }}");
-    var totalamount = "{{ order.total_amount }}";
-    var totalitems = "{{ order.total_items }}";
-    var orderstatus = "{{ order.order_status }}";
-    var flatdiscount = "{{ order.discount }}";
-    ordstr = `<div class="card border-danger" style="margin-top:50px;">
+    {% if order.order_status == "Canceled"%}
+    <script>
+      var oid = "{{ order.order_id }}";
+      var orderitems = JSON.parse("{{ order.items|escapejs }}");
+      var totalamount = "{{ order.total_amount }}";
+      var totalitems = "{{ order.total_items }}";
+      var orderstatus = "{{ order.order_status }}";
+      var flatdiscount = "{{ order.discount }}";
+      ordstr = `<div class="card border-danger" style="margin-top:50px;">
               <h5 class="card-header">
                 <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-danger text-wrap" >${orderstatus}</div>
               </h5>
@@ -1139,18 +1166,18 @@
               <div class="card-footer bg-transparent" id="order-footer-${oid}" >
               </div>
             </div>`
-    $('#ordercontainer').append(ordstr);
-    for (id in orderitems) {
-      itemstr = `<tr>
+      $('#ordercontainer').append(ordstr);
+      for (id in orderitems) {
+        itemstr = `<tr>
               <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
               <td style="padding-top:40px;" >${orderitems[id][1]}</td>
               <td style="padding-top:40px;">${orderitems[id][2]}</td>
               <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
               <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
             </tr>`
-      $('#order-body-' + oid).append(itemstr);
-    }
-    footerstr = `
+        $('#order-body-' + oid).append(itemstr);
+      }
+      footerstr = `
             <div class="row align-items-start">
                 <div class="col-8 ">
                 <div class="card border-dark mb-3" style="height:130px;">
@@ -1194,23 +1221,23 @@
             </div>
             
   `
-    $('#order-footer-' + oid).append(footerstr);
-  </script>
-  {% endif %}
+      $('#order-footer-' + oid).append(footerstr);
+    </script>
+    {% endif %}
 
-  {% endfor %}
-  <!--FORLOOP END FOR RECENT ORDERS-->
+    {% endfor %}
+    <!--FORLOOP END FOR RECENT ORDERS-->
 
-  <!--FORLOOP START FOR ACTIVE ORDERS-->
-  {% for order in ACTIVE_ORDERS %}
-  <script>
-    var oid = "{{ order.order_id }}";
-    var orderitems = JSON.parse("{{ order.items|escapejs }}");
-    var totalamount = "{{ order.total_amount }}";
-    var totalitems = "{{ order.total_items }}";
-    var orderstatus = "{{ order.order_status }}";
-    var flatdiscount = "{{ order.discount }}";
-    ordstr = `<div class="card border-dark" style="margin-top:50px;">
+    <!--FORLOOP START FOR ACTIVE ORDERS-->
+    {% for order in ACTIVE_ORDERS %}
+    <script>
+      var oid = "{{ order.order_id }}";
+      var orderitems = JSON.parse("{{ order.items|escapejs }}");
+      var totalamount = "{{ order.total_amount }}";
+      var totalitems = "{{ order.total_items }}";
+      var orderstatus = "{{ order.order_status }}";
+      var flatdiscount = "{{ order.discount }}";
+      ordstr = `<div class="card border-dark" style="margin-top:50px;">
               <h5 class="card-header">
                 <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-warning text-wrap" >${orderstatus}</div>
               </h5>
@@ -1225,18 +1252,18 @@
               <div class="card-footer bg-transparent" id="active-order-footer-${oid}" >
               </div>
             </div>`
-    $('#activeordercontainer').append(ordstr);
-    for (id in orderitems) {
-      itemstr = `<tr>
+      $('#activeordercontainer').append(ordstr);
+      for (id in orderitems) {
+        itemstr = `<tr>
               <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
               <td style="padding-top:40px;" >${orderitems[id][1]}</td>
               <td style="padding-top:40px;">${orderitems[id][2]}</td>
               <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
               <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
             </tr>`
-      $('#active-order-body-' + oid).append(itemstr);
-    }
-    footerstr = `
+        $('#active-order-body-' + oid).append(itemstr);
+      }
+      footerstr = `
             <div class="row align-items-start">
               <div class="col-8">
                 <div class="card border-dark mb-3" style="height:130px;" >
@@ -1284,21 +1311,21 @@
             </div>
             
   `
-    $('#active-order-footer-' + oid).append(footerstr);
-  </script>
-  {% endfor %}
-  <!--FORLOOP END FOR ACTIVE ORDERS-->
+      $('#active-order-footer-' + oid).append(footerstr);
+    </script>
+    {% endfor %}
+    <!--FORLOOP END FOR ACTIVE ORDERS-->
 
-  <!--FOR LOOP START FOR SHIPPED ORDERS-->
-  {% for order in SHIPPED_ORDERS %}
-  <script>
-    var oid = "{{ order.order_id }}";
-    var orderitems = JSON.parse("{{ order.items|escapejs }}");
-    var totalamount = "{{ order.total_amount }}";
-    var totalitems = "{{ order.total_items }}";
-    var orderstatus = "{{ order.order_status }}";
-    var flatdiscount = "{{ order.discount }}";
-    ordstr = `<div class="card border-dark" style="margin-top:50px;">
+    <!--FOR LOOP START FOR SHIPPED ORDERS-->
+    {% for order in SHIPPED_ORDERS %}
+    <script>
+      var oid = "{{ order.order_id }}";
+      var orderitems = JSON.parse("{{ order.items|escapejs }}");
+      var totalamount = "{{ order.total_amount }}";
+      var totalitems = "{{ order.total_items }}";
+      var orderstatus = "{{ order.order_status }}";
+      var flatdiscount = "{{ order.discount }}";
+      ordstr = `<div class="card border-dark" style="margin-top:50px;">
               <h5 class="card-header">
                 <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-primary text-wrap" >${orderstatus}</div>
               </h5>
@@ -1313,18 +1340,18 @@
               <div class="card-footer bg-transparent" id="active-order-footer-${oid}" >
               </div>
             </div>`
-    $('#shippedordercontainer').append(ordstr);
-    for (id in orderitems) {
-      itemstr = `<tr>
+      $('#shippedordercontainer').append(ordstr);
+      for (id in orderitems) {
+        itemstr = `<tr>
               <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
               <td style="padding-top:40px;" >${orderitems[id][1]}</td>
               <td style="padding-top:40px;">${orderitems[id][2]}</td>
               <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
               <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
             </tr>`
-      $('#active-order-body-' + oid).append(itemstr);
-    }
-    footerstr = `
+        $('#active-order-body-' + oid).append(itemstr);
+      }
+      footerstr = `
             <div class="row align-items-start">
               <div class="col-8">
                 <div class="card border-dark mb-3" style="height:130px;" >
@@ -1372,21 +1399,21 @@
             </div>
             
   `
-    $('#active-order-footer-' + oid).append(footerstr);
-  </script>
-  {% endfor %}
-  <!--FOR LOOP ENDS FOR SHIPPED ORDERS-->
+      $('#active-order-footer-' + oid).append(footerstr);
+    </script>
+    {% endfor %}
+    <!--FOR LOOP ENDS FOR SHIPPED ORDERS-->
 
-  <!--FOR LOOP START FOR DELIVERED ORDERS-->
-  {% for order in DELIVERED_ORDERS %}
-  <script>
-    var oid = "{{ order.order_id }}";
-    var orderitems = JSON.parse("{{ order.items|escapejs }}");
-    var totalamount = "{{ order.total_amount }}";
-    var totalitems = "{{ order.total_items }}";
-    var orderstatus = "{{ order.order_status }}";
-    var flatdiscount = "{{ order.discount }}";
-    ordstr = `<div class="card border-dark" style="margin-top:50px;">
+    <!--FOR LOOP START FOR DELIVERED ORDERS-->
+    {% for order in DELIVERED_ORDERS %}
+    <script>
+      var oid = "{{ order.order_id }}";
+      var orderitems = JSON.parse("{{ order.items|escapejs }}");
+      var totalamount = "{{ order.total_amount }}";
+      var totalitems = "{{ order.total_items }}";
+      var orderstatus = "{{ order.order_status }}";
+      var flatdiscount = "{{ order.discount }}";
+      ordstr = `<div class="card border-dark" style="margin-top:50px;">
               <h5 class="card-header">
                 <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-success text-wrap" >${orderstatus}</div>
               </h5>
@@ -1401,18 +1428,18 @@
               <div class="card-footer bg-transparent" id="delivered-order-footer-${oid}" >
               </div>
             </div>`
-    $('#deliveredordercontainer').append(ordstr);
-    for (id in orderitems) {
-      itemstr = `<tr>
+      $('#deliveredordercontainer').append(ordstr);
+      for (id in orderitems) {
+        itemstr = `<tr>
               <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
               <td style="padding-top:40px;" >${orderitems[id][1]}</td>
               <td style="padding-top:40px;">${orderitems[id][2]}</td>
               <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
               <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
             </tr>`
-      $('#delivered-order-body-' + oid).append(itemstr);
-    }
-    footerstr = `
+        $('#delivered-order-body-' + oid).append(itemstr);
+      }
+      footerstr = `
             <div class="row align-items-start">
               <div class="col-8">
                 <div class="card border-dark mb-3" style="height:130px;" >
@@ -1455,21 +1482,21 @@
             </div>
             
   `
-    $('#delivered-order-footer-' + oid).append(footerstr);
-  </script>
-  {% endfor %}
-  <!--FOR LOOP END FOR DELIVERED ORDERS-->
+      $('#delivered-order-footer-' + oid).append(footerstr);
+    </script>
+    {% endfor %}
+    <!--FOR LOOP END FOR DELIVERED ORDERS-->
 
-  <!--FOR LOOP START FOR CANCELED ORDERS-->
-  {% for order in CANCELED_ORDERS %}
-  <script>
-    var oid = "{{ order.order_id }}";
-    var orderitems = JSON.parse("{{ order.items|escapejs }}");
-    var totalamount = "{{ order.total_amount }}";
-    var totalitems = "{{ order.total_items }}";
-    var orderstatus = "{{ order.order_status }}";
-    var flatdiscount = "{{ order.discount }}";
-    ordstr = `<div class="card border-danger" style="margin-top:50px;">
+    <!--FOR LOOP START FOR CANCELED ORDERS-->
+    {% for order in CANCELED_ORDERS %}
+    <script>
+      var oid = "{{ order.order_id }}";
+      var orderitems = JSON.parse("{{ order.items|escapejs }}");
+      var totalamount = "{{ order.total_amount }}";
+      var totalitems = "{{ order.total_items }}";
+      var orderstatus = "{{ order.order_status }}";
+      var flatdiscount = "{{ order.discount }}";
+      ordstr = `<div class="card border-danger" style="margin-top:50px;">
               <h5 class="card-header">
                 <div class="badge btn border border-dark text-dark text-wrap">${oid}</div>&nbsp;&nbsp;<div class="badge btn bg-danger text-wrap" >${orderstatus}</div>
               </h5>
@@ -1484,18 +1511,18 @@
               <div class="card-footer bg-transparent" id="canceled-order-footer-${oid}" >
               </div>
             </div>`
-    $('#canceledordercontainer').append(ordstr);
-    for (id in orderitems) {
-      itemstr = `<tr>
+      $('#canceledordercontainer').append(ordstr);
+      for (id in orderitems) {
+        itemstr = `<tr>
               <td><img src="${orderitems[id][0]}" style="max-width:100px;max-height:100px;"></td>
               <td style="padding-top:40px;" >${orderitems[id][1]}</td>
               <td style="padding-top:40px;">${orderitems[id][2]}</td>
               <td style="padding-top:40px;"><div class="badge btn border border-dark text-dark text-wrap" >${orderitems[id][3]}</div></td>
               <td style="padding-top:40px;">₹&nbsp;<div class="badge btn border border-dark text-dark text-wrap"  >${totalamount}</div></td>
             </tr>`
-      $('#canceled-order-body-' + oid).append(itemstr);
-    }
-    footerstr = `
+        $('#canceled-order-body-' + oid).append(itemstr);
+      }
+      footerstr = `
             <div class="row align-items-start">
               <div class="col-8">
                 <div class="card border-dark mb-3" style="height:130px;" >
@@ -1538,88 +1565,143 @@
             </div>
             
   `
-    $('#canceled-order-footer-' + oid).append(footerstr);
+      $('#canceled-order-footer-' + oid).append(footerstr);
+    </script>
+    {% endfor %}
+    <!--FOR LOOP END FOR CANCELED ORDERS-->
+
+    <!--SCRIPT STARTS FOR CKEDITOR-->
+    <script>
+      CKEDITOR.replace("prodesc");
+    </script>
+    <!--SCRIPT END FOR CKEDITOR-->
+
+    <!--SCRIPT TAG START FOR MENU TOGGLE-->
+    <script>
+      $("#toggleorder").click(function () {
+        $("#sellerdashboard").hide();
+        $("#sellerproducts").hide();
+        $("#sellershop").hide();
+        $("#addproductcontainer").hide();
+        $("#updateproductcontainer").hide();
+        $("#viewproductcontainer").hide();
+        $("#sellerorder").fadeIn(2000);
+      });
+
+      $("#toggleproducts").click(function () {
+        $("#sellerdashboard").hide();
+        $("#sellerproducts").fadeIn(2000);
+        $("#sellershops").hide();
+        $("#updateproductcontainer").hide();
+        $("#addproductcontainer").hide();
+        $("#viewproductcontainer").hide();
+        $("#sellerorder").hide();
+      });
+
+      $("#toggleshop").click(function () {
+        $("#sellerdashboard").hide();
+        $("#sellerproducts").hide();
+        $("#addproductcontainer").hide();
+        $("#updateproductcontainer").hide();
+        $("#viewproductcontainer").hide();
+        $("#sellershops").fadeIn(2000);
+        $("#sellerorder").hide();
+      });
+
+      $("#toggledashboard").click(function () {
+        $("#sellerdashboard").fadeIn(2000);
+        $("#sellerproducts").hide();
+        $("#sellershops").hide();
+        $("#sellerorder").hide();
+        $("#updateproductcontainer").hide();
+        $("#viewproductcontainer").hide();
+        $("#addproductcontainer").hide();
+      });
+
+      $("#addproducttoggle").click(function () {
+        $("#sellerdashboard").hide();
+        $("#sellerproducts").hide();
+        $("#sellershops").hide();
+        $("#sellerorder").hide();
+        $("#updateproductcontainer").hide();
+        $("#viewproductcontainer").hide();
+        $("#addproductcontainer").fadeIn(2000);
+      });
+
+      $("#updateproducttoggle").click(function () {
+        $("#sellerdashboard").hide();
+        $("#sellerproducts").hide();
+        $("#sellershops").hide();
+        $("#sellerorder").hide();
+        $("#addproductcontainer").hide();
+        $("#viewproductcontainer").hide();
+        $("#updateproductcontainer").fadeIn(2000);
+      });
+
+      $("#viewproducttoggle").click(function () {
+        $("#sellerdashboard").hide();
+        $("#sellerproducts").hide();
+        $("#sellershops").hide();
+        $("#sellerorder").hide();
+        $("#addproductcontainer").hide();
+        $("#viewproductcontainer").fadeIn(2000);
+        $("#updateproductcontainer").hide();
+      });
+    </script>
+    <!--SCRIPT TAG END FOR MENU TOGGLE-->
+
+    <script>
+      // PERSONAL DETAILS EDIT BUTTON
+      $("#editpersonaldetails").click(function () {
+          if (document.getElementById('editpersonaldetails').innerHTML == 'Edit') {
+              document.getElementById('userFirstName').disabled = false;
+              document.getElementById('userLastName').disabled = false;
+              document.getElementById('userEmail').disabled = false;
+              document.getElementById('personaldetailssavebtn').style = "display:block";
+              document.getElementById('editpersonaldetails').innerHTML = "Cancel";
+          }
+          else {
+              document.getElementById('userFirstName').disabled = true;
+              document.getElementById('userLastName').disabled = true;
+              document.getElementById('userEmail').disabled = true;
+              document.getElementById('personaldetailssavebtn').style = "display:none";
+              document.getElementById('editpersonaldetails').innerHTML = "Edit";
+          }
+  
+      })
+  
+      // MANAGE ADDRESS TAB
+      $("#manageaddressbtn").click(function(){
+          document.getElementById('manageaddresscontainer').style="display:block;";
+          document.getElementById('personalinformationcontainer').style="display:none;";
+      })
+      // PROFILE INFORMATION TAB
+      $("#profileinformationbtn").click(function(){
+          document.getElementById('manageaddresscontainer').style="display:none;";
+          document.getElementById('personalinformationcontainer').style="display:block;";
+      })
+  
+      //ADDRESS EDIT BUTTON
+      $("#manageaddresseditbtn").click(function () {
+          if (document.getElementById('manageaddresseditbtn').innerHTML == 'Edit') {
+              document.getElementById('inputHouse2').disabled = false;
+              document.getElementById('inputLocality2').disabled = false;
+              document.getElementById('inputCity2').disabled = false;
+              document.getElementById('inputState2').disabled = false;
+              document.getElementById('inputZip2').disabled = false;
+              document.getElementById('saveAddressbtn').style = "display:block";
+              document.getElementById('manageaddresseditbtn').innerHTML = "Cancel";
+          }
+          else {
+              document.getElementById('inputHouse2').disabled = true;
+              document.getElementById('inputLocality2').disabled = true;
+              document.getElementById('inputCity2').disabled = true;
+              document.getElementById('inputState2').disabled = true;
+              document.getElementById('inputZip2').disabled = true;
+              document.getElementById('saveAddressbtn').style = "display:none";
+              document.getElementById('manageaddresseditbtn').innerHTML = "Edit";
+          }
+  
+      })
   </script>
-  {% endfor %}
-  <!--FOR LOOP END FOR CANCELED ORDERS-->
-
-  <!--SCRIPT STARTS FOR CKEDITOR-->
-  <script>
-    CKEDITOR.replace("prodesc");
-  </script>
-  <!--SCRIPT END FOR CKEDITOR-->
-
-  <!--SCRIPT TAG START FOR MENU TOGGLE-->
-  <script>
-    $("#toggleorder").click(function () {
-      $("#sellerdashboard").hide();
-      $("#sellerproducts").hide();
-      $("#sellershop").hide();
-      $("#addproductcontainer").hide();
-      $("#updateproductcontainer").hide();
-      $("#viewproductcontainer").hide();
-      $("#sellerorder").fadeIn(2000);
-    });
-
-    $("#toggleproducts").click(function () {
-      $("#sellerdashboard").hide();
-      $("#sellerproducts").fadeIn(2000);
-      $("#sellershops").hide();
-      $("#updateproductcontainer").hide();
-      $("#addproductcontainer").hide();
-      $("#viewproductcontainer").hide();
-      $("#sellerorder").hide();
-    });
-
-    $("#toggleshop").click(function () {
-      $("#sellerdashboard").hide();
-      $("#sellerproducts").hide();
-      $("#addproductcontainer").hide();
-      $("#updateproductcontainer").hide();
-      $("#viewproductcontainer").hide();
-      $("#sellershops").fadeIn(2000);
-      $("#sellerorder").hide();
-    });
-
-    $("#toggledashboard").click(function () {
-      $("#sellerdashboard").fadeIn(2000);
-      $("#sellerproducts").hide();
-      $("#sellershops").hide();
-      $("#sellerorder").hide();
-      $("#updateproductcontainer").hide();
-      $("#viewproductcontainer").hide();
-      $("#addproductcontainer").hide();
-    });
-
-    $("#addproducttoggle").click(function () {
-      $("#sellerdashboard").hide();
-      $("#sellerproducts").hide();
-      $("#sellershops").hide();
-      $("#sellerorder").hide();
-      $("#updateproductcontainer").hide();
-      $("#viewproductcontainer").hide();
-      $("#addproductcontainer").fadeIn(2000);
-    });
-
-    $("#updateproducttoggle").click(function () {
-      $("#sellerdashboard").hide();
-      $("#sellerproducts").hide();
-      $("#sellershops").hide();
-      $("#sellerorder").hide();
-      $("#addproductcontainer").hide();
-      $("#viewproductcontainer").hide();
-      $("#updateproductcontainer").fadeIn(2000);
-    });
-
-    $("#viewproducttoggle").click(function () {
-      $("#sellerdashboard").hide();
-      $("#sellerproducts").hide();
-      $("#sellershops").hide();
-      $("#sellerorder").hide();
-      $("#addproductcontainer").hide();
-      $("#viewproductcontainer").fadeIn(2000);
-      $("#updateproductcontainer").hide();
-    });
-  </script>
-  <!--SCRIPT TAG END FOR MENU TOGGLE-->
-  {% endblock %}
+    {% endblock %}
