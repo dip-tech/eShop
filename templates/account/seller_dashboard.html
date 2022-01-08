@@ -147,8 +147,13 @@
             <div class="card-footer bg-transparent border-success d-flex justify-content-center" style="padding:10px;">
               <table>
                 <tr>
-                  <td style="padding-left: 30px;padding-right:30px;"><button class="btn border border-dark"
-                      type="button" style="width:200px;font-size:14px;">View Product</button></td>
+                  <td style="padding-left: 30px;padding-right:30px;">
+                    <form action="/products/view/" method="GET">
+                    <input type="hidden" name="p_id" value="{{ item.id }}"  >
+                    <button class="btn border border-dark"
+                      type="submit" style="width:200px;font-size:14px;">View Product</button>
+                    </form>
+                    </td>
                   <td style="padding-left: 30px;padding-right:30px;">
                     <form action="/products/update-product-details/" method="GET">
                       <input type="hidden" name='p_id' value="{{ item.id }}">
@@ -323,8 +328,13 @@
             <div class="card-footer bg-transparent border-success d-flex justify-content-center" style="padding:10px;">
               <table>
                 <tr>
-                  <td style="padding-left: 30px;padding-right:30px;"><button class="btn border border-dark"
-                      type="button" style="width:200px;font-size:14px;">View Product</button></td>
+                  <td style="padding-left: 30px;padding-right:30px;">
+                    <form action="/products/view/" method="GET">
+                      <input type="hidden" name="p_id" value="{{item.id}}">
+                    <button class="btn border border-dark"
+                      type="submit" style="width:200px;font-size:14px;">View Product</button>
+                    </form>
+                    </td>
                   <td style="padding-left: 30px;padding-right:30px;">
                     <form action="/products/update-product-details/" method="GET">
                       <input type="hidden" name="p_id" value="{{item.id}}">
