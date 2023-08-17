@@ -1,0 +1,9 @@
+// PULL IMAGE FROM DOCKER HUB
+docker pull dipankar8dutta/eshop-docker-img
+
+            or
+// CREATE DOCKER IMAGE FROM DOCKERFILE
+docker build -t eshop-docker-img .
+
+// RUN DOCKER IMAGE
+docker run --name eshop-docker-container -p 8000:8000 -d eshop-docker-img
